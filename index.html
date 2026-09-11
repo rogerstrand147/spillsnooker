@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="no"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Snooker i Norge — hvor du kan spille</title>
+<meta name="description" content="Finn nærmeste snookerbord i Norge. Åpningstider, priser og nybegynnerkurs hos klubbene.">
+<style>
+:root{
+ --svart:#0C0E0D; --flate:#161B18; --hevet:#1D2320; --kant:#2A322D;
+ --filt:#157F4C; --filt-lys:#2FA86D; --filt-mork:#0E5533;
+ --lampe:#E07A4D; --lampe-lys:#F0A181;
+ --elfenben:#F4F1EA; --dempet:#9AA39C; --svak:#6B746E;
+ --gul:#E8C33D; --rosa:#E58BA6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--svart);color:var(--elfenben);
+ font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+ font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+a{color:var(--filt-lys)}
+
+/* Forhåndsvisningsbanner */
+#forhand{background:var(--lampe);color:#0C0E0D;text-align:center;padding:9px 16px;
+ font-size:.82rem;font-weight:650;letter-spacing:.02em}
+
+/* Topp */
+header{padding:28px 0 0;
+ background:radial-gradient(ellipse 950px 420px at 50% -10%,rgba(21,127,76,.22),transparent 66%)}
+h1{font-size:clamp(2rem,5.2vw,3.5rem);line-height:1.06;letter-spacing:-.03em;font-weight:700;max-width:16ch}
+h1 em{font-style:normal;color:var(--filt-lys)}
+.under{color:var(--dempet);font-size:1.08rem;margin-top:18px;max-width:56ch}
+
+/* Modusvelger */
+.modus{display:inline-flex;gap:3px;background:var(--flate);border:1px solid var(--kant);
+ border-radius:11px;padding:4px;margin:30px 0 18px}
+.modus button{background:none;border:none;color:var(--dempet);font:inherit;font-size:.9rem;
+ font-weight:600;padding:9px 17px;border-radius:8px;cursor:pointer}
+.modus button[aria-pressed=true]{background:var(--filt);color:#fff}
+
+/* Kart */
+.kartboks{display:grid;grid-template-columns:1fr 340px;gap:22px;align-items:start}
+@media(max-width:880px){.kartboks{grid-template-columns:1fr}}
+.kartflate{position:relative;background:var(--svart);border:1px solid rgba(42,50,45,.55);
+ border-radius:16px;overflow:hidden}
+svg#svg{display:block;width:100%;height:660px;touch-action:none;cursor:grab}
+@media(max-width:880px){svg#svg{height:480px}}
+svg#svg.drag{cursor:grabbing}
+#coast{fill:url(#filt);stroke:#2FA86D;stroke-opacity:.34;stroke-width:1;stroke-linejoin:round}
+#vignett,#lyspol{pointer-events:none}
+.dybdelag{stroke:none}
+.grid{stroke:rgba(244,241,234,.08);stroke-width:.6}
+.dot{cursor:pointer}
+.dot .kule{transition:r .12s}
+.dot:hover .kule{stroke:var(--elfenben);stroke-width:1.4}
+.dot .stilk{stroke-linecap:round}
+.dot.skjult{display:none}
+.dot .kule{stroke:rgba(244,241,234,.34);stroke-width:.7}
+.dot.klubb .kule{stroke:rgba(244,241,234,.55);stroke-width:.9}
+.dot.koa .kule{stroke:rgba(244,241,234,.9);stroke-width:1.3}
+.dot.privat{opacity:.5}
+.dot.dempet{opacity:.18}
+.dot.uthevet .kule{stroke:var(--lampe);stroke-width:1.8}
+.klubb .hull{color:var(--lampe);font-size:.93em}
+.klubb .stempel.vent{border-color:var(--svak);color:var(--dempet)}
+.klubb .teller.tom span{color:var(--dempet)}
+.klubb .teller.tom b{display:inline;font-size:1em;color:var(--elfenben)}
+.kvittering.advarsel{border-color:var(--lampe);color:var(--dempet)}
+.kvittering.advarsel b{color:var(--lampe)}
+.klubb.peket{outline:2px solid var(--lampe);outline-offset:3px}
+.minikart{display:flex;align-items:center;gap:14px;margin:14px 0 4px;
+ padding:12px 14px;background:var(--svart);border:1px solid var(--kant);border-radius:10px}
+.minikart svg{width:54px;height:63px;flex:none;display:block}
+.minikart .veien{text-decoration:none;color:var(--lampe);font-size:.92rem;font-weight:500;line-height:1.35}
+.minikart .veien span{display:block;color:var(--svak);font-size:.79rem;font-weight:400;margin-top:3px}
+.minikart .veien:hover{color:var(--lampe-lys)}
+.heroflate{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.85fr);
+ gap:44px;align-items:center}
+.rekrutt{background:var(--flate);border:1px solid var(--kant);border-radius:16px;
+ padding:26px 26px 22px}
+.rekrutt h2{font-size:1.34rem;font-weight:500;line-height:1.3;color:var(--elfenben);margin:8px 0 12px}
+.rekrutt p{color:var(--dempet);font-size:.93rem;line-height:1.65;margin-bottom:18px}
+.rekrutt .knapp{display:block;text-align:center;text-decoration:none;margin-bottom:9px}
+.rekrutt .rtall{margin-top:14px;padding-top:14px;border-top:1px solid var(--kant);
+ font-size:.82rem;color:var(--svak);font-family:ui-monospace,Menlo,monospace;line-height:1.7}
+.led.liten{font-size:.88rem;color:var(--svak);margin-top:10px;max-width:74ch}
+.led.liten b.hull{color:var(--lampe);font-weight:500}
+@media(max-width:900px){.heroflate{grid-template-columns:1fr;gap:28px}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.sok{display:flex;align-items:center;gap:12px;margin:0 0 16px}
+.sok input{flex:1;max-width:440px;background:var(--flate);border:1px solid var(--kant);
+ color:var(--elfenben);border-radius:10px;padding:12px 15px;font-family:inherit;font-size:1rem}
+.sok input:focus{outline:none;border-color:var(--filt-lys)}
+.sok input::placeholder{color:var(--svak)}
+.sok #q-svar{font-size:.85rem;color:var(--lampe);font-family:ui-monospace,Menlo,monospace}
+.rettmeg{font-size:.86rem;color:var(--dempet);margin-top:10px;max-width:70ch;line-height:1.6}
+.rettmeg a{color:var(--lampe);text-decoration:none;border-bottom:1px solid rgba(224,122,77,.4)}
+.rettmeg a:hover{border-bottom-color:var(--lampe)}
+.fylke{display:flex;justify-content:space-between;align-items:center;gap:10px;
+ padding:9px 14px;background:var(--hevet);border-top:1px solid var(--kant);
+ font-size:.82rem;letter-spacing:.03em;color:var(--dempet);cursor:pointer;
+ position:sticky;top:0;z-index:1}
+.fylke:hover,.fylke.on{color:var(--elfenben);background:#243029}
+.fylke .fbord{font-family:ui-monospace,Menlo,monospace;color:var(--elfenben)}
+.fylke.on .fbord{color:var(--lampe)}
+.regler{margin-top:34px;padding:26px 28px;background:var(--flate);
+ border:1px solid var(--kant);border-radius:14px}
+.regler h3{font-size:1.06rem;font-weight:500;color:var(--elfenben);margin-bottom:10px}
+.regler h3+.regler-inn{margin-top:0}
+.regler .regler-inn{color:var(--dempet);margin-top:12px;max-width:72ch;line-height:1.7}
+.regler .regler-inn b{color:var(--elfenben);font-weight:500}
+.regler .regler-inn.liten{font-size:.84rem;color:var(--svak)}
+.regler h3:not(:first-child){margin-top:26px}
+.ballrad{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 4px}
+.ballrad span{display:flex;align-items:center;gap:7px;padding:6px 12px 6px 8px;
+ background:var(--hevet);border:1px solid var(--kant);border-radius:99px;font-size:.85rem}
+.ballrad b{width:15px;height:15px;border-radius:50%;display:block}
+.ballrad em{font-style:normal;font-family:ui-monospace,Menlo,monospace;
+ color:var(--lampe);font-size:.9rem}
+ol.punkt.tall{margin:14px 0 0 20px;padding:0;list-style:decimal;color:var(--dempet)}
+ol.punkt.tall li{margin:9px 0;line-height:1.65;max-width:70ch}
+ol.punkt.tall li b{color:var(--elfenben);font-weight:500}
+.lenker{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:10px;margin-top:16px}
+.lenker a{display:block;padding:13px 15px;background:var(--hevet);border:1px solid var(--kant);
+ border-radius:10px;text-decoration:none;transition:.15s}
+.lenker a:hover{border-color:var(--filt);background:#222b26}
+.lenker a b{display:block;color:var(--elfenben);font-weight:500;font-size:.95rem}
+.lenker a span{display:block;color:var(--svak);font-size:.83rem;margin-top:3px;line-height:1.5}
+@media(prefers-reduced-motion:reduce){.dot .kule{transition:none}}
+.zoom{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:5px}
+.zoom button{width:34px;height:34px;border-radius:8px;background:var(--hevet);
+ border:1px solid var(--kant);color:var(--elfenben);font-size:1rem;cursor:pointer;font-weight:600}
+.tegnforkl{display:flex;gap:16px;flex-wrap:wrap;padding:13px 16px;border-top:1px solid var(--kant);
+ font-size:.79rem;color:var(--dempet)}
+.tegnforkl b{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+#tip{position:absolute;pointer-events:none;opacity:0;transition:opacity .1s;background:var(--hevet);
+ border:1px solid var(--kant);border-radius:9px;padding:9px 12px;font-size:.8rem;max-width:230px;z-index:5}
+#tip h4{font-size:.86rem;margin-bottom:2px}
+#tip p{color:var(--dempet);font-size:.76rem}
+
+/* Sideliste */
+.liste{background:var(--flate);border:1px solid var(--kant);border-radius:16px;
+ max-height:660px;overflow-y:auto}
+.item{display:grid;grid-template-columns:3px 1fr auto;gap:12px;align-items:center;
+ padding:11px 15px;border-bottom:1px solid var(--kant);cursor:pointer}
+.item:hover{background:var(--hevet)}
+.item.skjult{display:none}
+.item .bar{height:26px;border-radius:2px}
+.item h3{font-size:.88rem;font-weight:600}
+.item p{font-size:.75rem;color:var(--svak)}
+.item .cnt{font-family:ui-monospace,Menlo,monospace;font-size:.9rem;color:var(--dempet)}
+.klubb .hull{color:var(--lampe);font-size:.93em}
+.klubb .stempel{display:inline-block;margin:10px 8px 0 0;padding:4px 11px;border-radius:99px;
+  border:1px solid var(--filt);color:var(--filt-lys);font-size:.78rem;letter-spacing:.01em}
+.klubb .stempel.apen{border-color:var(--lampe);color:var(--lampe-lys)}
+
+/* Seksjoner */
+section{padding:64px 0}
+.merk{font-size:.74rem;text-transform:uppercase;letter-spacing:.16em;color:var(--lampe);font-weight:650}
+h2{font-size:clamp(1.6rem,3.4vw,2.2rem);letter-spacing:-.025em;font-weight:700;margin:8px 0 14px}
+.led{color:var(--dempet);max-width:64ch;margin-bottom:26px}
+
+/* Klubbkort */
+.kort-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px}
+.klubb{background:var(--flate);border:1px solid var(--kant);border-radius:15px;padding:24px;
+ display:flex;flex-direction:column}
+.klubb h3{font-size:1.2rem;font-weight:650;letter-spacing:-.01em}
+.klubb .sted{color:var(--dempet);font-size:.9rem;margin-bottom:16px}
+.rad{display:flex;justify-content:space-between;gap:14px;padding:9px 0;
+ border-top:1px solid var(--kant);font-size:.88rem}
+.rad>span:first-child{color:var(--svak);flex-shrink:0}
+.rad>span:last-child{text-align:right}
+.nbf{font-size:.75rem;color:var(--svak);margin-top:14px;padding-top:12px;border-top:1px solid var(--kant)}
+.teller{margin-top:16px;padding:14px 16px;border-radius:11px;
+ background:linear-gradient(135deg,rgba(21,127,76,.18),rgba(21,127,76,.04));
+ border:1px solid rgba(47,168,109,.30)}
+.teller b{font-size:1.8rem;color:var(--filt-lys);font-weight:700;letter-spacing:-.02em;line-height:1}
+.teller span{color:var(--dempet);font-size:.83rem;display:block;margin-top:4px}
+.knapp{display:block;width:100%;text-align:center;background:var(--lampe);color:#0C0E0D;
+ font-weight:650;padding:13px 20px;border-radius:10px;text-decoration:none;font-size:.94rem;
+ margin-top:16px;border:none;cursor:pointer;font-family:inherit}
+.knapp:hover{background:var(--lampe-lys)}
+.knapp.sek{background:transparent;color:var(--filt-lys);border:1.5px solid var(--filt)}
+.knapp.sek:hover{background:rgba(21,127,76,.14)}
+
+/* Skjema */
+.skjema{margin-top:14px;display:none;gap:9px;flex-direction:column}
+.skjema.aap{display:flex}
+.skjema input{background:var(--hevet);border:1px solid var(--kant);border-radius:9px;
+ padding:12px 14px;color:var(--elfenben);font:inherit;font-size:.92rem;width:100%}
+.skjema input:focus{outline:none;border-color:var(--filt-lys)}
+.skjema small{color:var(--svak);font-size:.75rem;line-height:1.45}
+.kvittering{margin-top:14px;padding:15px;border-radius:11px;background:rgba(21,127,76,.14);
+ border:1px solid rgba(47,168,109,.34);font-size:.89rem;display:none}
+.kvittering.vis{display:block}
+
+/* Info */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.info{background:var(--flate);border:1px solid var(--kant);border-radius:14px;padding:22px}
+.info h3{font-size:1.02rem;margin-bottom:7px;font-weight:650}
+.info p{color:var(--dempet);font-size:.9rem}
+.stor{font-size:2rem;font-weight:700;color:var(--filt-lys);letter-spacing:-.02em;display:block;margin-bottom:2px}
+
+/* Bordvarsling */
+.varsel{background:linear-gradient(145deg,rgba(224,122,77,.10),rgba(224,122,77,.02));
+ border:1px solid rgba(224,122,77,.26);border-radius:16px;padding:34px}
+.varsel h2{margin-top:0}
+.epost{display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:1rem;
+ background:var(--hevet);border:1px solid var(--kant);padding:11px 17px;border-radius:9px;
+ margin:14px 0;color:var(--lampe);text-decoration:none}
+ul.punkt{margin:14px 0 0 19px;color:var(--dempet);font-size:.92rem}
+ul.punkt li{margin-bottom:5px}
+
+footer{border-top:1px solid var(--kant);padding:44px 0 60px;color:var(--svak);font-size:.84rem}
+footer a{color:var(--dempet)}
+footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
+
+/* ═══ v2: hero-video ═══ */
+.hero{position:relative;border-radius:18px;overflow:hidden;background:#07110C;border:1px solid var(--kant);
+ aspect-ratio:16/9;max-height:78vh;width:100%}
+@media(max-width:700px){.hero{aspect-ratio:4/5;max-height:none}}
+.hero video,.hero img,.hero .plassholder{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero .plassholder{display:grid;place-items:center;text-align:center;padding:24px 24px 34%;
+ color:var(--dempet);font-family:ui-monospace,Menlo,monospace;font-size:.82rem;line-height:1.6;
+ background:radial-gradient(ellipse 58% 46% at 50% 42%,#12643E 0%,#0C4A2E 48%,#07110C 100%)}
+.hero .plassholder b{display:block;color:var(--elfenben);font-weight:500;margin-bottom:6px;max-width:44ch;margin-left:auto;margin-right:auto}
+.hero .plassholder span{display:block;max-width:38ch;margin:0 auto}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+ background:linear-gradient(to top,rgba(12,14,13,.94) 0%,rgba(12,14,13,.6) 38%,rgba(12,14,13,.1) 100%)}
+.hero .ord{position:absolute;left:0;right:0;bottom:0;padding:clamp(22px,5vw,56px);z-index:2}
+.hero .topp{position:absolute;top:0;left:0;right:0;z-index:2;display:flex;justify-content:flex-end;padding:clamp(14px,2.5vw,22px)}
+.hero .topp a{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:99px;
+ background:rgba(12,14,13,.55);border:1px solid var(--kant);color:var(--elfenben);text-decoration:none;
+ font-size:.9rem;font-weight:600;backdrop-filter:blur(6px)}
+.hero .topp a:hover{border-color:var(--filt-lys);color:var(--filt-lys)}
+.hero h1{max-width:18ch}
+.heroflate{padding-top:36px}
+
+/* ═══ v2: kulestripa ═══ */
+.stripe{position:sticky;top:0;z-index:20;height:4px;background:var(--flate);margin-top:14px}
+.stripe i{display:block;height:100%;width:100%;transform-origin:left center;transform:scaleX(var(--p,0));
+ background:linear-gradient(90deg,#C8322B 0 14.28%,#E8C33D 0 28.57%,#157F4C 0 42.85%,
+ #8A5A32 0 57.14%,#2E77C4 0 71.42%,#E58BA6 0 85.71%,#3A4640 0 100%)}
+@media(prefers-reduced-motion:reduce){.stripe i{transform:none}}
+
+/* ═══ v2: bilde per klubb ═══ */
+.klubb .bilde{aspect-ratio:16/10;border-radius:11px;border:1px solid var(--filt);overflow:hidden;
+ display:grid;place-items:center;margin-bottom:16px;
+ background:radial-gradient(ellipse 72% 62% at 50% 46%,#0F3D27 0%,#0A1C13 68%,#07110C 100%)}
+.klubb .bilde img{width:100%;height:100%;object-fit:cover;display:block}
+.klubb .bilde span{color:var(--filt-lys);font-weight:650;letter-spacing:-.01em;font-size:1.05rem;text-align:center;padding:12px}
+
+/* ═══ v2: telleren ═══ */
+.teller .setning{color:var(--elfenben);font-size:1.02rem;display:block;margin-bottom:4px}
+.teller .setning b{font-size:1.35em;color:var(--filt-lys);font-weight:700;letter-spacing:-.02em;
+ display:inline-block;min-width:1.4ch;text-align:right;line-height:1}
+.teller .eks{font-style:normal;color:var(--svak);font-size:.72rem;border:1px solid var(--kant);
+ border-radius:99px;padding:1px 7px;margin-left:6px;white-space:nowrap}
+.klubb [data-meld][hidden]{display:none}
+
+/* ═══ v2: sitat ═══ */
+.sitatboks{display:grid;grid-template-columns:minmax(180px,260px) 1fr;gap:36px;align-items:center;
+ background:var(--flate);border:1px solid var(--kant);border-radius:16px;padding:32px}
+@media(max-width:700px){.sitatboks{grid-template-columns:1fr;gap:22px}}
+.portrett{aspect-ratio:4/5;border-radius:12px;border:1px solid var(--filt);display:grid;place-items:center;
+ text-align:center;padding:16px;color:var(--dempet);font-family:ui-monospace,Menlo,monospace;font-size:.78rem;line-height:1.6;
+ background:radial-gradient(ellipse 70% 60% at 50% 40%,#0F3D27 0%,#0A1C13 70%,#07110C 100%)}
+.sitat{font-size:clamp(1.3rem,2.6vw,1.8rem);font-weight:500;letter-spacing:-.02em;line-height:1.3;color:var(--lampe);margin:10px 0 14px}
+.sitatkilde{color:var(--dempet);font-size:.9rem;max-width:52ch}
+
+/* ═══ v2: spillelista ═══ */
+.ramme{aspect-ratio:16/9;background:var(--flate);border:1px solid var(--kant);border-radius:16px;overflow:hidden;
+ display:grid;place-items:center;text-align:center;padding:24px}
+.ramme iframe{width:100%;height:100%;border:0;display:block}
+.ramme b{display:block;color:var(--elfenben);font-weight:500;margin-bottom:6px}
+.ramme span{display:block;max-width:44ch;color:var(--dempet);font-family:ui-monospace,Menlo,monospace;font-size:.82rem;line-height:1.6}
+.klipp{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:14px}
+.klipp-kort{background:var(--flate);border:1px solid var(--kant);border-radius:12px;padding:16px 18px}
+.klipp-kort small{display:block;color:var(--svak);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.klipp-kort b{color:var(--elfenben);font-weight:500;font-size:.95rem;line-height:1.4}
+.kilde{color:var(--svak);font-size:.82rem;margin-top:16px}
+</style>
+
+</head>
+<body>
+
+<div id="forhand">Forhåndsvisning — klubbtallene er ekte, ventelistetallene er eksempler, fire av sju klubber mangler åpningstider, og påmeldingen er ikke koblet til noe ennå.</div>
+
+<header>
+ <div class="wrap">
+  <div class="hero" id="hero">
+   <div class="plassholder" id="plassholder"><div>
+    <b>Video: rød ball mot hull, filmes på klubbens bord</b>
+    <span>5–8 sekunder, uten lyd, i sløyfe. 16:9 på skjerm, beskåret til 4:5 på mobil. Stillbilde som fallback ved datasparing.</span>
+   </div></div>
+   <nav class="topp" aria-label="For klubber"><a href="#klubbdrift">For klubber</a></nav>
+   <div class="ord"><h1>Hvor kan du spille <em>snooker</em> i Norge?</h1></div>
+  </div>
+ </div>
+</header>
+<div class="stripe" aria-hidden="true"><i></i></div>
+<div class="wrap heroflate">
+  <div class="heroord">
+   <p class="under">Rundt 50 steder i Norge har snookerbord. Her er hvor de står, og
+   hva vi vet om når det er åpent. Flere av klubbene slipper inn folk som ikke er
+   medlemmer — vi holder på å bekrefte hvilke.</p>
+  </div>
+  <aside class="rekrutt">
+   <div class="merk">Snookerskolen</div>
+   <h2>Åtte kvelder.<br>Gratis. Utstyret låner du.</h2>
+   <p>Et nybegynnerkurs som starter på null. Klubben setter opp en pulje når nok
+   folk i byen har meldt interesse — derfor spør vi om e-posten din før vi har
+   en dato.</p>
+   <a class="knapp" href="#klubber">Meld deg på — der du bor</a>
+   <a class="knapp sek" href="#hva">Jeg har aldri spilt — hva er snooker?</a>
+   <div class="rtall" id="rtall"></div>
+  </aside>
+</div>
+
+<div class="wrap">
+ <div class="sok">
+  <label for="q" class="sr">Søk etter sted</label>
+  <input type="search" id="q" placeholder="Skriv byen din — Bergen, Trondheim, Stord …" autocomplete="off">
+  <span id="q-svar"></span>
+ </div>
+ <div class="modus" role="group" aria-label="Visningsmodus">
+  <button id="m-spille" aria-pressed="true">Jeg vil spille</button>
+  <button id="m-alle" aria-pressed="false">Alle bord</button>
+ </div>
+
+ <div class="kartboks">
+  <div class="kartflate">
+   <svg id="svg" viewBox="0 0 600 700" aria-label="Kart over snookerbord i Norge">
+    <defs>
+     <radialGradient id="lampe-pol" cx="50%" cy="38%" r="62%">
+      <stop offset="0%" stop-color="#E07A4D" stop-opacity=".30"></stop>
+      <stop offset="45%" stop-color="#E07A4D" stop-opacity=".11"></stop>
+      <stop offset="100%" stop-color="#E07A4D" stop-opacity="0"></stop>
+     </radialGradient>
+     <radialGradient id="filt" cx="50%" cy="34%" r="78%">
+      <stop offset="0%" stop-color="#12643E"></stop>
+      <stop offset="55%" stop-color="#0C4A2E"></stop>
+      <stop offset="100%" stop-color="#05271A"></stop>
+     </radialGradient>
+     <radialGradient id="vignett-g" cx="50%" cy="42%" r="72%">
+      <stop offset="55%" stop-color="#0C0E0D" stop-opacity="0"></stop>
+      <stop offset="100%" stop-color="#0C0E0D" stop-opacity=".72"></stop>
+     </radialGradient>
+     <radialGradient id="skygge-g" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#04120B" stop-opacity=".55"></stop>
+      <stop offset="100%" stop-color="#04120B" stop-opacity="0"></stop>
+     </radialGradient>
+     <radialGradient id="b1" cx="34%" cy="30%" r="72%">
+      <stop offset="0%" stop-color="#F0857F"></stop><stop offset="42%" stop-color="#C8322B"></stop>
+      <stop offset="100%" stop-color="#78120E"></stop>
+     </radialGradient>
+     <radialGradient id="b2" cx="34%" cy="30%" r="72%">
+      <stop offset="0%" stop-color="#F7E7A8"></stop><stop offset="42%" stop-color="#E8C33D"></stop>
+      <stop offset="100%" stop-color="#9A7B15"></stop>
+     </radialGradient>
+     <radialGradient id="b3" cx="34%" cy="30%" r="72%">
+      <stop offset="0%" stop-color="#5FC492"></stop><stop offset="42%" stop-color="#157F4C"></stop>
+      <stop offset="100%" stop-color="#0A4229"></stop>
+     </radialGradient>
+     <radialGradient id="b4" cx="34%" cy="30%" r="72%">
+      <stop offset="0%" stop-color="#C99A6E"></stop><stop offset="42%" stop-color="#8A5A32"></stop>
+      <stop offset="100%" stop-color="#4C2F16"></stop>
+     </radialGradient>
+     <radialGradient id="b5" cx="34%" cy="30%" r="72%">
+      <stop offset="0%" stop-color="#8FBEF0"></stop><stop offset="42%" stop-color="#2E77C4"></stop>
+      <stop offset="100%" stop-color="#16467C"></stop>
+     </radialGradient>
+     <radialGradient id="b6" cx="34%" cy="30%" r="72%">
+      <stop offset="0%" stop-color="#F7C7D5"></stop><stop offset="42%" stop-color="#E58BA6"></stop>
+      <stop offset="100%" stop-color="#9C4E68"></stop>
+     </radialGradient>
+     <clipPath id="klipp-land"><path id="coast-klipp"></path></clipPath>
+    </defs>
+    <rect id="lyspol" x="0" y="0" width="600" height="700" fill="url(#lampe-pol)"></rect>
+    <g id="cam">
+     <g id="dybde"></g>
+     <path id="coast"></path>
+     <g id="gridlines" clip-path="url(#klipp-land)"></g>
+     <g id="dots"></g>
+    </g>
+    <rect id="vignett" x="0" y="0" width="600" height="700" fill="url(#vignett-g)"></rect>
+   </svg>
+   <div class="zoom"><button id="zin" aria-label="Zoom inn">+</button>
+    <button id="zout" aria-label="Zoom ut">−</button>
+    <button id="zres" aria-label="Tilbakestill" style="font-size:.7rem">alt</button></div>
+   <div id="tip"></div>
+   <div class="tegnforkl">
+    <span><b style="background:#C8322B"></b>1</span>
+    <span><b style="background:#E8C33D"></b>2</span>
+    <span><b style="background:#157F4C"></b>3</span>
+    <span><b style="background:#8A5A32"></b>4</span>
+    <span><b style="background:#2E77C4"></b>5</span>
+    <span><b style="background:#E58BA6"></b>6+</span>
+    <span style="color:#6B746E">bord — som verdien på ballen</span>
+    <span style="color:#6B746E">Nedtonet = privat bord</span>
+   </div>
+  </div>
+  <div class="liste" id="list"></div>
+ </div>
+ <p style="font-size:.78rem;color:#6B746E;margin-top:12px;max-width:70ch">
+  Grunnlag: bordregisteret på <a href="https://snooker.ardalen.com">snooker.ardalen.com</a>,
+  vedlikeholdt av Hermund Årdalen. Deler er utdatert — Os er bekreftet endret fra 8 til 4 bord.
+  Posisjonene er omtrentlige.</p>
+ <p class="rettmeg">Mangler et bord på kartet, eller har det flyttet?
+  <a href="mailto:rogerstrand147@gmail.com?subject=Retting%20til%20snookerkartet&amp;body=Sted%3A%20%0ABy%3A%20%0AAntall%20bord%3A%20%0AHva%20som%20er%20feil%3A%20%0A">
+   Send oss en linje</a> — sted, by og hva som er feil. Vi retter det og sier fra til
+  bordregisteret.</p>
+</div>
+
+<section id="klubber"><div class="wrap">
+ <div class="merk">Klubbene</div>
+ <h2>Der du kan begynne</h2>
+ <p class="led">Noen av klubbene har drop-in-kvelder der hvem som helst kan komme
+ uten medlemskap og uten påmelding. Utstyr låner du på stedet, og kommer du alene er
+ det som regel noen å spille med.</p>
+ <p class="led liten"><b class="hull">Oransje tekst</b> betyr at opplysningen ikke er
+ bekreftet av klubben selv. Noe av det er hentet fra klubbens egen nettside eller fra
+ offentlige registre og stemmer sannsynligvis — men vi har ikke fått det bekreftet,
+ og da sier vi det. Ring gjerne før du drar.</p>
+ <p class="led liten">Hver klubb bestemmer selv hvor mange som må stå på lista før de
+ setter opp en pulje. Der vi ikke har spurt ennå, viser vi 15 som felles utgangspunkt.</p>
+ <div class="kort-grid" id="klubbkort"></div>
+</div></section>
+
+<section id="maflin"><div class="wrap">
+ <div class="sitatboks">
+  <div class="portrett"><span>Bilde: Kurt Maflin<br>— ikke innhentet</span></div>
+  <div>
+   <div class="merk">Kurt Maflin</div>
+   <blockquote class="sitat">[Sitat fra Kurt Maflin — ikke innhentet]</blockquote>
+   <p class="sitatkilde">Norsk profesjonell spiller. Sitat og bilde settes inn først når Kurt selv har godkjent dem.</p>
+  </div>
+ </div>
+</div></section>
+
+<section id="se"><div class="wrap">
+ <div class="merk">Når det er som best</div>
+ <h2>Se hvordan det ser ut når det er som best</h2>
+ <p class="led">Én spilleliste med offisielle klipp fra World Snooker Tour. Innholdet styres i YouTube, så siden trenger aldri endres.</p>
+ <div id="spilleliste"></div>
+ <p class="kilde">Videoene tilhører World Snooker Tour og vises via YouTube.</p>
+</div></section>
+
+<section id="hva"><div class="wrap">
+ <div class="merk">Hvis du aldri har spilt</div>
+ <h2>Kort om snooker</h2>
+ <p class="led">Du trenger ikke kunne noe for å komme. Men hvis du vil vite hva du
+ går til, er dette hele spillet på ett minutt.</p>
+
+ <div class="info-grid">
+  <div class="info"><h3>Du trenger ingenting</h3>
+   <p>Kø, kuler og kritt finnes på stedet. Kom i det du har på deg.</p></div>
+  <div class="info"><span class="stor">250 kr</span>
+   <p>Per time for bordet i Oslo, delt på dem som spiller. Hver klubb setter sin egen
+   pris — vi henter inn resten nå.</p></div>
+  <div class="info"><span class="stor">12 fot</span>
+   <p>Et snookerbord er nesten dobbelt så stort som et poolbord. Det er en annen sport.</p></div>
+  <div class="info"><h3>Det tar tid — det er poenget</h3>
+   <p>Ingen treffer mye den første kvelden. De som blir hengende, blir det fordi
+   framgangen er målbar.</p></div>
+ </div>
+
+ <div class="regler">
+  <h3>Ballene, og hva de er verdt</h3>
+  <p class="regler-inn">Det er dette som avgjør alt. Fargene på kartet over er de
+  samme — en kule viser hvor mange bord stedet har, i ballens verdi.</p>
+  <div class="ballrad">
+   <span><b style="background:#C8322B"></b>Rød<em>1</em></span>
+   <span><b style="background:#E8C33D"></b>Gul<em>2</em></span>
+   <span><b style="background:#157F4C"></b>Grønn<em>3</em></span>
+   <span><b style="background:#8A5A32"></b>Brun<em>4</em></span>
+   <span><b style="background:#2E77C4"></b>Blå<em>5</em></span>
+   <span><b style="background:#E58BA6"></b>Rosa<em>6</em></span>
+   <span><b style="background:#14100F;border:1px solid #3A4640"></b>Svart<em>7</em></span>
+  </div>
+
+  <h3>Reglene på ett minutt</h3>
+  <ol class="punkt tall">
+   <li>Det ligger <b>femten røde</b> og <b>seks fargede</b> på bordet.</li>
+   <li>Du senker først en <b>rød</b>. Så velger du en <b>farge</b> — hvilken som helst.
+       Fargen settes tilbake på plassen sin.</li>
+   <li>Slik går det videre: rød, farge, rød, farge — så lenge det ligger røde igjen.</li>
+   <li>Når de røde er borte, tas fargene i <b>verdirekkefølge</b>, fra gul til svart.
+       Nå blir de liggende.</li>
+   <li>Flest poeng når bordet er tomt vinner <b>framen</b>. En kamp er best av et
+       oddetall framer.</li>
+  </ol>
+  <p class="regler-inn"><b>147</b> er det høyeste som er mulig i én omgang: alle
+  femten røde med svart etter, og så alle fargene. Det skjer noen ganger i året i
+  verden.</p>
+  <p class="regler-inn">Og <b>«snooker»</b> er også noe du gjør: du legger ballen slik
+  at motstanderen ikke ser en eneste lovlig ball. Da må hun sprette via vantet — og
+  bommer hun, får du poengene. Det er derfor sporten heter det den heter.</p>
+ </div>
+
+ <div class="regler">
+  <h3>Turneringer i Norge</h3>
+  <p class="regler-inn">Klubbene arrangerer turneringer gjennom hele sesongen, og
+  norgesmesterskapet går hvert år. Påmelding og resultater ligger i CueScore, som
+  alle klubbene bruker. Du må være medlem i en klubb og ha løst lisens for å spille
+  — spør klubben, de har gjort det før.</p>
+  <p class="regler-inn">Det er ingen vei utenom å begynne som fersk. Alle som spiller
+  i NM i dag har stått i et klubblokale og bommet på sin første rød.</p>
+ </div>
+
+ <div class="regler">
+  <h3>Vil du se mer?</h3>
+  <div class="lenker">
+   <a href="https://wst.tv" target="_blank" rel="noopener">
+    <b>World Snooker Tour</b><span>Proffsirkuset — kamper, spillere og terminliste</span></a>
+   <a href="https://www.snooker.org" target="_blank" rel="noopener">
+    <b>snooker.org</b><span>Resultatdatabasen for hele sporten, drevet av Hermund Årdalen</span></a>
+   <a href="https://www.biljardforbundet.no" target="_blank" rel="noopener">
+    <b>Norges Biljardforbund</b><span>Lisens, forsikring og nasjonale turneringer</span></a>
+   <a href="https://www.cuescore.com" target="_blank" rel="noopener">
+    <b>CueScore</b><span>Påmelding, resultater og direktesending fra norske turneringer</span></a>
+   <a href="http://snooker.ardalen.com/stuff/snookerbordinorge.html" target="_blank" rel="noopener">
+    <b>Bordregisteret</b><span>Hvor det finnes snookerbord i Norge — grunnlaget for kartet over</span></a>
+   <a href="https://www.norsk-tipping.no/grasrotandelen" target="_blank" rel="noopener">
+    <b>Grasrotandelen</b><span>Gir klubben din 7 % av det du uansett spiller for, uten at det koster deg noe</span></a>
+  </div>
+  <p class="regler-inn liten">Grasrotandelen er Norsk Tippings ordning. Vi lenker
+  bare — vi betaler ikke for å promotere den, og det er heller ikke lov.</p>
+ </div>
+</div></section>
+
+<section id="bord"><div class="wrap">
+ <div class="varsel">
+  <div class="merk">Bord og utstyr</div>
+  <h2>Skal dere kvitte dere med et snookerbord?</h2>
+  <p class="led">Si fra til oss først. Et bord som forsvinner ut av miljøet kommer
+  sjelden tilbake — og som regel finnes det en klubb et annet sted i landet som
+  gjerne skulle hatt det. Vi kjøper ingenting og tar ingen provisjon. Vi vet bare
+  hvem som leter.</p>
+  <a class="epost" href="mailto:rogerstrand147@gmail.com">rogerstrand147@gmail.com</a>
+  <p style="color:var(--svak);font-size:.83rem;margin-top:8px">Adressen
+  <code>bord@spillsnooker.no</code> settes opp når domenet er registrert. Inntil da
+  går det til Roger direkte.</p>
+  <p style="color:var(--dempet);font-size:.9rem">Skriv kort hva slags bord det er,
+  hvor det står, og når det haster. Vi svarer om vi kjenner noen som er interessert —
+  og om vi ikke gjør det, sier vi det.</p>
+  <ul class="punkt">
+   <li>Snookerbord, 10 og 12 fot</li>
+   <li>Duk, kuler, køer og annet utstyr</li>
+   <li>Bord som står nedpakket og ikke er i bruk</li>
+  </ul>
+  <p style="color:var(--svak);font-size:.83rem;margin-top:16px">
+   De fleste bord i Norge omsettes gjennom Facebook-gruppa «Snooker i Norge» og på Finn.no.
+   Er du på jakt, er det der du skal se.</p>
+ </div>
+</div></section>
+
+<section id="klubbdrift"><div class="wrap">
+ <div class="merk">For klubbene</div>
+ <h2>Verktøykassen for norske snookerklubber</h2>
+ <p class="led">Fem dokumenter, fritt tilgjengelig for alle klubber i Norge — også
+ de som ikke driver med snooker. Laget fordi de samme spørsmålene stilles i hver
+ klubb hvert år.</p>
+ <div class="lenker">
+  <a href="Arshjul%20og%20tilskuddskalender.docx" download="">
+   <b>Årshjul og tilskuddskalender</b><span>Hvilken støtte som finnes, og når fristene går ut</span></a>
+  <a href="Soknadspakke.docx" download="">
+   <b>Søknadspakke</b><span>Ferdig utfylte søknader som bare trenger klubbens egne tall</span></a>
+  <a href="Sponsorpakke.docx" download="">
+   <b>Sponsorpakke</b><span>Hva en klubb faktisk kan tilby en lokal bedrift</span></a>
+  <a href="Rekrutteringsopplegg.docx" download="">
+   <b>Rekrutteringsopplegg</b><span>Fem trinn fra «fant fram» til «ble værende»</span></a>
+  <a href="brosjyre-klubbrating.html" target="_blank" rel="noopener">
+   <b>Klubbrating og handicap</b><span>Så en fersk og en erfaren kan ha en jevn kamp</span></a>
+ </div>
+</div></section>
+
+<footer><div class="wrap">
+ <div>Snooker i Norge — et felles opplegg for de sju snookerklubbene i landet.</div>
+ <p class="disclaimer">Nettstedet lages og driftes foreløpig av Roger André Strand,
+ som ikke har verv i noen klubb eller i forbundet. Målet er at klubbene skal
+ overta det. Innholdet er samlet fra klubbene selv, fra offentlige registre og fra
+ bordregisteret på snooker.ardalen.com.</p>
+ <p class="disclaimer">Klubbene er medlemsklubber i
+ <a href="https://www.biljardforbundet.no">Norges Biljardforbund</a>, som organiserer
+ lisens, forsikring og nasjonale turneringer. <strong>Denne siden er ikke et offisielt
+ NBF-nettsted</strong> og drives ikke av forbundet.
+ Turneringer og resultater ligger på <a href="https://cuescore.com">CueScore</a>.</p>
+</div></footer>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   1. INNSTILLINGER
+   ══════════════════════════════════════════════════════════════════ */
+const FORHANDSVIS = true;          // false når SKJEMA_ENDEPUNKT er satt og alle sju klubber er bekreftet
+const SKJEMA_ENDEPUNKT = "";       // URL til e-postlista. Tom = knappen viser bare kvittering
+const TERSKEL = 15;                // felles utgangspunkt til klubben sier sitt
+const VIDEO_URL = "";              // mp4/webm, 5–8 s, uten lyd. Tom = plassholderen står
+const VIDEO_STILL = "";            // stillbilde (jpg). Vises ved datasparing og redusert bevegelse
+const SPILLELISTE = "";            // YouTube-spilleliste-ID (PL…). Innholdet styres i YouTube, aldri her
+const EKSEMPELTALL = true;         // ventelistetallene er eksempler til skjemaet er koblet
+const REDUSERT = matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* Hver klubb kan overstyre med terskel: <tall>. Ingen av de sju har svart ennå,
+   så alle bruker fellestallet — og det står på siden at det er slik. */
+const terskelFor = k => k.terskel || TERSKEL;
+
+/* ══════════════════════════════════════════════════════════════════
+   2. KLUBBDATA  — én rad per klubb, hentes fra regnearket
+      bekreftet: true  → vises som klubbkort og i «Jeg vil spille»
+      bekreftet: false → bordene vises på kartet, men ingen klubbkort
+   ══════════════════════════════════════════════════════════════════ */
+const KLUBBER = [
+ /* Bekreftet av klubben selv. null = ikke innhentet ennå og vises som åpent hull. */
+ {navn:"Oslo Snooker & Carambole", sted:"Oslo", bekreftet:true,
+  adresse:"Ensjøveien 16, 0655 Oslo — det står 16-18 på inngangsdøra. Nær Ensjø T-bane",
+  dropin:"Torsdag 17–22 og søndag 12–22. Bordet bookes på forhånd", pris:"250 kr/t for bordet — 125 kr/t hvis du spiller med et medlem", bord:8,
+  bordnote:"pluss 4 carambolebord", kontakt:"info@oslosnooker.no",
+  apen:true, kurs:null, venteliste:7, bilde:null},
+
+ {navn:"Stord Snooker", sted:"Stord", bekreftet:true,
+  adresse:"Podlen 4, 5410 Sagvåg — Stord",
+  dropin:null, dropinhint:"Klubben har «pay and play», og kjørte gratis åpen trening hver torsdag våren 2025. Tider for i høst ikke bekreftet",
+  pris:null, bord:8, bordnote:"pluss 2 poolbord",
+  kontakt:"stordsnooker@gmail.com", kurs:null, venteliste:3, bilde:null},
+
+ {navn:"Helgeland Snooker", sted:"Mo i Rana", bekreftet:true,
+  adresse:"Strandgata 25 B, 8622 Mo i Rana",
+  dropin:null, dropinhint:"Nettsiden oppgir åpent man–fre 17–22 og lør–søn 12–20. Om det gjelder ikke-medlemmer er ikke bekreftet",
+  pris:null, bord:4, kontakt:"johnnyjenssen@yahoo.com",
+  pilot:true, kurs:null, venteliste:4, bilde:null},
+
+ /* Ikke bekreftet — bordene vises på kartet, men klubben får ikke kort ennå. */
+ {navn:"Trondheim Snooker", sted:"Trondheim", bekreftet:true,
+  adresse:"Brøsetvegen 168, kjelleren — Moholt, Trondheim",
+  dropin:"Pay & play når det er vakt i lokalet. Avtal på forhånd. Prøvetime kan bestilles",
+  pris:"150 kr for de to første timene per person, 300 kr over to timer", bord:6,
+  bordnote:"pluss 2 poolbord", kontakt:"post@trondheimsnooker.org · 450 76 710",
+  apen:true, kurs:null, venteliste:11, bilde:null},
+ {navn:"Os Biljard og Snookerklubb", sted:"Bjørnafjorden", bekreftet:false, bord:4, kurs:null, venteliste:0, bilde:null},
+ {navn:"Sarpsborg Snookerklubb", sted:"Sarpsborg", bekreftet:true,
+  adresse:"Ved Hafslund, Sarpsborg — 250 m² lokale",
+  dropin:"Pay & play etter avtale — bestill time på e-post",
+  pris:"100 kr/t for voksen, 50 kr/t for ungdom", bord:4,
+  bordnote:"pluss 2 biljardbord", kontakt:"post@sarpsborgsnooker.com",
+  apen:true, kurs:null, venteliste:2, bilde:null},
+ {navn:"Ishavsbyen Biljard og Snookerklubb", sted:"Tromsø", bekreftet:true,
+  adresse:"Lars Eriksens vei 3c, Tromsø",
+  dropin:null, dropinhint:"Klubben oppgir åpent mandag–fredag 18–21. Om det gjelder ikke-medlemmer er ikke bekreftet",
+  pris:null, bord:null,
+  kontakt:"Leder 416 52 690 · kasserer 924 33 552",
+  kurs:null, venteliste:0, bilde:null}
+];
+
+/* ══════════════════════════════════════════════════════════════════
+   3. BORDREGISTERET — grunnlag: snooker.ardalen.com
+   ══════════════════════════════════════════════════════════════════ */
+const STEDER=[
+ {n:"Oslo Snooker",s:"Oslo",f:"Oslo",b:8,k:"klubb",lat:59.913,lng:10.752},
+ {n:"Stord Snooker",s:"Stord",f:"Vestland",b:8,k:"klubb",lat:59.781,lng:5.500},
+ {n:"Trondheim Snooker",s:"Trondheim",f:"Trøndelag",b:6,k:"klubb",lat:63.430,lng:10.395},
+ {n:"Os Biljard & Snookerklubb",s:"Os, Bjørnafjorden",f:"Vestland",b:4,k:"klubb",lat:60.185,lng:5.470,note:"Tre kilder spriker: registeret sier 8, CueScore sier 6, vi har notert 4. Må avklares med klubben."},
+ {n:"Helgeland Snooker",s:"Mo i Rana",f:"Nordland",b:4,k:"klubb",lat:66.313,lng:14.142},
+ {n:"Sarpsborg Snookerklubb",s:"Sarpsborg",f:"Østfold",b:4,k:"klubb",lat:59.283,lng:11.110,note:"Bekreftet 4 snookerbord og 2 biljardbord via klubbens egen nettside."},
+ {n:"Ishavsbyen Biljard & Snooker",s:"Tromsø",f:"Troms",b:2,k:"klubb",lat:69.649,lng:18.956,note:"Fikk 340 500 i lån fra NBF til bordkjøp — kan ha flere nå."},
+ {n:"Grenland Biljardsenter",s:"Porsgrunn",f:"Telemark",b:1,k:"klubb",lat:59.141,lng:9.656},
+ {n:"Arctic Biljardklubb",s:"Bodø",f:"Nordland",b:1,k:"klubb",lat:67.280,lng:14.405,note:"Usikker — finnes denne ennå?"},
+ {n:"Bjerke Biljardpark",s:"Oslo",f:"Oslo",b:1,k:"klubb",lat:59.941,lng:10.831},
+ {n:"Hyllestad Biljardklubb",s:"Hyllestad",f:"Vestland",b:1,k:"klubb",lat:61.163,lng:5.302},
+ {n:"Molde Biljardklubb",s:"Molde",f:"Møre og Romsdal",b:1,k:"klubb",lat:62.737,lng:7.161},
+ {n:"Trondheim Biljardklubb",s:"Nardo, Trondheim",f:"Trøndelag",b:1,k:"klubb",lat:63.403,lng:10.412},
+ {n:"Vestby Biljardklubb",s:"Vestby",f:"Akershus",b:1,k:"klubb",lat:59.612,lng:10.750},
+ {n:"Ølen IL Biljard & Snooker",s:"Ølen",f:"Rogaland",b:1,k:"klubb",lat:59.604,lng:5.803,note:"Registeret oppgir 1 bord. Stord opplyser at Bømlo-bordet er solgt hit — uavklart om det er ett eller to."},
+ {n:"Dora 1 Bowling & Biljard",s:"Trondheim",f:"Trøndelag",b:4,k:"bedrift",lat:63.441,lng:10.424},
+ {n:"Horten Biljardsenter",s:"Horten",f:"Vestfold",b:3,k:"bedrift",lat:59.417,lng:10.485},
+ {n:"Down Town Bowling",s:"Porsgrunn",f:"Telemark",b:2,k:"bedrift",lat:59.138,lng:9.659},
+ {n:"Alta BowlingSenter",s:"Alta",f:"Finnmark",b:1,k:"bedrift",lat:69.968,lng:23.271},
+ {n:"Bowling 1",s:"Røros",f:"Trøndelag",b:1,k:"bedrift",lat:62.575,lng:11.384},
+ {n:"Eat & Play",s:"Tønsberg",f:"Vestfold",b:1,k:"bedrift",lat:59.267,lng:10.408},
+ {n:"General Hotell",s:"Hønefoss",f:"Buskerud",b:1,k:"bedrift",lat:60.168,lng:10.257,note:"10 fot"},
+ {n:"Hotel Alexandra",s:"Loen",f:"Vestland",b:1,k:"bedrift",lat:61.871,lng:6.851},
+ {n:"Inside Rock Café",s:"Stavanger",f:"Rogaland",b:1,k:"bedrift",lat:58.970,lng:5.733},
+ {n:"Kong Oscar",s:"Bergen",f:"Vestland",b:1,k:"bedrift",lat:60.393,lng:5.328},
+ {n:"Spillehall Tau",s:"Tau",f:"Rogaland",b:1,k:"bedrift",lat:59.066,lng:5.929},
+ {n:"Risøbank",s:"Mandal",f:"Agder",b:1,k:"bedrift",lat:58.028,lng:7.458},
+ {n:"Royal Bowling",s:"Bodø",f:"Nordland",b:1,k:"bedrift",lat:67.283,lng:14.375},
+ {n:"Sheiken Bowling og Biljard",s:"Haugesund",f:"Rogaland",b:1,k:"bedrift",lat:59.413,lng:5.268},
+ {n:"Tromsø Bowling & Biljard",s:"Tromsø",f:"Troms",b:1,k:"bedrift",lat:69.653,lng:18.960,note:"Nettsiden oppgir 10 biljard- og snookerbord til sammen. Hvor mange som er snooker er ikke avklart — registertallet 1 er trolig for lavt."},
+ {n:"Hånes senter",s:"Kristiansand",f:"Agder",b:1,k:"bedrift",lat:58.162,lng:8.089},
+ {n:"Privat bord",s:"Sandefjord",f:"Vestfold",b:1,k:"privat",lat:59.130,lng:10.225,note:"Privat klubb, månedsavgift."},
+ {n:"Kapp Snooker",s:"Kapp",f:"Innlandet",b:1,k:"privat",lat:60.708,lng:10.860,note:"Privat salong."},
+ {n:"Privat bord",s:"Austvatn",f:"Innlandet",b:1,k:"privat",lat:60.500,lng:11.550},
+ {n:"Lødingen Snookerklubb",s:"Lødingen",f:"Nordland",b:2,k:"privat",lat:68.408,lng:15.993,note:"1 lagret."},
+ {n:"Privat bord",s:"Halsa",f:"Nordland",b:1,k:"privat",lat:66.500,lng:13.200,note:"Riley Aristocrat 1982. Alle velkommen."},
+ {n:"Privat bord",s:"Grimstad",f:"Agder",b:1,k:"privat",lat:58.341,lng:8.593},
+ {n:"Privat bord",s:"Randaberg",f:"Rogaland",b:3,k:"privat",lat:58.995,lng:5.620,note:"Tre bord i området."},
+ {n:"Privat bord",s:"Varhaug, Jæren",f:"Rogaland",b:1,k:"privat",lat:58.613,lng:5.652,note:"Nedpakket."},
+ {n:"Privat bord",s:"Hjelmeland",f:"Rogaland",b:1,k:"privat",lat:59.233,lng:6.191},
+ {n:"IT Fornebu",s:"Bærum",f:"Akershus",b:1,k:"privat",lat:59.893,lng:10.623},
+ {n:"Privat bord",s:"Kristiansand",f:"Agder",b:1,k:"privat",lat:58.146,lng:7.995,note:"10 fot"},
+ {n:"Privat bord",s:"Stord",f:"Vestland",b:1,k:"privat",lat:59.760,lng:5.530,note:"10 fot"},
+ {n:"Privat bord",s:"Ytterøy",f:"Trøndelag",b:1,k:"privat",lat:63.790,lng:11.130},
+ {n:"Einan Snooker",s:"Snillfjord",f:"Trøndelag",b:1,k:"privat",lat:63.420,lng:9.400},
+ {n:"Privat bord",s:"Verdal",f:"Trøndelag",b:1,k:"privat",lat:63.790,lng:11.480},
+ {n:"Privat bord",s:"Malvik",f:"Trøndelag",b:1,k:"privat",lat:63.425,lng:10.680,note:"8 fot"},
+ {n:"Privat bord",s:"Ørsta",f:"Møre og Romsdal",b:1,k:"privat",lat:62.199,lng:6.135},
+ {n:"Privat bord",s:"Sem, Tønsberg",f:"Vestfold",b:1,k:"privat",lat:59.280,lng:10.350},
+ {n:"Privat bord",s:"Trondheim",f:"Trøndelag",b:1,k:"privat",lat:63.450,lng:10.360},
+ {n:"Privat bord",s:"Tveit",f:"Agder",b:1,k:"privat",lat:58.200,lng:8.100}
+];
+
+/* ══════════════════════════════════════════════════════════════════
+   4. KART
+   ══════════════════════════════════════════════════════════════════ */
+const LAT0=57.6,LAT1=71.4,LNG0=4.0,LNG1=31.5,W=600,H=700,PAD=22;
+const kx=Math.cos((LAT0+LAT1)/2*Math.PI/180);
+const spanX=(LNG1-LNG0)*kx,spanY=LAT1-LAT0;
+const sc=Math.min((W-2*PAD)/spanX,(H-2*PAD)/spanY);
+const offX=(W-spanX*sc)/2,offY=(H-spanY*sc)/2;
+const P=(lat,lng)=>[offX+(lng-LNG0)*kx*sc,offY+(LAT1-lat)*sc];
+
+const OMRISS=[[57.98,7.05],[58.14,8.00],[58.30,8.60],[58.60,9.10],[59.05,10.03],[59.27,10.40],
+[59.60,10.55],[59.91,10.75],[59.60,10.95],[59.12,11.39],[59.60,11.80],[60.50,12.50],
+[61.50,12.60],[62.20,12.10],[63.30,12.10],[64.00,12.20],[65.00,14.30],[66.15,15.40],
+[67.20,16.10],[68.00,18.10],[69.06,20.55],[68.70,23.80],[69.05,27.00],[68.60,28.40],
+[69.30,29.30],[69.72,30.05],[70.37,31.10],[70.90,28.20],[71.17,25.78],[70.66,23.68],
+[70.20,21.00],[69.65,18.95],[69.10,15.80],[68.15,13.00],[67.28,14.38],[66.30,13.00],
+[65.47,12.21],[64.86,11.24],[63.70,9.60],[63.11,7.73],[62.47,6.15],[61.60,4.95],
+[60.39,5.20],[59.41,5.20],[58.97,5.60],[58.30,6.20]];
+
+const BANE = OMRISS.map((p,i)=>(i?'L':'M')+P(p[0],p[1]).map(v=>v.toFixed(1)).join(' ')).join(' ')+' Z';
+document.getElementById('coast').setAttribute('d', BANE);
+document.getElementById('coast-klipp').setAttribute('d', BANE);
+
+/* Dybde: kopier av landflaten forskjøvet nedover, mørkere for hvert lag.
+   Gir kanten på duken tykkelse uten 3D-bibliotek og uten å flytte en eneste
+   markør — alt ligger i samme koordinatsystem som før. */
+const DYBDE = 13, LAG = 9;
+document.getElementById('dybde').innerHTML =
+ Array.from({length:LAG},(_,i)=>{
+  const t = (LAG-i)/LAG;                       // 1 nederst → mot 0 øverst
+  const y = (DYBDE*t).toFixed(1);
+  const lys = Math.round(9 + 26*(1-t));        // nederste lag mørkest
+  return `<path class="dybdelag" d="${BANE}" transform="translate(0 ${y})"
+           fill="rgb(${Math.round(lys*0.35)},${lys+14},${Math.round(lys*0.75)})"/>`;
+ }).join('');
+
+let g='';
+for(let la=58;la<=71;la+=2){const a=P(la,LNG0),b=P(la,LNG1);
+ g+=`<line class="grid" x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}"/>`;}
+for(let lo=5;lo<=31;lo+=5){const a=P(LAT0,lo),b=P(LAT1,lo);
+ g+=`<line class="grid" x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}"/>`;}
+document.getElementById('gridlines').innerHTML=g;
+
+/* Fargen er ballens verdi, og verdien er antall bord:
+   1 rød · 2 gul · 3 grønn · 4 brun · 5 blå · 6 og flere rosa.
+   En snookerspiller leser stigen uten forklaring. Kategori vises ikke lenger
+   med farge, men med behandling: private bord er nedtonet, klubber har rand. */
+const BALL = b => b>=6?6:Math.max(1,b);
+const FARGE={1:"#C8322B",2:"#E8C33D",3:"#157F4C",4:"#8A5A32",5:"#2E77C4",6:"#E58BA6"};
+const STILK={1:"#6E1512",2:"#7A6110",3:"#0A4229",4:"#4C2F16",5:"#16467C",6:"#8A4159"};
+const KOALISJON=new Set(["Oslo Snooker","Stord Snooker","Trondheim Snooker",
+ "Os Biljard & Snookerklubb","Helgeland Snooker","Sarpsborg Snookerklubb",
+ "Ishavsbyen Biljard & Snooker"]);
+
+const dots=document.getElementById('dots');
+dots.innerHTML=STEDER.map((p,i)=>{
+ const q=P(p.lat,p.lng), r=3.4+Math.min(p.b,8)*0.85, v=BALL(p.b);
+ const h=Math.max(6, r*1.55);
+ const x=q[0].toFixed(1), y=q[1].toFixed(1), ky=(q[1]-h).toFixed(1);
+ const kl='dot'+(KOALISJON.has(p.n)?' koa':'')+(p.k==='privat'?' privat':'')+(p.k==='klubb'?' klubb':'');
+ return `<g class="${kl}" data-i="${i}" data-k="${p.k}" data-f="${p.f}" tabindex="0" role="button" aria-label="${p.n}, ${p.s}, ${p.b} bord">
+  <ellipse class="skygge" cx="${x}" cy="${y}" rx="${(r*1.9).toFixed(1)}" ry="${(r*0.72).toFixed(1)}" fill="url(#skygge-g)"/>
+  <line class="stilk" x1="${x}" y1="${y}" x2="${x}" y2="${ky}" stroke="${STILK[v]}" stroke-width="${(r*0.28).toFixed(1)}" stroke-opacity=".85"/>
+  <circle class="kule" cx="${x}" cy="${ky}" r="${r.toFixed(1)}" fill="url(#b${v})"/>
+ </g>`;
+}).join('');
+
+const list=document.getElementById('list');
+
+/* Lista er gruppert på fylke. 51 steder i én lang rekke er ikke til å lese —
+   fylket er det folk faktisk leter etter. Klikk på en fylkesrad zoomer til
+   alle bordene i det fylket. */
+function fylkesgrupper(kunKlubb){
+ const g={};
+ STEDER.forEach((p,i)=>{
+  if(kunKlubb && p.k!=='klubb') return;
+  (g[p.f]=g[p.f]||{bord:0,rader:[]});
+  g[p.f].bord+=p.b; g[p.f].rader.push(i);
+ });
+ return Object.entries(g)
+  .map(([f,v])=>({f,bord:v.bord,rader:v.rader.sort((x,y)=>STEDER[y].b-STEDER[x].b||STEDER[x].n.localeCompare(STEDER[y].n,'nb'))}))
+  .sort((x,y)=>y.bord-x.bord||x.f.localeCompare(y.f,'nb'));
+}
+
+function tegnListe(kunKlubb){
+ list.innerHTML=fylkesgrupper(kunKlubb).map(gr=>
+  `<div class="fylke" data-f="${gr.f}" tabindex="0" role="button">
+     <span>${gr.f}</span><span class="fbord">${gr.bord}</span>
+   </div>`+
+  gr.rader.map(i=>{const p=STEDER[i];
+   return `<div class="item" data-i="${i}" data-k="${p.k}" data-f="${p.f}">
+    <div class="bar" style="background:${FARGE[BALL(p.b)]}"></div>
+    <div><h3>${p.n}</h3><p>${p.s}</p></div><div class="cnt">${p.b}</div></div>`;}).join('')
+ ).join('');
+}
+
+function zoomFylke(f){
+ const pk=STEDER.filter(p=>p.f===f).map(p=>P(p.lat,p.lng));
+ if(!pk.length) return;
+ const xs=pk.map(q=>q[0]), ys=pk.map(q=>q[1]);
+ const cx=(Math.min(...xs)+Math.max(...xs))/2, cy=(Math.min(...ys)+Math.max(...ys))/2;
+ const bx=Math.max(40,Math.max(...xs)-Math.min(...xs)), by=Math.max(40,Math.max(...ys)-Math.min(...ys));
+ zoomTil(cx,cy,Math.max(1,Math.min(6,Math.min(W/bx,H/by)*0.55)));
+ document.querySelectorAll('.dot').forEach(d=>{
+  d.classList.toggle('uthevet', d.dataset.f===f);
+  d.classList.toggle('dempet',  d.dataset.f!==f);
+ });
+}
+list.addEventListener('click',e=>{
+ const fy=e.target.closest('.fylke'); if(!fy) return;
+ document.querySelectorAll('.fylke.on').forEach(n=>n.classList.remove('on'));
+ fy.classList.add('on'); zoomFylke(fy.dataset.f);
+});
+document.getElementById('zres').addEventListener('click',()=>{
+ document.querySelectorAll('.dot').forEach(d=>d.classList.remove('uthevet','dempet'));
+ document.querySelectorAll('.fylke.on').forEach(n=>n.classList.remove('on'));
+});
+
+/* Modus: «Jeg vil spille» viser kun klubber, «Alle bord» viser alt */
+let modus='spille';
+function tegnModus(){
+ const kunKlubb = modus==='spille';
+ document.querySelectorAll('.dot').forEach(el=>
+  el.classList.toggle('skjult', kunKlubb && el.dataset.k!=='klubb'));
+ tegnListe(kunKlubb);
+ document.getElementById('m-spille').setAttribute('aria-pressed', kunKlubb);
+ document.getElementById('m-alle').setAttribute('aria-pressed', !kunKlubb);
+}
+document.getElementById('m-spille').onclick=()=>{modus='spille';tegnModus();};
+document.getElementById('m-alle').onclick=()=>{modus='alle';tegnModus();};
+tegnModus();
+
+/* Zoom og panorering */
+const cam=document.getElementById('cam'),svg=document.getElementById('svg');
+let z=1,tx=0,ty=0;
+const apply=()=>cam.setAttribute('transform',`translate(${tx} ${ty}) scale(${z})`);
+const zoomTil=(x,y,n)=>{z=n;tx=W/2-x*z;ty=H/2-y*z;apply();};
+document.getElementById('zin').onclick=()=>zoomTil((W/2-tx)/z,(H/2-ty)/z,Math.min(z*1.6,10));
+document.getElementById('zout').onclick=()=>zoomTil((W/2-tx)/z,(H/2-ty)/z,Math.max(z/1.6,1));
+document.getElementById('zres').onclick=()=>{z=1;tx=0;ty=0;apply();};
+
+let drag=false,px,py;
+svg.addEventListener('pointerdown',e=>{drag=true;px=e.clientX;py=e.clientY;
+ svg.classList.add('drag');svg.setPointerCapture(e.pointerId);});
+svg.addEventListener('pointermove',e=>{if(!drag)return;
+ const r=svg.getBoundingClientRect(),k=W/r.width;
+ tx+=(e.clientX-px)*k;ty+=(e.clientY-py)*k;px=e.clientX;py=e.clientY;apply();});
+svg.addEventListener('pointerup',()=>{drag=false;svg.classList.remove('drag');});
+svg.addEventListener('pointercancel',()=>{drag=false;svg.classList.remove('drag');});
+svg.addEventListener('wheel',e=>{e.preventDefault();
+ const r=svg.getBoundingClientRect(),k=W/r.width;
+ const mx=(e.clientX-r.left)*k,my=(e.clientY-r.top)*k,wx=(mx-tx)/z,wy=(my-ty)/z;
+ z=Math.max(1,Math.min(10,z*(e.deltaY<0?1.15:1/1.15)));
+ tx=mx-wx*z;ty=my-wy*z;apply();},{passive:false});
+
+/* Tooltip */
+const tip=document.getElementById('tip'),flate=document.querySelector('.kartflate');
+function visTip(i,cx,cy){
+ const p=STEDER[i];
+ tip.innerHTML=`<h4>${p.n}</h4><p>${p.s} · ${p.f}<br>${p.b} bord${p.note?'<br>'+p.note:''}</p>`;
+ const r=flate.getBoundingClientRect();
+ tip.style.left=Math.min(cx-r.left+12,r.width-244)+'px';
+ tip.style.top=(cy-r.top+12)+'px';tip.style.opacity=1;
+}
+dots.addEventListener('pointerover',e=>{const d=e.target.closest('.dot');
+ if(d)visTip(+d.dataset.i,e.clientX,e.clientY);});
+dots.addEventListener('pointerout',()=>tip.style.opacity=0);
+list.addEventListener('pointerover',e=>{const it=e.target.closest('.item');
+ if(!it)return;const p=STEDER[+it.dataset.i],q=P(p.lat,p.lng);
+ const r=svg.getBoundingClientRect();
+ visTip(+it.dataset.i,r.left+(q[0]*z+tx)*r.width/W,r.top+(q[1]*z+ty)*r.height/H);});
+list.addEventListener('pointerout',()=>tip.style.opacity=0);
+/* Kartet skal ikke stoppe i en zoom. Treffer stedet en av de sju klubbene,
+   åpnes klubbkortet og siden ruller dit. */
+const TILKLUBB={};
+KLUBBER.forEach((k,i)=>{TILKLUBB[k.sted.split(',')[0].trim().toLowerCase()]=i;});
+
+/* Koordinat per klubb, slått opp i bordregisteret på by. Brukes til den lille
+   posisjonsruta i klubbkortet. */
+const KLUBBPOS={};
+KLUBBER.forEach((k,i)=>{
+ const by=k.sted.split(',')[0].trim().toLowerCase();
+ const tr=STEDER.find(p=>p.s.split(',')[0].trim().toLowerCase()===by);
+ if(tr) KLUBBPOS[i]=[tr.lat,tr.lng];
+});
+function apneKlubbkort(p){
+ const n=TILKLUBB[p.s.split(',')[0].trim().toLowerCase()];
+ if(n===undefined) return false;
+ const kort=document.getElementById('klubb-'+n);
+ if(!kort) return false;
+ document.querySelectorAll('.klubb.peket').forEach(x=>x.classList.remove('peket'));
+ kort.classList.add('peket');
+ window.scrollTo({top:kort.getBoundingClientRect().top+scrollY-(innerHeight-kort.offsetHeight)/2,behavior:'smooth'});
+ setTimeout(()=>kort.classList.remove('peket'),2600);
+ return true;
+}
+function velgSted(i){
+ const p=STEDER[i],q=P(p.lat,p.lng);
+ zoomTil(q[0],q[1],4);
+ apneKlubbkort(p);
+}
+list.addEventListener('click',e=>{const it=e.target.closest('.item');
+ if(it) velgSted(+it.dataset.i);});
+dots.addEventListener('click',e=>{const d=e.target.closest('.dot');
+ if(d) velgSted(+d.dataset.i);});
+dots.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;
+ const d=e.target.closest('.dot'); if(d){e.preventDefault();velgSted(+d.dataset.i);}});
+
+/* Søk: hun i Bergen vil skrive «Bergen», ikke lete på et kart. */
+const q=document.getElementById('q'), qsvar=document.getElementById('q-svar');
+function sok(){
+ const v=q.value.trim().toLowerCase();
+ document.querySelectorAll('.dot').forEach(d=>d.classList.remove('uthevet','dempet'));
+ if(!v){qsvar.textContent='';return;}
+ const treff=[...STEDER.keys()].filter(i=>{const p=STEDER[i];
+  return (p.n+' '+p.s+' '+p.f).toLowerCase().includes(v);});
+ document.querySelectorAll('.dot').forEach(d=>{
+  const inn=treff.includes(+d.dataset.i);
+  d.classList.toggle('uthevet',inn); d.classList.toggle('dempet',!inn);});
+ if(!treff.length){qsvar.textContent='Ingen treff. Prøv fylket i stedet.';return;}
+ qsvar.textContent=treff.length===1?'1 sted':treff.length+' steder';
+ const pk=treff.map(i=>P(STEDER[i].lat,STEDER[i].lng));
+ const xs=pk.map(a=>a[0]),ys=pk.map(a=>a[1]);
+ const cx=(Math.min(...xs)+Math.max(...xs))/2, cy=(Math.min(...ys)+Math.max(...ys))/2;
+ const bx=Math.max(50,Math.max(...xs)-Math.min(...xs)),by=Math.max(50,Math.max(...ys)-Math.min(...ys));
+ zoomTil(cx,cy,Math.max(1,Math.min(6,Math.min(W/bx,H/by)*0.5)));
+}
+q.addEventListener('input',sok);
+q.addEventListener('keydown',e=>{if(e.key!=='Enter')return;
+ e.preventDefault();
+ const v=q.value.trim().toLowerCase();
+ const t=[...STEDER.keys()].find(i=>(STEDER[i].n+' '+STEDER[i].s).toLowerCase().includes(v));
+ if(t!==undefined) velgSted(t);});
+
+
+/* ══════════════════════════════════════════════════════════════════
+   4b. V2 — VIDEO, KULESTRIPE, TELLER, SPILLELISTE
+   ══════════════════════════════════════════════════════════════════ */
+/* Video øverst: bare når fila finnes, og bare når hun ikke sparer data. */
+(()=>{
+ if(!VIDEO_URL && !VIDEO_STILL) return;               // plassholderen står
+ const hero=document.getElementById('hero'), ph=document.getElementById('plassholder');
+ const spar=(navigator.connection&&navigator.connection.saveData)||matchMedia('(prefers-reduced-data: reduce)').matches;
+ let el;
+ if(REDUSERT||spar||!VIDEO_URL){
+  if(!VIDEO_STILL) return;
+  el=document.createElement('img'); el.src=VIDEO_STILL; el.alt='';
+ }else{
+  el=document.createElement('video');
+  el.muted=true; el.loop=true; el.autoplay=true; el.playsInline=true; el.preload='metadata';
+  if(VIDEO_STILL) el.poster=VIDEO_STILL;
+  el.src=VIDEO_URL;
+ }
+ ph.replaceWith(el);
+})();
+
+/* Kulestripa fylles med rullingen og er full når påmeldingen står midt på skjermen. */
+(()=>{
+ const s=document.querySelector('.stripe i'), mal=document.getElementById('klubber');
+ if(REDUSERT){ s.style.setProperty('--p',1); return; }
+ const fyll=()=>{
+  const slutt=mal.getBoundingClientRect().top+scrollY-innerHeight*.5;
+  s.style.setProperty('--p', Math.max(0,Math.min(1,scrollY/Math.max(1,slutt))).toFixed(3));
+ };
+ addEventListener('scroll',fyll,{passive:true}); addEventListener('resize',fyll); fyll();
+})();
+
+/* Telleren teller én gang, når den kommer i synsfeltet. */
+function tellOpp(el){
+ const m=+el.dataset.mal;
+ if(REDUSERT||!m){ el.textContent=m; return; }
+ const t0=performance.now(), d=1000;
+ const steg=n=>{const p=Math.min(1,(n-t0)/d), e=1-Math.pow(1-p,3);
+  el.textContent=Math.round(m*e); if(p<1) requestAnimationFrame(steg);};
+ requestAnimationFrame(steg);
+}
+const io=new IntersectionObserver(es=>es.forEach(x=>{
+ if(x.isIntersecting){ tellOpp(x.target); io.unobserve(x.target); }}),{threshold:.6});
+function observerTellere(){ document.querySelectorAll('.teller b[data-mal]').forEach(b=>io.observe(b)); }
+
+/* Spillelista: én iframe. Uten ID vises en merket ramme. */
+(()=>{
+ const b=document.getElementById('spilleliste');
+ const ramme = SPILLELISTE
+  ? `<iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=${encodeURIComponent(SPILLELISTE)}" title="Spilleliste: snooker når det er som best" loading="lazy" allowfullscreen allow="encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>`
+  : `<div><b>YouTube-spilleliste</b><span>Sett SPILLELISTE til spillelistas ID, så vises den her. Rekkefølge og innhold styres i YouTube.</span></div>`;
+ b.innerHTML=`<div class="ramme">${ramme}</div>
+  <div class="klipp">
+   <div class="klipp-kort"><small>Eksempel · World Snooker Tour</small><b>Ronnie O'Sullivan — 147 på 5 minutter og 8 sekunder (1997)</b></div>
+   <div class="klipp-kort"><small>Eksempel · World Snooker Tour</small><b>Kurt Maflin — Crucible-debut (2020)</b></div>
+  </div>`;
+})();
+
+/* ══════════════════════════════════════════════════════════════════
+   5. KLUBBKORT OG VENTELISTE
+   ══════════════════════════════════════════════════════════════════ */
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* Liten posisjonsrute: hvor i landet klubben ligger, tegnet med samme omriss og
+   samme projeksjon som hovedkartet. Ingen kartfliser, ingen avhengighet.
+   Ved siden av ligger lenka som faktisk får noen til døra. */
+function minikart(i,k){
+ const pos=KLUBBPOS[i];
+ const sok=encodeURIComponent((k.bekreftet&&k.adresse)?k.adresse:(k.navn+', '+k.sted));
+ const url='https://www.google.com/maps/search/?api=1&query='+sok;
+ const nal=pos?(()=>{const q=P(pos[0],pos[1]);
+  return `<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="26" fill="#E07A4D" opacity=".16"/>
+          <circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="11" fill="#E07A4D"
+                  stroke="#F4F1EA" stroke-width="3"/>`;})():'';
+ return `<div class="minikart">
+   <svg viewBox="0 0 600 700" aria-label="Omtrentlig posisjon i Norge" role="img">
+    <path d="${BANE}" fill="#0C4A2E" stroke="#2FA86D" stroke-opacity=".3" stroke-width="2"/>
+    ${nal}
+   </svg>
+   <a class="veien" href="${url}" target="_blank" rel="noopener">
+    Vis veien i Google Maps
+    <span>${k.bekreftet&&k.adresse?'Adressen er bekreftet av klubben':'Søker på klubbens navn — adressen er ikke bekreftet'}</span>
+   </a>
+  </div>`;
+}
+
+/* Én setning, ett tall. Aldri tallet 0 — da heter det «bli den første». */
+function tellerHTML(k){
+ const by=esc(k.sted), t=k.venteliste||0;
+ const eks=EKSEMPELTALL?' <em class="eks">eksempeltall</em>':'';
+ if(t===0) return `<div class="teller tom"><span><b>Bli den første i ${by}.</b> Ved ${terskelFor(k)} påmeldte setter klubben opp en pulje.${eks}</span></div>`;
+ return `<div class="teller"><span class="setning">Det står <b data-mal="${t}">${REDUSERT?t:0}</b> ${t===1?'person':'personer'} i ${by} og venter.</span><span>Ved ${terskelFor(k)} setter klubben opp en pulje.${eks}</span></div>`;
+}
+
+/* Alle sju klubber får kort. «bekreftet» styrer om vi viser fakta eller åpne
+   hull — ikke om byen finnes. Ventelista må virke i alle sju byer, for det er
+   nettopp i byene uten åpningstider at etterspørselen må dokumenteres (Å6). */
+function tegnKlubber(){
+ const boks=document.getElementById('klubbkort');
+ boks.innerHTML=KLUBBER.map((k,i)=>{
+  const by=k.sted;
+  const hull=t=>`<span class="hull">${t}</span>`;
+  let f='';
+  if(k.bekreftet){
+   f+=`<div class="rad"><span>Drop-in</span>${k.dropin?`<span>${esc(k.dropin)}</span>`:hull(esc(k.dropinhint||'Vi henter inn åpningstidene nå'))}</div>`;
+   f+=`<div class="rad"><span>Pris</span>${k.pris?`<span>${esc(k.pris)}</span>`:hull('Vi henter inn prisen nå')}</div>`;
+   f+=k.bord
+     ? `<div class="rad"><span>Bord</span><span>${k.bord} i fullstørrelse${k.bordnote?` <em style="color:var(--svak);font-style:normal">— ${esc(k.bordnote)}</em>`:''}</span></div>`
+     : `<div class="rad"><span>Bord</span>${hull('Vi bekrefter tallet med klubben nå')}</div>`;
+   f+=`<div class="rad"><span>Kontakt</span>${k.kontakt?`<span><a href="mailto:${esc(k.kontakt)}">${esc(k.kontakt)}</a></span>`:hull('Vi henter inn kontaktadressen nå')}</div>`;
+  }else{
+   f+=`<div class="rad"><span>Drop-in</span>${hull('Vi ringer klubben nå')}</div>`;
+   f+=`<div class="rad"><span>Pris</span>${hull('Ikke bekreftet')}</div>`;
+   f+=`<div class="rad"><span>Bord</span>${k.bord?`<span>${k.bord} <em style="color:var(--svak);font-style:normal">— fra registeret, ikke bekreftet</em></span>`:hull('Ikke bekreftet')}</div>`;
+  }
+
+  const teller = k.kurs ? '' : tellerHTML(k);
+
+  return `
+  <div class="klubb" id="klubb-${i}" data-by="${esc(by)}">
+   <div class="bilde">${k.bilde?`<img src="${esc(k.bilde)}" alt="Lokalet hos ${esc(k.navn)}" loading="lazy">`:`<span>${esc(k.navn)}</span>`}</div>
+   <h3>${esc(k.navn)}</h3>
+   <div class="sted">${esc(k.adresse||k.sted)}</div>
+   ${minikart(i,k)}
+   ${k.pilot?`<div class="stempel">Pilotklubb — første Snookerskole høsten 2026</div>`:''}
+   ${k.apen?`<div class="stempel apen">Åpent for deg som ikke er medlem</div>`:''}
+   ${!k.bekreftet?`<div class="stempel vent">Vi snakker med klubben nå</div>`:''}
+   ${f}
+   ${k.kurs
+     ? `<a class="knapp" href="#" data-meld="${i}">Snookerskolen starter ${esc(k.kurs)} — meld deg på</a>`
+     : `${teller}<button class="knapp" data-meld="${i}">Meld deg på</button>`}
+   <form class="skjema" data-skjema="${i}">
+     <input type="email" required placeholder="E-postadresse" aria-label="E-postadresse">
+     <button class="knapp" type="submit">${k.kurs?'Meld meg på':'Sett meg på lista'}</button>
+     <small>Vi bruker adressen kun til å si fra om kurs i ${esc(by)}.
+     Ingen nyhetsbrev, og du kan melde deg av når som helst.</small>
+   </form>
+   <div class="kvittering" data-kvit="${i}"></div>
+   <div class="nbf">Medlemsklubb i
+     <a href="https://www.biljardforbundet.no" target="_blank" rel="noopener">Norges Biljardforbund</a></div>
+  </div>`;}).join('');
+
+ boks.querySelectorAll('[data-meld]').forEach(b=>b.onclick=e=>{
+  e.preventDefault();
+  const f=boks.querySelector(`[data-skjema="${b.dataset.meld}"]`);
+  b.hidden=true; f.classList.add('aap'); f.querySelector('input').focus();
+ });
+
+ boks.querySelectorAll('[data-skjema]').forEach(f=>f.onsubmit=async e=>{
+  e.preventDefault();
+  const i=f.dataset.skjema, k=KLUBBER[i];
+  const epost=f.querySelector('input[type=email]').value;
+  let lagret=false;
+  if(SKJEMA_ENDEPUNKT){
+   try{
+    await fetch(SKJEMA_ENDEPUNKT,{method:'POST',headers:{'Content-Type':'application/json'},
+     body:JSON.stringify({epost,by:k.sted,klubb:k.navn})});
+    lagret=true;
+   }catch(err){ /* stille — brukeren skal ikke straffes for nettfeil */ }
+  }
+  f.classList.remove('aap');
+  if(lagret){                                  // telleren mater seg selv fra skjemaet
+   k.venteliste=(k.venteliste||0)+1;
+   const gt=boks.querySelector('#klubb-'+i+' .teller');
+   if(gt){ gt.outerHTML=tellerHTML(k); const nb=boks.querySelector('#klubb-'+i+' .teller b[data-mal]'); if(nb) nb.textContent=k.venteliste; }
+  }
+  const kv=boks.querySelector(`[data-kvit="${i}"]`);
+  /* Uten endepunkt lagres ingenting. Da skal det stå, ikke skjules bak et banner. */
+  kv.innerHTML = lagret
+   ? (k.kurs
+      ? `Takk — du er påmeldt. ${esc(k.navn)} tar kontakt før ${esc(k.kurs)}.`
+      : `Takk. Du får beskjed så snart ${esc(k.navn)} setter opp neste pulje.`)
+   : `<b>Dette er en forhåndsvisning.</b> Adressen ble ikke lagret noe sted, og du
+      får ingen beskjed. Skjemaet kobles til når nettstedet settes opp for alvor.`;
+  kv.classList.add('vis');
+  if(!lagret) kv.classList.add('advarsel');
+ });
+ observerTellere();
+}
+tegnKlubber();
+
+/* Tallene i hero regnes ut av dataene, så de aldri kan bli utdaterte i teksten. */
+(()=>{
+ const bek=KLUBBER.filter(k=>k.bekreftet);
+ const bord=bek.reduce((n,k)=>n+(k.bord||0),0);
+ document.getElementById('rtall').innerHTML=
+  `${KLUBBER.length} klubber · ${bord} bord bekreftet så langt<br>fra Tromsø til Sarpsborg`;
+})();
+
+if(!FORHANDSVIS) document.getElementById('forhand').style.display='none';
+</script>
+
+
+</body></html>

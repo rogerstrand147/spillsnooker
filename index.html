@@ -274,6 +274,7 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
 .ramme{aspect-ratio:16/9;background:var(--flate);border:1px solid var(--kant);border-radius:16px;overflow:hidden;
  display:grid;place-items:center;text-align:center;padding:24px}
 .ramme iframe{width:100%;height:100%;border:0;display:block}
+.ramme.video{padding:0}
 .ramme b{display:block;color:var(--elfenben);font-weight:500;margin-bottom:6px}
 .ramme span{display:block;max-width:44ch;color:var(--dempet);font-family:ui-monospace,Menlo,monospace;font-size:.82rem;line-height:1.6}
 .klipp{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:14px}
@@ -1023,7 +1024,7 @@ function observerTellere(){ document.querySelectorAll('.teller b[data-mal]').for
  const ramme = SPILLELISTE
   ? `<iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=${encodeURIComponent(SPILLELISTE)}" title="Spilleliste: snooker når det er som best" loading="lazy" allowfullscreen allow="encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>`
   : `<div><b>YouTube-spilleliste</b><span>Sett SPILLELISTE til spillelistas ID, så vises den her. Rekkefølge og innhold styres i YouTube.</span></div>`;
- b.innerHTML=`<div class="ramme">${ramme}</div>`;
+ b.innerHTML=`<div class="ramme${SPILLELISTE?' video':''}">${ramme}</div>`;
 })();
 
 /* ══════════════════════════════════════════════════════════════════

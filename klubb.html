@@ -35,13 +35,15 @@ h2{font-size:1.35rem;letter-spacing:-.02em;margin-bottom:6px}
 .kalk{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:22px;margin-top:22px}
 @media(max-width:760px){.kalk{grid-template-columns:1fr}}
 .panel{background:var(--flate);border:1px solid var(--kant);border-radius:14px;padding:20px}
-.felt{display:grid;grid-template-columns:1fr 112px;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid var(--kant)}
+.felt{display:grid;grid-template-columns:1fr 132px;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid var(--kant)}
+.felt.bred{grid-template-columns:1fr}
+[hidden]{display:none!important}
 .felt:last-of-type{border-bottom:none}
 .felt label{font-size:.92rem}
 .felt label small{display:block;color:var(--svak);font-size:.74rem;line-height:1.4;margin-top:2px}
 .felt input,.felt select{background:var(--hevet);border:1px solid var(--kant);border-radius:9px;
- padding:10px 12px;color:var(--elfenben);font:inherit;font-size:.95rem;width:100%;text-align:right}
-.felt select{text-align:left}
+ padding:10px 12px;color:var(--elfenben);font:inherit;font-size:1.05rem;width:100%;text-align:right;min-height:46px}
+.felt select{text-align:left;font-size:.95rem;text-overflow:ellipsis;margin-top:6px}
 .felt input:focus,.felt select:focus{outline:none;border-color:var(--filt-lys)}
 .felt input.anslag{border-color:rgba(224,122,77,.45)}
 .tag{display:inline-block;font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;padding:2px 7px;border-radius:5px;
@@ -120,7 +122,7 @@ footer p{margin-top:8px;max-width:70ch}
 
  <div class="kalk">
   <form class="panel" id="skjema" autocomplete="off">
-   <div class="felt">
+   <div class="felt bred">
     <label for="klubb">Klubb<small>Forhåndsutfyller bordtall fra klubbregisteret. Egne tall kan skrives over.</small></label>
     <select id="klubb"></select>
    </div>
@@ -180,7 +182,7 @@ footer p{margin-top:8px;max-width:70ch}
 
  <div class="kalk">
   <form class="panel" id="t-skjema" autocomplete="off">
-   <div class="felt">
+   <div class="felt bred">
     <label for="t-ordning">Ordning<small>Minstebeløp og frist fra årshjulet. Sjekk gjeldende utlysning før innsending.</small></label>
     <select id="t-ordning"></select>
    </div>

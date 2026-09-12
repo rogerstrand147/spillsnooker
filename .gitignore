@@ -13,3 +13,10 @@ $RECYCLE.BIN/
 *~
 .vscode/
 .idea/
+
+# Interne prosjektfiler – skal aldri publiseres
+STATUS.*
+ARBEIDSLISTE.*
+INDEKS.*
+FAKTA.*
+norsk-snooker-v*.html

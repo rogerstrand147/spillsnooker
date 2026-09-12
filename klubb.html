@@ -4,8 +4,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <!-- Fjernes samtidig med FORHANDSVIS = false i index.html -->
 <meta name="robots" content="noindex,nofollow">
-<title>For klubbene — rekrutteringskalkulatoren · Snooker i Norge</title>
-<meta name="description" content="Hva blir det egentlig av å kjøre ett kurs? Klubben taster inn sine egne tall og ser medlemstallet om ett, to og tre år — mot det bordene tåler.">
+<title>For klubbene — tre kalkulatorer · Snooker i Norge</title>
+<meta name="description" content="Tre regnestykker for snookerklubber: hva ett kurs gir av medlemmer, hva klubben kan søke om, og hva en sponsorpakke er verdt å be om. Klubbens egne tall, regnet i nettleseren.">
 <style>
 :root{
  --svart:#0C0E0D; --flate:#161B18; --hevet:#1D2320; --kant:#2A322D;
@@ -73,23 +73,49 @@ h2{font-size:1.35rem;letter-spacing:-.02em;margin-bottom:6px}
 .forut ul{margin:8px 0 0 18px}
 .forut li{margin-top:4px}
 .kommer{margin-top:10px;padding:18px 20px;border:1px dashed var(--kant);border-radius:12px;color:var(--svak);font-size:.88rem;max-width:60ch}
+.hopp{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.hopp a{font-size:.82rem;text-decoration:none;color:var(--dempet);border:1px solid var(--kant);border-radius:999px;padding:6px 13px}
+.hopp a:hover{color:var(--filt-lys);border-color:var(--filt)}
+section+section{border-top:1px solid var(--kant)}
+.sum{display:grid;gap:8px;margin-top:8px}
+.sum .r{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--kant);font-size:.92rem}
+.sum .r:last-child{border-bottom:none}
+.sum .r b{font-variant-numeric:tabular-nums}
+.sum .r.tot{font-size:1.05rem}
+.sum .r.tot b{color:var(--filt-lys);font-size:1.5rem}
+.dom{margin-top:14px;padding:14px 16px;border-radius:11px;font-size:.92rem;line-height:1.5}
+.dom.ok{background:rgba(21,127,76,.14);border:1px solid rgba(47,168,109,.34)}
+.dom.nei{background:rgba(224,122,77,.12);border:1px solid rgba(224,122,77,.4)}
+.dom.nei b{color:var(--lampe-lys)}
+.dom.ok b{color:var(--filt-lys)}
+.spenn{display:grid;grid-template-columns:1fr auto;gap:8px 14px;align-items:center;margin-top:8px}
+.spenn .n{font-size:.9rem}
+.spenn .n small{display:block;color:var(--svak);font-size:.74rem}
+.spenn .v{font-size:.95rem;text-align:right;white-space:nowrap}
+.spenn .v.tot{font-size:1.25rem;font-weight:700;color:var(--filt-lys)}
+.spenn .n.tot{font-weight:650;padding-top:8px;border-top:1px solid var(--kant)}
+.spenn .v.tot{padding-top:8px;border-top:1px solid var(--kant)}
 footer{margin-top:20px;padding:34px 0 50px;border-top:1px solid var(--kant);color:var(--svak);font-size:.82rem;line-height:1.6}
 footer p{margin-top:8px;max-width:70ch}
 </style>
 </head><body>
 
-<div id="forhand">Forhåndsvisning — kalkulatoren regner bare i nettleseren din. Ingenting sendes eller lagres. Konverteringsraten er et anslag: Snookerskolen er ikke kjørt ennå.</div>
+<div id="forhand">Forhåndsvisning — kalkulatorene regner bare i nettleseren din. Ingenting sendes eller lagres. Konverteringsraten, budsjettmodellen og dugnadssatsen er anslag som klubben skal bytte ut med egne tall.</div>
 
 <header><div class="wrap">
  <a class="tilbake" href="index.html">← Hvor kan du spille snooker i Norge?</a>
  <div class="merk">For klubbene</div>
  <h1>Hva blir det egentlig av å kjøre <em>ett kurs</em>?</h1>
- <p class="led">Tast inn klubbens egne tall. Kalkulatoren viser medlemstallet om ett, to og
- tre år — og hvor mye av det bordene tåler klubben bruker i dag. Alt kan endres.</p>
+ <p class="led">Tre regnestykker med klubbens egne tall. Rekruttering først — det er
+ det som inspirerer. Deretter hva det er verdt å søke om, og hva en sponsorpakke er
+ verdt å be om. Alt kan endres, ingenting lagres.</p>
+ <nav class="hopp" aria-label="Kalkulatorene">
+  <a href="#rekruttering">1 · Rekruttering</a><a href="#tilskudd">2 · Tilskudd</a><a href="#sponsor">3 · Sponsor</a>
+ </nav>
 </div></header>
 
-<section><div class="wrap">
- <h2>Rekrutteringskalkulatoren</h2>
+<section id="rekruttering"><div class="wrap">
+ <h2>1 · Rekrutteringskalkulatoren</h2>
  <p class="led" style="margin-top:4px;font-size:.95rem">Et bord tåler 15–25 aktive. De fleste klubber bruker en brøkdel av det.</p>
 
  <div class="kalk">
@@ -146,9 +172,113 @@ footer p{margin-top:8px;max-width:70ch}
   </ul>
  </div>
 
- <div class="kommer">Resten av klubbdelen — gjeldende regler, frister og satser, tilskudds- og
- sponsorkalkulatoren — kommer her. Inntil da ligger verktøykassen nederst på
- <a href="index.html#klubbdrift">forsiden</a>.</div>
+</div></section>
+
+<section id="tilskudd"><div class="wrap">
+ <h2>2 · Tilskuddskalkulatoren</h2>
+ <p class="led" style="margin-top:4px;font-size:.95rem">Hva klubben faktisk søker om — og om beløpet holder over ordningens gulv.</p>
+
+ <div class="kalk">
+  <form class="panel" id="t-skjema" autocomplete="off">
+   <div class="felt">
+    <label for="t-ordning">Ordning<small>Minstebeløp og frist fra årshjulet. Sjekk gjeldende utlysning før innsending.</small></label>
+    <select id="t-ordning"></select>
+   </div>
+   <div class="felt">
+    <label for="t-kost">Kostnader per pulje, kr<span class="tag">budsjettmodell</span><small>Instruktørhonorar, utstyr, markedsføring, avslutning. Bytt med klubbens egne priser.</small></label>
+    <input type="number" id="t-kost" min="0" step="100" inputmode="numeric" value="32570" class="anslag">
+   </div>
+   <div class="felt">
+    <label for="t-timer">Dugnadstimer per pulje<small>Instruktører, oppsett, kiosk. Føres som egeninnsats.</small></label>
+    <input type="number" id="t-timer" min="0" step="1" inputmode="numeric" value="40">
+   </div>
+   <div class="felt">
+    <label for="t-sats">Dugnadssats, kr/time<span class="tag">forutsetning</span><small><b>Satsen fastsettes av ordningen, ikke av klubben.</b> 300 er Tromsø kommunes sats — bruk den ordningen oppgir, og forsvar den i søknaden.</small></label>
+    <input type="number" id="t-sats" min="0" step="50" inputmode="numeric" value="300" class="anslag">
+   </div>
+   <div class="felt">
+    <label for="t-annen">Annen finansiering per pulje, kr<small>Deltakeravgift, sponsor, kommunale midler, egne penger. Trekkes fra det du søker om.</small></label>
+    <input type="number" id="t-annen" min="0" step="100" inputmode="numeric" value="0">
+   </div>
+   <div class="felt">
+    <label for="t-puljer">Puljer i søknaden<small>Én pulje kommer ofte under gulvet. To i året, eller et treårig løp, er det som holder.</small></label>
+    <input type="number" id="t-puljer" min="1" max="12" step="1" inputmode="numeric" value="1">
+   </div>
+  </form>
+
+  <div class="panel res" aria-live="polite">
+   <h3>Regnestykket</h3>
+   <div class="sum" id="t-sum"></div>
+   <div class="dom" id="t-dom"></div>
+   <p class="setning" id="t-setning"></p>
+  </div>
+ </div>
+
+ <div class="forut">
+  <b>Forutsetningene, sagt rett ut</b>
+  <ul>
+   <li><b>Omsøkt = kostnader − dugnad ført som egeninnsats − annen finansiering.</b> Det er det omsøkte beløpet som måles mot ordningens minstebeløp, ikke prosjektverdien. Det er her søknader faller under gulvet.</li>
+   <li><b>32 570 kr per pulje</b> er budsjettmodellen fra søknadspakken — et anslag klubben skal bytte ut med egne priser før noe sendes.</li>
+   <li>Dugnad ført som egeninnsats gjør søknaden faglig sterkere (finansiøren vektlegger frivillighet) og beløpet lavere. Løsningen er ikke å kutte dugnaden, men å søke om nok puljer.</li>
+   <li>Minstebeløp og frister er fra årshjulet per september 2026. <b>Frister endres</b> — se utlysningen den dagen du sender.</li>
+   <li>Ingenting sendes eller lagres.</li>
+  </ul>
+ </div>
+</div></section>
+
+<section id="sponsor"><div class="wrap">
+ <h2>3 · Sponsorkalkulatoren</h2>
+ <p class="led" style="margin-top:4px;font-size:.95rem">Hva det er verdt å be om — som et spenn, aldri én fasit. Et presist tall fra en kalkulator blir lest som en fasit i en forhandling.</p>
+
+ <div class="kalk">
+  <form class="panel" id="s-skjema" autocomplete="off">
+   <div class="felt">
+    <label for="s-medl">Medlemmer<small>Sponsorstigen er priset for 30–130 medlemmer. Færre → nedre del av spennet, flere → øvre.</small></label>
+    <input type="number" id="s-medl" min="0" step="1" inputmode="numeric" value="40">
+   </div>
+   <div class="felt">
+    <label for="s-bord">Bord i fullstørrelse<small>Hvert bord er én selgbar enhet som bordpartner.</small></label>
+    <input type="number" id="s-bord" min="0" max="40" step="1" inputmode="numeric" value="4">
+   </div>
+   <div class="felt">
+    <label for="s-bordp">Bordpartnere du vil selge<small>Seks små avtaler er lettere enn én stor. Kan ikke være flere enn bord.</small></label>
+    <input type="number" id="s-bordp" min="0" step="1" inputmode="numeric" value="2">
+   </div>
+   <div class="felt">
+    <label for="s-turn">Turneringer i året med partner<small>Turneringene strømmes allerede — strømmingen koster ingenting ekstra å selge.</small></label>
+    <input type="number" id="s-turn" min="0" step="1" inputmode="numeric" value="1">
+   </div>
+   <div class="felt">
+    <label for="s-kveld">Bedriftskvelder i året<small>To timer, 10–20 deltakere, instruktør. Første gang gratis — den selger sponsingen.</small></label>
+    <input type="number" id="s-kveld" min="0" step="1" inputmode="numeric" value="4">
+   </div>
+   <div class="felt">
+    <label for="s-klubbp">Klubbpartner<small>Logo i lokalet og på drakter, én bedriftskveld. 0 eller 1.</small></label>
+    <input type="number" id="s-klubbp" min="0" max="3" step="1" inputmode="numeric" value="0">
+   </div>
+   <div class="felt">
+    <label for="s-hoved">Hovedpartner<small>Alt over, pluss navngiving av hovedturneringen. Krever at klubben har noe å gi. 0 eller 1.</small></label>
+    <input type="number" id="s-hoved" min="0" max="1" step="1" inputmode="numeric" value="0">
+   </div>
+  </form>
+
+  <div class="panel res" aria-live="polite">
+   <h3>Verdt å be om, per år</h3>
+   <div class="spenn" id="s-spenn"></div>
+   <p class="setning" id="s-setning"></p>
+  </div>
+ </div>
+
+ <div class="forut">
+  <b>Forutsetningene, sagt rett ut</b>
+  <ul>
+   <li>Prisene er sponsorpakkens veiledende spenn: bordpartner 5 000–15 000, klubbpartner 10 000–25 000, turneringspartner 5 000–20 000 per turnering, hovedpartner 25 000–75 000, bedriftskveld 4 000–8 000. <b>Juster etter lokalt næringsliv</b> — en by tåler mer enn et lite sted.</li>
+   <li>Medlemstallet flytter «midtpunktet» i spennet, ikke grensene. Det er en tommelfingerregel, ikke en markedsanalyse.</li>
+   <li>Klubben selger ikke synlighet. Den selger lokal forankring, en ferdig bedriftskveld og et navn på noe som står i årevis. Følgertall og besøk er ikke med i regnestykket med vilje.</li>
+   <li>Byttehandel (trykkeri, regnskap, elektriker) er ikke regnet inn, men teller som egeninnsats i tilskuddssøknader.</li>
+   <li>Ingenting sendes eller lagres.</li>
+  </ul>
+ </div>
 </div></section>
 
 <footer><div class="wrap">
@@ -183,7 +313,46 @@ function regn({bord,aktive,pulje,puljer,andel}){
  const bruktLav=kapHoy?aktive/kapHoy:0, bruktHoy=kapLav?aktive/kapLav:0; // andel av kapasitet, spenn
  return {kapLav,kapHoy,nye,aar,bruktLav,bruktHoy};
 }
-if(typeof module!=='undefined') module.exports={regn,KLUBBER,PER_BORD_LAV,PER_BORD_HOY};
+/* ── Tilskudd ──
+   Minstebeløp/frist fra Arshjul og tilskuddskalender (sept. 2026). null = ingen kjent grense. */
+const ORDNINGER=[
+ {navn:"Gjensidigestiftelsen — høstutlysningen", min:30000, maks:800000, frist:"1. september kl. 16:00. Tiltaket må starte året etter", merk:"Målgruppe til og med 24 år. Samarbeid mellom klubber vektlegges. Utstyr alene får avslag"},
+ {navn:"Sparebankstiftelsen DNB (Oslo, Sarpsborg)", min:null, maks:null, frist:"Inntil 50 000: løpende (ikke 21.11–31.12). Over 50 000: 1. februar og 1. september", merk:"Sluttrapport fra forrige tildeling må være levert før ny søknad"},
+ {navn:"Sparebanken Norge — prosjekt-/ildsjelmidler (Stord, Os)", min:null, maks:null, frist:"Vinduer 20.02–15.04 og 20.08–01.10", merk:"Banken, ikke stiftelsen — stiftelsen deler bare ut i Agder og Telemark"},
+ {navn:"SpareBank 1 SMN / Sparebankstiftelsen SMN (Trondheim)", min:null, maks:null, frist:"Banken løpende (ca. 30 dagers svar), stiftelsen halvårlig", merk:""},
+ {navn:"SpareBank 1 Nord-Norge, Samfunnsløftet (Ishavsbyen)", min:null, maks:null, frist:"Tre utlysninger, frist 1. oktober", merk:"Egne dugnadssatser publisert — bruk dem"},
+ {navn:"SpareBank 1 Helgeland / Sparebankstiftelsen Helgeland", min:null, maks:null, frist:"15.03, 15.05, 15.08 og 15.11", merk:""},
+ {navn:"Bufdir — inkludering av barn og unge", min:null, maks:null, frist:"Utlysning sept./okt., søknadsfrist normalt 31. oktober / 1. november", merk:"Søknaden går via kommunen — snakk med kommunens kontaktperson først. Ordningen legges om fra 2027"},
+ {navn:"NBFs prosjektmidler", min:null, maks:null, frist:"Ukjent — avklares med forbundskontoret. Ikke utlyst i 2025", merk:"Snitt ca. 25 000 per prosjekt i 2023"},
+];
+function regnTilskudd({kost,timer,sats,annen,puljer,ordning}){
+ const dugnad=timer*sats;
+ const verdi=(kost)*puljer;                       // prosjektverdi = kostnader; dugnaden er en del av finansieringen
+ const egen=dugnad*puljer, ann=annen*puljer;
+ const omsokt=Math.max(0, verdi-egen-ann);
+ const o=ORDNINGER[ordning]||{};
+ const underMin = o.min!=null && omsokt<o.min;
+ const overMaks = o.maks!=null && omsokt>o.maks;
+ // hvor mange puljer trengs for å nå minstebeløpet med samme forutsetninger
+ const perPulje=Math.max(0,kost-dugnad-annen);
+ const puljerTilMin = (o.min!=null && perPulje>0) ? Math.ceil(o.min/perPulje) : null;
+ const utenDugnad = Math.max(0, verdi-ann);        // alternativet: instruktørhonorar utbetales, ingen egeninnsats
+ return {dugnad,verdi,egen,ann,omsokt,underMin,overMaks,puljerTilMin,utenDugnad,o};
+}
+
+/* ── Sponsor ── spenn fra Sponsorpakke v1 (juli 2026). */
+const PRIS={bord:[5000,15000],klubb:[10000,25000],turn:[5000,20000],hoved:[25000,75000],kveld:[4000,8000]};
+function regnSponsor({medl,bord,bordp,turn,kveld,klubbp,hoved}){
+ const antBordp=Math.min(bordp,bord);
+ const pos=Math.min(1,Math.max(0,(medl-30)/100));  // 30 medl → 0, 130 → 1
+ const linje=(n,[lav,hoy])=>({lav:n*lav,hoy:n*hoy,midt:Math.round(n*(lav+(hoy-lav)*pos))});
+ const l={
+  bord:linje(antBordp,PRIS.bord), klubb:linje(klubbp,PRIS.klubb), turn:linje(turn,PRIS.turn),
+  hoved:linje(hoved,PRIS.hoved), kveld:linje(kveld,PRIS.kveld)};
+ const tot=Object.values(l).reduce((a,x)=>({lav:a.lav+x.lav,hoy:a.hoy+x.hoy,midt:a.midt+x.midt}),{lav:0,hoy:0,midt:0});
+ return {...l,tot,antBordp,pos};
+}
+if(typeof module!=='undefined') module.exports={regn,KLUBBER,PER_BORD_LAV,PER_BORD_HOY,regnTilskudd,ORDNINGER,regnSponsor,PRIS};
 
 /* DOM */
 if(typeof document!=='undefined'){
@@ -235,6 +404,65 @@ if(typeof document!=='undefined'){
  });
  $('skjema').addEventListener('submit',e=>e.preventDefault());
  tegn();
+
+ /* ── Tilskudd ── */
+ const kr=n=>Math.round(n).toLocaleString('nb-NO')+' kr';
+ const tsel=$('t-ordning');
+ tsel.innerHTML=ORDNINGER.map((o,i)=>`<option value="${i}">${o.navn}</option>`).join('');
+ function tegnT(){
+  const kost=les('t-kost')??0, timer=les('t-timer')??0, sats=les('t-sats')??0, annen=les('t-annen')??0;
+  const puljer=Math.max(1,les('t-puljer')??1), ordning=parseInt(tsel.value)||0;
+  const r=regnTilskudd({kost,timer,sats,annen,puljer,ordning});
+  const p=puljer>1?` × ${puljer} puljer`:'';
+  $('t-sum').innerHTML=`
+   <div class="r"><span>Prosjektverdi (kostnader${p})</span><b>${kr(r.verdi)}</b></div>
+   <div class="r"><span>− dugnad ført som egeninnsats (${timer} t × ${sats} kr${p})</span><b>${kr(r.egen)}</b></div>
+   <div class="r"><span>− annen finansiering${p}</span><b>${kr(r.ann)}</b></div>
+   <div class="r tot"><span>= omsøkt beløp</span><b>${kr(r.omsokt)}</b></div>`;
+  const o=r.o, dom=$('t-dom');
+  let tekst='', kl='ok';
+  if(r.underMin){
+   kl='nei';
+   tekst=`<b>Under gulvet.</b> ${o.navn.split(' — ')[0]} krever minst ${kr(o.min)} omsøkt — dere ber om ${kr(r.omsokt)}, altså ${kr(o.min-r.omsokt)} for lite.`
+    +(r.puljerTilMin?` Med samme forutsetninger holder <b>${r.puljerTilMin} puljer</b> (${kr(r.puljerTilMin*Math.max(0,kost-r.dugnad-annen))}).`:'')
+    +(r.utenDugnad>=o.min?` Alternativet — utbetale instruktørhonorar i stedet for å føre dugnad — gir ${kr(r.utenDugnad)} omsøkt, så vidt over. Men da mister søknaden det finansiøren vektlegger mest.`:'');
+  } else if(r.overMaks){
+   kl='nei'; tekst=`<b>Over taket.</b> ${o.navn.split(' — ')[0]} gir maks ${kr(o.maks)}. Del opp, eller reduser antall puljer.`;
+  } else if(o.min!=null){
+   tekst=`<b>Over gulvet.</b> ${kr(r.omsokt)} omsøkt mot minstebeløp ${kr(o.min)}${o.maks?` og tak ${kr(o.maks)}`:''}.`;
+  } else {
+   tekst=`<b>Ingen kjent minstegrense</b> for ${o.navn.split(' — ')[0]}. Beløpet er ikke problemet — les utlysningen for hva den støtter og ikke støtter.`;
+  }
+  dom.className='dom '+kl; dom.innerHTML=tekst;
+  $('t-setning').innerHTML=`<b>Frist:</b> ${o.frist}.${o.merk?' '+o.merk+'.':''}`;
+ }
+ tsel.addEventListener('change',tegnT);
+ ['t-kost','t-timer','t-sats','t-annen','t-puljer'].forEach(id=>$(id).addEventListener('input',tegnT));
+ $('t-skjema').addEventListener('submit',e=>e.preventDefault());
+ tegnT();
+
+ /* ── Sponsor ── */
+ const sp=(x)=>x.hoy===0?'—':`${Math.round(x.lav).toLocaleString('nb-NO')}–${Math.round(x.hoy).toLocaleString('nb-NO')} kr`;
+ function tegnS(){
+  const medl=les('s-medl')??0, bord=les('s-bord')??0, bordp=les('s-bordp')??0, turn=les('s-turn')??0,
+        kveld=les('s-kveld')??0, klubbp=les('s-klubbp')??0, hoved=les('s-hoved')??0;
+  const r=regnSponsor({medl,bord,bordp,turn,kveld,klubbp,hoved});
+  const rad=(n,sub,x)=>`<span class="n">${n}<small>${sub}</small></span><span class="v">${sp(x)}</span>`;
+  $('s-spenn').innerHTML=
+   rad(`${r.antBordp} bordpartner${r.antBordp===1?'':'e'}`,`5 000–15 000 per bord${bordp>bord?' · begrenset til antall bord':''}`,r.bord)+
+   rad(`${klubbp} klubbpartner${klubbp===1?'':'e'}`,'10 000–25 000',r.klubb)+
+   rad(`${turn} turneringspartner${turn===1?'':'e'}`,'5 000–20 000 per turnering',r.turn)+
+   rad(`${hoved} hovedpartner`,'25 000–75 000',r.hoved)+
+   rad(`${kveld} bedriftskveld${kveld===1?'':'er'}`,'4 000–8 000 per kveld · inntekt, ikke sponsing',r.kveld)+
+   `<span class="n tot">Til sammen, per år</span><span class="v tot">${sp(r.tot)}</span>`;
+  const s=$('s-setning');
+  if(r.tot.hoy===0){ s.innerHTML='Velg minst én avtale eller bedriftskveld.'; return; }
+  s.innerHTML=`Med ${medl} medlemmer ligger et rimelig utgangspunkt rundt <b>${kr(r.tot.midt)}</b> i året — men be om spennet, ikke tallet. `+
+   (kveld>0?`Bedriftskveldene (${sp(r.kveld)}) er inntekt klubben kan starte med i morgen, og den korteste veien til en sponsoravtale.`:`Legg inn bedriftskvelder — de er den korteste veien til en sponsoravtale.`);
+ }
+ ['s-medl','s-bord','s-bordp','s-turn','s-kveld','s-klubbp','s-hoved'].forEach(id=>$(id).addEventListener('input',tegnS));
+ $('s-skjema').addEventListener('submit',e=>e.preventDefault());
+ tegnS();
 }
 </script>
 </body></html>

@@ -943,7 +943,9 @@ q.addEventListener('keydown',e=>{if(e.key!=='Enter')return;
  let el;
  if(REDUSERT||spar||!VIDEO_URL){
   if(!VIDEO_STILL) return;
-  el=document.createElement('img'); el.src=VIDEO_STILL; el.alt=''; el.loading='eager'; el.decoding='async';
+  el=document.createElement('img'); el.src=VIDEO_STILL;
+  el.alt='Snookerbord med ballene satt opp i et norsk klubblokale';
+  el.loading='eager'; el.decoding='async';
  }else{
   el=document.createElement('video');
   el.muted=true; el.loop=true; el.autoplay=true; el.playsInline=true; el.preload='metadata';

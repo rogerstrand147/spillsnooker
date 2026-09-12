@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klubbrating — brosjyre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F4ED; --paper2:#EFEAE0; --ink:#1A1714; --ink-dim:#6E6659;
+  --felt:#1E5C43; --felt-l:#2F8560; --felt-p:#E4EDE8;
+  --gold:#B8862B; --rose:#B2596F;
+  --line:#DCD5C7;
+  --display:"Fraunces",Georgia,serif; --body:"Inter Tight",system-ui,sans-serif; --data:"DM Mono",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#8A8478;font-family:var(--body);color:var(--ink);padding:26px 0;-webkit-font-smoothing:antialiased}
+
+.side{
+  width:210mm;min-height:297mm;background:var(--paper);margin:0 auto 26px;
+  padding:19mm 18mm;position:relative;overflow:hidden;
+  box-shadow:0 8px 40px rgba(0,0,0,.28);
+}
+h1{font-family:var(--display);font-variation-settings:"SOFT" 30,"WONK" 1,"opsz" 144;
+  font-weight:700;font-size:44pt;line-height:.94;letter-spacing:-.025em}
+h1 em{font-style:italic;color:var(--felt);font-variation-settings:"SOFT" 60,"WONK" 1}
+h2{font-family:var(--display);font-variation-settings:"SOFT" 30,"WONK" 1,"opsz" 60;
+  font-weight:600;font-size:19pt;letter-spacing:-.015em;margin-bottom:7px}
+h3{font-family:var(--display);font-variation-settings:"WONK" 1;font-weight:600;font-size:12.5pt;margin-bottom:4px}
+p{font-size:10.5pt;line-height:1.55;color:#2E2921}
+.dim{color:var(--ink-dim)}
+.kicker{font-family:var(--data);font-size:8pt;letter-spacing:.18em;text-transform:uppercase;color:var(--felt);margin-bottom:14px}
+
+/* forside */
+.hero-felt{
+  position:absolute;left:0;right:0;top:118mm;height:74mm;
+  background:linear-gradient(175deg,var(--felt-l),var(--felt));
+}
+.hero-felt::before{content:"";position:absolute;left:14%;top:0;bottom:0;width:1px;background:rgba(255,255,255,.22)}
+.hero-felt::after{content:"";position:absolute;left:calc(14% - 26mm);top:50%;width:26mm;height:52mm;
+  transform:translateY(-50%);border:1px solid rgba(255,255,255,.22);border-right:0;border-radius:26mm 0 0 26mm}
+.balls-row{position:absolute;right:16mm;top:50%;transform:translateY(-50%);display:flex;gap:7mm}
+.bl{width:11mm;height:11mm;border-radius:50%;box-shadow:inset -2px -3px 6px rgba(0,0,0,.45)}
+.lede{font-size:13pt;line-height:1.5;max-width:38ch;margin-top:16px}
+.foot-note{position:absolute;left:18mm;right:18mm;bottom:16mm;font-size:9pt;color:var(--ink-dim);
+  border-top:1px solid var(--line);padding-top:9px}
+
+/* tre steg */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:6mm;margin:8mm 0}
+.step{background:var(--paper2);border-radius:2px;padding:6mm 5mm;position:relative}
+.step .num{font-family:var(--data);font-size:8pt;letter-spacing:.14em;color:var(--felt);margin-bottom:6px}
+.step p{font-size:9.5pt;line-height:1.5}
+
+/* skala */
+.scale{margin:6mm 0}
+.scale-bar{height:9mm;border-radius:2px;display:flex;overflow:hidden;margin-bottom:5px}
+.scale-bar div{flex:1}
+.scale-lbl{display:flex;font-family:var(--data);font-size:7.5pt;color:var(--ink-dim);letter-spacing:.06em}
+.scale-lbl span{flex:1}
+.scale-lbl span:last-child{text-align:right}
+table{width:100%;border-collapse:collapse;font-size:9.5pt;margin:4mm 0}
+th{text-align:left;font-family:var(--data);font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-dim);padding:5px 8px 5px 0;border-bottom:1.5px solid var(--ink)}
+td{padding:6px 8px 6px 0;border-bottom:1px solid var(--line)}
+td.n{font-family:var(--data);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+
+/* duell */
+.duel{background:var(--felt-p);border-radius:2px;padding:7mm 6mm;margin:6mm 0}
+.duel-top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:5mm;margin-bottom:6mm}
+.pl{text-align:center}
+.pl .nm{font-family:var(--display);font-variation-settings:"WONK" 1;font-weight:600;font-size:14pt}
+.pl .rt{font-family:var(--data);font-size:26pt;color:var(--felt);line-height:1.1;margin-top:2px}
+.pl .lv{font-size:8.5pt;color:var(--ink-dim);margin-top:2px}
+.vs{font-family:var(--data);font-size:9pt;color:var(--ink-dim);letter-spacing:.1em}
+.calc{border-top:1px dashed var(--felt-l);padding-top:5mm;text-align:center}
+.calc .eq{font-family:var(--data);font-size:11pt;color:#2E2921}
+.calc .res{font-family:var(--display);font-variation-settings:"WONK" 1;font-weight:600;font-size:17pt;color:var(--felt);margin-top:4px}
+.calc .sub{font-size:9pt;color:var(--ink-dim);margin-top:4px}
+
+/* fotoplass */
+.photo{background:var(--paper2);border:1px dashed var(--line);border-radius:2px;
+  height:44mm;display:grid;place-items:center;text-align:center;margin:6mm 0}
+.photo span{font-family:var(--data);font-size:8pt;letter-spacing:.1em;color:#A79E8D;text-transform:uppercase}
+
+.callout{border-left:2.5px solid var(--gold);padding:1mm 0 1mm 5mm;margin:6mm 0}
+.callout p{font-size:10pt}
+
+/* veggplakat */
+.wall h1{font-size:36pt}
+.wall table{font-size:13pt}
+.wall th{font-size:9pt;padding-bottom:8px}
+.wall td{padding:11px 10px 11px 0}
+.wall td.n{font-size:15pt;color:var(--felt)}
+.big-rule{background:var(--felt);color:var(--paper);border-radius:2px;padding:7mm 6mm;margin:7mm 0}
+.big-rule .r{font-family:var(--display);font-variation-settings:"WONK" 1;font-weight:600;font-size:16pt;line-height:1.3}
+.big-rule .s{font-size:10pt;opacity:.85;margin-top:5px}
+
+.pagenum{position:absolute;right:18mm;bottom:16mm;font-family:var(--data);font-size:8pt;color:#B3AA98}
+
+@media print{
+  body{background:#fff;padding:0}
+  .side{box-shadow:none;margin:0;page-break-after:always;width:100%;min-height:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ SIDE 1 — FORSIDE ============ -->
+<section class="side">
+  <p class="kicker">For snookerklubber i Norge</p>
+  <h1>Alle kan<br>vinne en<br><em>jevn kamp.</em></h1>
+  <p class="lede">Et enkelt ratingsystem som gir nye spillere forsprang — så den første kampen blir spennende i stedet for pinlig.</p>
+
+  <div class="hero-felt">
+    <div class="balls-row">
+      <div class="bl" style="background:radial-gradient(circle at 32% 28%,#F6DE8F,#E4B62C 58%,#96741A)"></div>
+      <div class="bl" style="background:radial-gradient(circle at 32% 28%,#7FCBA1,#2F8D5B 58%,#17442B)"></div>
+      <div class="bl" style="background:radial-gradient(circle at 32% 28%,#C79066,#8A5430 58%,#452612)"></div>
+      <div class="bl" style="background:radial-gradient(circle at 32% 28%,#82AEE4,#3067AD 58%,#16375F)"></div>
+      <div class="bl" style="background:radial-gradient(circle at 32% 28%,#F6CBD5,#DE93A6 58%,#A45568)"></div>
+      <div class="bl" style="background:radial-gradient(circle at 32% 28%,#4A453F,#16130F 58%,#000)"></div>
+    </div>
+  </div>
+
+  <div class="foot-note">
+    <strong>Problemet:</strong> en fersk spiller taper 78–4 mot en klubbspiller. Ingen av dem hadde det gøy,
+    og den ferske kommer ikke tilbake. Snooker er ikke for vanskelig — den er for ujevn i starten.
+  </div>
+</section>
+
+<!-- ============ SIDE 2 — SLIK VIRKER DET ============ -->
+<section class="side">
+  <p class="kicker">Slik virker det</p>
+  <h2>Tre setninger er hele systemet</h2>
+
+  <div class="steps">
+    <div class="step">
+      <p class="num">01</p>
+      <h3>Alle har et tall</h3>
+      <p>Nye spillere starter på 300. Tallet sier hvor godt du spiller akkurat nå.</p>
+    </div>
+    <div class="step">
+      <p class="num">02</p>
+      <h3>Differansen ÷ 10</h3>
+      <p>Er forskjellen 180 poeng, starter den svakeste med 18 poeng i hver frame.</p>
+    </div>
+    <div class="step">
+      <p class="num">03</p>
+      <h3>Tallet flytter seg</h3>
+      <p>Etter kampen går vinneren opp og taperen ned — like mye begge veier.</p>
+    </div>
+  </div>
+
+  <h2 style="margin-top:9mm">Skalaen</h2>
+  <div class="scale">
+    <div class="scale-bar">
+      <div style="background:#D9E4DE"></div><div style="background:#B9CFC5"></div>
+      <div style="background:#8FB6A6"></div><div style="background:#5F9880"></div>
+      <div style="background:#357A5D"></div><div style="background:#1E5C43"></div>
+    </div>
+    <div class="scale-lbl"><span>100</span><span>Fersk</span><span>Nybegynner</span><span>Klubbspiller</span><span>Turnering</span><span>1000</span></div>
+  </div>
+
+  <table>
+    <tr><th>Rating</th><th>Nivå</th><th>Kjennetegn</th></tr>
+    <tr><td class="n">100–250</td><td>Helt fersk</td><td>Treffer ballen, men ikke alltid der hun vil</td></tr>
+    <tr><td class="n">250–400</td><td>Nybegynner</td><td>Forstår spillet. Serier på 10–20 poeng</td></tr>
+    <tr><td class="n">400–550</td><td>Klubbspiller</td><td>Serier på 20–40. Legger snookere med vilje</td></tr>
+    <tr><td class="n">550–700</td><td>God klubbspiller</td><td>Serier over 40. Spiller posisjon bevisst</td></tr>
+    <tr><td class="n">700–850</td><td>Turneringsspiller</td><td>Serier over 60. Spiller nasjonalt</td></tr>
+    <tr><td class="n">850+</td><td>Elite</td><td>Century-serier</td></tr>
+  </table>
+
+  <div class="callout">
+    <p><strong>Er du usikker på hvor en ny spiller hører hjemme?</strong> Sett 300 og la det gå.
+    Systemet retter seg selv i løpet av ti kamper.</p>
+  </div>
+
+  <p class="pagenum">2</p>
+</section>
+
+<!-- ============ SIDE 3 — EKSEMPEL ============ -->
+<section class="side">
+  <p class="kicker">Et eksempel</p>
+  <h2>Anne mot Bjørn</h2>
+  <p class="dim">Anne har spilt i seks år. Bjørn begynte i vinter.</p>
+
+  <div class="duel">
+    <div class="duel-top">
+      <div class="pl"><div class="nm">Anne</div><div class="rt">520</div><div class="lv">Klubbspiller</div></div>
+      <div class="vs">MOT</div>
+      <div class="pl"><div class="nm">Bjørn</div><div class="rt">340</div><div class="lv">Nybegynner</div></div>
+    </div>
+    <div class="calc">
+      <p class="eq">520 − 340 = 180 &nbsp;→&nbsp; 180 ÷ 10</p>
+      <p class="res">Bjørn starter med 18 poeng<br>i hver frame</p>
+      <p class="sub">Nå er kampen jevn. Begge kan vinne.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:7mm">Bjørn vinner 2–1. Hva skjer?</h3>
+  <p>Bjørn vant to av tre frames — altså 0,67 av kampen. Trekk fra 0,5, gang med 20.
+  Det gir <strong>+3 til Bjørn og −3 til Anne</strong>.</p>
+  <p style="margin-top:8px">Endringen er liten fordi Bjørn fikk forsprang. Det var ventet at det kunne gå
+  begge veier. Hadde han vunnet 3–0, ville han fått +10.</p>
+
+  <div class="photo"><span>Plass til bilde fra klubben</span></div>
+
+  <div class="callout">
+    <p><strong>Hvorfor tallene flytter seg like mye:</strong> når handicapen er riktig satt, er kampen
+    per definisjon jevn. Da trengs ingen formel — bare et fast tall opp eller ned.
+    Det er forenklingen som gjør at systemet faktisk kan brukes ved bordet.</p>
+  </div>
+
+  <div class="callout" style="border-left-color:#C0503A">
+    <p style="margin-bottom:5px"><strong>To forbehold som hører med</strong></p>
+    <p style="margin-bottom:5px"><strong>Tallene er ikke etterprøvd.</strong> Delingen på ti, taket
+    på 45 poeng og endringene etter kamp er fornuftige anslag, ikke målte verdier. Ingen klubb har
+    kjørt systemet en hel sesong ennå. Virker skalaen skjev hos dere, er det skalaen som skal
+    justeres — ikke spillerne.</p>
+    <p><strong>CueScore kan ikke føre klubbratingen for dere.</strong> Bekreftet av CueScore support
+    11. august 2026: egne ratinglister er forbeholdt nettverkskontoer, ikke klubber, og ratingen
+    deres bygger uansett bare på turneringer <em>uten</em> handicap. Ikke bruk en kveld på å lete
+    etter funksjonen — den finnes ikke på klubbnivå. Et ark på veggen holder for tretti medlemmer.</p>
+  </div>
+
+  <p class="pagenum">3</p>
+</section>
+
+<!-- ============ SIDE 4 — VEGGPLAKAT ============ -->
+<section class="side wall">
+  <p class="kicker">Heng denne ved bordet</p>
+  <h1 style="font-size:34pt;margin-bottom:6mm">Startpoeng</h1>
+
+  <table>
+    <tr><th>Forskjell i rating</th><th>Startpoeng</th></tr>
+    <tr><td>Under 50</td><td class="n">Spill likt</td></tr>
+    <tr><td>60</td><td class="n">6</td></tr>
+    <tr><td>100</td><td class="n">10</td></tr>
+    <tr><td>150</td><td class="n">15</td></tr>
+    <tr><td>200</td><td class="n">20</td></tr>
+    <tr><td>250</td><td class="n">25</td></tr>
+    <tr><td>300</td><td class="n">30</td></tr>
+    <tr><td>400</td><td class="n">40</td></tr>
+    <tr><td>450 eller mer</td><td class="n">45</td></tr>
+  </table>
+
+  <div class="big-rule">
+    <p class="r">Etter kampen: vinneren opp, taperen ned — like mange poeng.</p>
+    <p class="s">Doble tallene for spillere med under 20 kamper.</p>
+  </div>
+
+  <table>
+    <tr><th>Resultat</th><th>Vinner</th><th>Taper</th></tr>
+    <tr><td>2–0</td><td class="n">+10</td><td class="n">−10</td></tr>
+    <tr><td>2–1</td><td class="n">+3</td><td class="n">−3</td></tr>
+    <tr><td>3–0</td><td class="n">+10</td><td class="n">−10</td></tr>
+    <tr><td>3–1</td><td class="n">+5</td><td class="n">−5</td></tr>
+    <tr><td>3–2</td><td class="n">+2</td><td class="n">−2</td></tr>
+  </table>
+
+  <div class="foot-note" style="position:static;margin-top:8mm">
+    <strong>Tak på 45 poeng.</strong> Større forsprang gjør at den sterke må rydde nesten hele bordet.
+    Da er det ikke gøy for noen.<br>
+    <strong>Ratingen teller bare</strong> når begge er enige om at kampen er en ratingkamp.
+  </div>
+
+  <p class="pagenum">4</p>
+</section>
+
+</body>
+</html>

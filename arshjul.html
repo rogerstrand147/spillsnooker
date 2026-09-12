@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="no"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Fjernes samtidig med FORHANDSVIS = false i index.html -->
+<meta name="robots" content="noindex,nofollow">
+<title>Årshjul og tilskuddskalender · Snooker i Norge</title>
+<meta name="description" content="Støtteordninger for snookerklubber: når fristene går ut, hva de er verdt, og hva klubben må ha på plass for å kvalifisere. Kartlagt én gang, delt med alle.">
+<style>
+:root{
+ --svart:#0C0E0D; --flate:#161B18; --hevet:#1D2320; --kant:#2A322D;
+ --filt:#157F4C; --filt-lys:#2FA86D; --filt-mork:#0E5533;
+ --lampe:#E07A4D; --lampe-lys:#F0A181;
+ --elfenben:#F4F1EA; --dempet:#9AA39C; --svak:#6B746E;
+ --gul:#E8C33D; --rosa:#E58BA6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--svart);color:var(--elfenben);
+ font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+ font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px}
+a{color:var(--filt-lys)}
+#forhand{background:var(--lampe);color:#0C0E0D;text-align:center;padding:9px 16px;
+ font-size:.82rem;font-weight:650;letter-spacing:.02em}
+header{padding:28px 0 8px;
+ background:radial-gradient(ellipse 950px 420px at 50% -10%,rgba(21,127,76,.22),transparent 66%)}
+.tilbake{font-size:.85rem;color:var(--dempet);text-decoration:none}
+.tilbake:hover{color:var(--filt-lys)}
+.merk{font-size:.74rem;text-transform:uppercase;letter-spacing:.16em;color:var(--lampe);font-weight:650;margin-top:26px}
+h1{font-size:clamp(1.7rem,4.4vw,2.7rem);line-height:1.1;letter-spacing:-.03em;font-weight:700;max-width:22ch;margin-top:8px}
+h1 em{font-style:normal;color:var(--filt-lys)}
+.led{color:var(--dempet);font-size:1.04rem;margin-top:14px;max-width:62ch}
+section{padding:30px 0;scroll-margin-top:12px}
+h2{font-size:1.35rem;letter-spacing:-.02em;margin-bottom:8px;margin-top:4px}
+h3{font-size:1.02rem;letter-spacing:-.01em;margin:22px 0 6px;color:var(--elfenben)}
+p{margin-top:10px;max-width:68ch}
+.hopp{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.hopp a{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:99px;
+ border:1px solid var(--kant);background:var(--flate);color:var(--dempet);
+ text-decoration:none;font-size:.86rem;font-weight:600}
+.hopp a:hover{border-color:var(--filt);color:var(--filt-lys)}
+.panel{background:var(--flate);border:1px solid var(--kant);border-radius:14px;padding:20px 22px;margin-top:16px}
+.panel.varsel{border-color:rgba(224,122,77,.42);background:linear-gradient(135deg,rgba(224,122,77,.10),rgba(224,122,77,.02))}
+.panel.god{border-color:rgba(47,168,109,.32);background:linear-gradient(135deg,rgba(21,127,76,.14),rgba(21,127,76,.03))}
+.panel h3{margin-top:0}
+.tabellboks{overflow-x:auto;margin-top:14px}
+table{border-collapse:collapse;width:100%;font-size:.93rem;min-width:460px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--kant);vertical-align:top}
+th{font-size:.74rem;text-transform:uppercase;letter-spacing:.1em;color:var(--svak);font-weight:650}
+td strong{color:var(--elfenben)}
+.mnd{display:grid;gap:12px;margin-top:16px}
+@media(min-width:720px){.mnd{grid-template-columns:1fr 1fr}}
+.mnd .kort{background:var(--flate);border:1px solid var(--kant);border-radius:12px;padding:14px 16px}
+.mnd .kort b{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;color:var(--filt-lys);margin-bottom:6px}
+.mnd .kort ul{margin:0;padding-left:18px}
+.mnd .kort li{font-size:.9rem;margin-top:5px;color:var(--dempet)}
+.mnd .kort li strong{color:var(--elfenben);font-weight:600}
+.mnd .kort.tung{border-color:rgba(224,122,77,.34)}
+ul.liste{margin-top:10px;padding-left:20px}
+ul.liste li{margin-top:7px;max-width:66ch}
+ol.liste{margin-top:10px;padding-left:22px}
+ol.liste li{margin-top:9px;max-width:66ch}
+.ordning{background:var(--flate);border:1px solid var(--kant);border-radius:12px;padding:16px 18px;margin-top:14px}
+.ordning h3{margin-top:0}
+.ordning dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin-top:10px;font-size:.92rem}
+.ordning dt{color:var(--svak);font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;padding-top:3px}
+.ordning dd{color:var(--dempet)}
+.vinkel{margin-top:12px;padding:12px 14px;border-radius:9px;background:rgba(21,127,76,.12);
+ border-left:3px solid var(--filt);font-size:.92rem;color:var(--dempet)}
+.vinkel b{color:var(--filt-lys)}
+.nedlast{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 20px;border-radius:11px;
+ border:1px solid var(--filt);background:rgba(21,127,76,.14);color:var(--filt-lys);
+ text-decoration:none;font-weight:650;font-size:.95rem;margin-top:16px}
+.nedlast:hover{background:rgba(21,127,76,.24)}
+.ajour{margin-top:18px;font-size:.86rem;color:var(--svak);max-width:68ch}
+.utgatt{color:var(--svak);font-size:.9rem;margin-top:12px}
+.utgatt s{color:var(--svak)}
+footer{margin-top:20px;padding:34px 0 50px;border-top:1px solid var(--kant);color:var(--svak);font-size:.82rem;line-height:1.6}
+footer p{margin-top:8px;max-width:70ch}
+</style>
+</head><body>
+
+<div id="forhand">Forhåndsvisning — frister og beløp er kontrollert 11. august 2026. Sjekk alltid gjeldende utlysning før innsending.</div>
+
+<header><div class="wrap">
+ <a class="tilbake" href="index.html">← Hvor kan du spille snooker i Norge?</a>
+ <div class="merk">For klubbene</div>
+ <h1>Når går fristene, og <em>hva er de verdt</em>?</h1>
+ <p class="led">Arbeidet med å kartlegge støtteordninger, frister og krav er gjort
+ én gang, for alle de norske snookerklubbene. Klubben skal bare følge kalenderen.
+ Sett av én time i måneden — det er nok.</p>
+ <nav class="hopp" aria-label="Innhold">
+  <a href="#naa">Det som gjenstår i år</a><a href="#krav">Fem grunnforutsetninger</a><a href="#hjul">Årshjulet</a><a href="#katalog">Ordningene</a><a href="#tretti">De neste 30 dagene</a>
+ </nav>
+ <a class="nedlast" href="Arshjul%20og%20tilskuddskalender.docx" download>Last ned som Word-dokument</a>
+</div></header>
+
+<section id="naa"><div class="wrap">
+ <h2>Det som gjenstår i 2026</h2>
+ <p>Rekkefølgen er etter dato. Alt her er fortsatt mulig å rekke.</p>
+ <div class="tabellboks"><table>
+  <thead><tr><th>Frist</th><th>Ordning</th><th>Gjelder</th><th>Hva det er verdt</th></tr></thead>
+  <tbody>
+   <tr><td><strong>1. oktober</strong></td><td>SpareBank 1 Nord-Norge, Samfunnsløftet</td><td>Ishavsbyen</td><td>Tre utlysninger i året</td></tr>
+   <tr><td><strong>31. oktober / 1. november</strong></td><td>Bufdir — inkludering av barn og unge</td><td>Alle</td><td>Den største enkeltpotten som passer rekrutteringsarbeid</td></tr>
+   <tr><td><strong>15. november</strong></td><td>Sparebankstiftelsen Helgeland</td><td>Helgeland</td><td>Fjerde og siste frist i året</td></tr>
+   <tr><td><strong>15. november</strong></td><td>Idrettsrådets LAM-fordeling</td><td>Alle</td><td>Avhenger av registrerte medlemmer 6–19 år</td></tr>
+   <tr><td><strong>1. desember</strong></td><td>Momskompensasjon ved bygging og rehabilitering</td><td>Kun klubber som har bygget</td><td>Lotteri- og stiftelsestilsynet</td></tr>
+   <tr><td>November–desember</td><td>Sponsoravtaler for neste år</td><td>Alle</td><td>Bedrifter legger markedsbudsjett nå</td></tr>
+  </tbody>
+ </table></div>
+
+ <div class="panel varsel">
+  <h3>LAM krever ingen søknad — men arbeidet gjøres nå</h3>
+  <p>I de fleste kommuner fordeles LAM automatisk etter medlemstall. Det som
+  avgjør beløpet, er om medlemmene mellom 6 og 19 år står korrekt registrert med
+  betalt kontingent. Et uregistrert medlem er verdt null kroner. Ryddingen i
+  medlemsregisteret må skje nå, ikke i november.</p>
+ </div>
+
+ <p class="utgatt"><strong>Gått ut i år:</strong> <s>momskompensasjon på varer og
+ tjenester, 15. august</s> — neste runde sommeren 2027. <s>Gjensidigestiftelsens
+ høstutlysning, 1. september</s> — neste er sommerutlysningen i begynnelsen av
+ mars 2027. Begge står beskrevet i katalogen under, så klubben kan forberede seg
+ i god tid.</p>
+</div></section>
+
+<section id="krav"><div class="wrap">
+ <h2>Fem grunnforutsetninger</h2>
+ <p>Disse fem tingene styrer om klubben i det hele tatt er kvalifisert. De koster
+ ingenting, men mangler én av dem, stenger den flere ordninger samtidig.</p>
+ <div class="tabellboks"><table>
+  <thead><tr><th>#</th><th>Krav</th><th>Hva det låser opp</th></tr></thead>
+  <tbody>
+   <tr><td>1</td><td><strong>Registrert i Frivillighetsregisteret</strong> (Brønnøysund)</td><td>Momskompensasjon, grasrotandelen, de fleste stiftelser</td></tr>
+   <tr><td>2</td><td><strong>Grasrotandelen</strong> aktivert hos Norsk Tipping</td><td>Løpende inntekt uten søknad — spillere knytter klubben til spillekortet</td></tr>
+   <tr><td>3</td><td>Medlemmer i <strong>elektronisk medlemsregister</strong> med betalt kontingent</td><td>LAM, samordnet rapportering, NIF-tilskudd, forbundets nøkkeltall</td></tr>
+   <tr><td>4</td><td><strong>Årsmøtegodkjent regnskap</strong> innen 31. mars</td><td>Momskompensasjon</td></tr>
+   <tr><td>5</td><td><strong>Politiattestansvarlig</strong> og <strong>barneidrettsansvarlig</strong> oppnevnt</td><td>Alle ordninger rettet mot barn og unge</td></tr>
+  </tbody>
+ </table></div>
+ <div class="panel god">
+  <h3>Merk punkt 3 særskilt</h3>
+  <p>Hvert medlem i alderen 6–19 år som er korrekt registrert med betalt
+  kontingent, utløser LAM-kroner gjennom idrettsrådet. Et uregistrert medlem er
+  verdt null. Dette er den billigste inntektsøkningen en klubb kan gjøre — det er
+  ren rutine, ikke arbeid.</p>
+ </div>
+</div></section>
+
+<section id="hjul"><div class="wrap">
+ <h2>Årshjulet</h2>
+ <p>Finn inneværende måned. Gjør det som står der.</p>
+ <div class="mnd">
+  <div class="kort"><b>Januar</b><ul>
+   <li>Frist for spillemidler til anlegg videre fra kommune til fylkeskommune, normalt <strong>15. januar</strong>. Planer om lokale, bord eller rehabilitering må inn i kommunens plan året før</li>
+   <li>Ferdigstill regnskapet for foregående år</li></ul></div>
+  <div class="kort"><b>Februar</b><ul>
+   <li>Innkall til årsmøte, senest 31. mars</li>
+   <li>Vårfrister hos flere sparebankstiftelser. Sjekk din regionale stiftelse</li></ul></div>
+  <div class="kort tung"><b>Mars</b><ul>
+   <li><strong>Årsmøte senest 31. mars.</strong> Lovpålagt, og en forutsetning for momskompensasjon</li>
+   <li><strong>Gjensidigestiftelsens sommerutlysning</strong> (2026: 2. mars). Egne kriterier, ikke samme pott som høstfristen</li>
+   <li>Samordnet rapportering til NIF åpner</li></ul></div>
+  <div class="kort tung"><b>April</b><ul>
+   <li><strong>Samordnet rapportering til NIF</strong> — normalt frist 30. april. Her rapporteres medlemstallene som styrer LAM</li>
+   <li><strong>Møt på idrettsrådets årsmøte.</strong> Tildelingskriteriene for LAM vedtas der. Er ikke klubben til stede, er dere ikke med når kaka deles</li></ul></div>
+  <div class="kort"><b>Mai</b><ul>
+   <li>Kommunale kulturmidler og aktivitetstilskudd — frister varierer, ofte april–juni</li>
+   <li>Planlegg høstens rekrutteringstiltak. Det er nå søknadene til høsten må formes</li></ul></div>
+  <div class="kort"><b>Juni</b><ul>
+   <li>Rolig måned. Bruk den til å forberede momskompensasjonssøknaden</li></ul></div>
+  <div class="kort"><b>Juli</b><ul>
+   <li>Ferie. Sjekk at regnskapstallet for momskompensasjon er klart</li></ul></div>
+  <div class="kort tung"><b>August</b><ul>
+   <li><strong>15. august: frist for momskompensasjon</strong> på varer og tjenester</li>
+   <li>Idrettsrådet starter LAM-fordelingen, 15. august–15. november</li>
+   <li><strong>Start høstens rekrutteringskampanje.</strong> August og september er de to månedene i året der folk melder seg inn i noe nytt</li></ul></div>
+  <div class="kort tung"><b>September</b><ul>
+   <li><strong>Gjensidigestiftelsens høstfrist: 1. september kl. 16:00.</strong> Prosjektet må starte året etter</li>
+   <li>Bufdirs utlysning for neste år publiseres</li>
+   <li><strong>Ta kontakt med kommunens kontaktperson for Bufdir-ordningen nå.</strong> Kommunen rangerer søknadene fra frivillige — de som har snakket med kommunen på forhånd, rangeres høyere</li></ul></div>
+  <div class="kort tung"><b>Oktober</b><ul>
+   <li><strong>Frist Bufdir «Tilskudd til inkludering av barn og unge»</strong> — de siste årene 31. oktober / 1. november. Den største enkeltpotten som er relevant for rekrutteringsarbeid</li></ul></div>
+  <div class="kort"><b>November</b><ul>
+   <li><strong>15. november:</strong> idrettsrådets LAM-fordeling må være innsendt. Ikke klubbens frist, men følg opp at dere er med</li>
+   <li>Legg budsjett for neste år</li></ul></div>
+  <div class="kort"><b>Desember</b><ul>
+   <li><strong>1. desember:</strong> momskompensasjon ved bygging og rehabilitering av idrettsanlegg. Gjelder kun hvis klubben har bygget</li>
+   <li>Signer sponsoravtaler for neste kalenderår. Bedrifter legger markedsbudsjett i november og desember — kommer dere i februar, er pengene brukt</li></ul></div>
+ </div>
+</div></section>
+
+<section id="katalog"><div class="wrap">
+ <h2>Ordningene, én for én</h2>
+
+ <div class="ordning">
+  <h3>1 · Momskompensasjon på varer og tjenester</h3>
+  <dl>
+   <dt>Forvalter</dt><dd>Lotteri- og stiftelsestilsynet, samordnet av NIF</dd>
+   <dt>Frist</dt><dd>15. august, for NIF-tilsluttede klubber</dd>
+   <dt>Hvor mye</dt><dd>8 % av de første 7 millionene i driftskostnader</dd>
+   <dt>Søknadsvei</dt><dd>NIFs forvaltningsportal, innlogging via MinIdrett. Kun daglig leder og styremedlemmer kan søke</dd>
+   <dt>Krever</dt><dd>Årsmøtegodkjent regnskap for foregående år, registrering i Frivillighetsregisteret</dd>
+  </dl>
+  <p>Selve søknaden er ett tall fra det årsmøtegodkjente regnskapet, lagt inn i
+  portalen — ingen prosjektbeskrivelse, ingen kreativitet. Forberedelsen skjer på
+  årsmøtet i mars. Ny forskrift gjelder fra 1. januar 2026: krav om
+  revisorbekreftelse gjelder nå i hovedsak klubber med over 7 millioner i
+  driftskostnader, så de fleste snookerklubber slipper den kostnaden.</p>
+ </div>
+
+ <div class="ordning">
+  <h3>2 · Lokale aktivitetsmidler (LAM)</h3>
+  <dl>
+   <dt>Forvalter</dt><dd>Kommunens idrettsråd, midler fra Kultur- og likestillingsdepartementet</dd>
+   <dt>Frist</dt><dd>Ingen søknadsfrist i de fleste kommuner — fordeles etter medlemstall</dd>
+   <dt>Krever</dt><dd>Idrettslig virksomhet for barn (6–12) og/eller ungdom (13–19), korrekt registrerte medlemstall</dd>
+  </dl>
+  <div class="vinkel"><b>Snookervinkelen:</b> mange idrettsråd vekter ungdom
+  (13–19) tyngre enn barn. Snooker rekrutterer typisk fra 12–13 år og oppover —
+  det er den aldersgruppen som gir mest LAM per hode.</div>
+  <p><strong>Viktigst:</strong> delta på idrettsrådets årsmøte. Kriteriene settes der.</p>
+ </div>
+
+ <div class="ordning">
+  <h3>3 · NBFs prosjektmidler</h3>
+  <dl>
+   <dt>Forvalter</dt><dd>Norges Biljardforbund, organisasjonsutvalget</dd>
+   <dt>Hvor mye</dt><dd>280 000 kr fordelt på 11 prosjekter i 2023 — snitt ca. 25 000 per prosjekt</dd>
+   <dt>Hva støttes</dt><dd>Hovedsakelig rekrutteringsprosjekter rettet mot ungdom, kvinner og sosial inkludering</dd>
+   <dt>Frist</dt><dd>Må avklares med forbundskontoret</dd>
+  </dl>
+  <div class="vinkel"><b>Snookervinkelen:</b> dette er penger som allerede er
+  øremerket akkurat den typen arbeid snookerklubbene vil gjøre.</div>
+ </div>
+
+ <div class="ordning">
+  <h3>4 · NBFs klubblån til bordkjøp</h3>
+  <dl>
+   <dt>Forvalter</dt><dd>Norges Biljardforbund, styrebehandles</dd>
+   <dt>Hva</dt><dd>Rentefrie eller rimelige lån til innkjøp av bord</dd>
+   <dt>Frist</dt><dd>Løpende</dd>
+  </dl>
+  <div class="vinkel"><b>Snookervinkelen:</b> Oslo Snookerklubb har fått 370 000
+  og Ishavsbyen 340 500 gjennom ordningen. Det er presedens — bruk den.</div>
+ </div>
+
+ <div class="ordning">
+  <h3>5 · Gjensidigestiftelsen</h3>
+  <dl>
+   <dt>Frister</dt><dd>To faste runder i året: sommerutlysningen 1.–2. mars, høstutlysningen 1. september kl. 16:00</dd>
+   <dt>Beløp</dt><dd>Minimum 30 000 kr, maksimum 800 000 kr. Varighet inntil 3 år</dd>
+   <dt>Målgruppe</dt><dd>Til og med 24 år. Et kurs uten aldersprofil treffer ved siden av formålet</dd>
+   <dt>Oppstart</dt><dd>Prosjektet må starte året etter søknadsåret. Allerede igangsatte prosjekter støttes ikke</dd>
+  </dl>
+  <p><strong>Støttes ikke:</strong> faste kostnader som administrasjon, husleie og
+  strøm, bygging og oppussing, parti- og interessepolitiske og religiøse formål,
+  aktiviteter i utlandet. Søknader som bare gjelder utstyrsinnkjøp får avslag.</p>
+  <p><strong>Vektlegges:</strong> inkludering uavhengig av funksjonsnivå og
+  økonomi, involvering av barn og unge i planleggingen, egne ressurser og annen
+  finansiering, samarbeid mellom flere organisasjoner, miljøhensyn som lån av
+  utstyr.</p>
+  <div class="vinkel"><b>Snookervinkelen:</b> kursopplegg og rekrutteringstiltak,
+  ikke husleie. En koalisjon av sju klubber treffer samarbeidskriteriet direkte.</div>
+  <div class="panel varsel">
+   <h3>Fella i minstebeløpet: dugnad trekker søknaden under gulvet</h3>
+   <p>Det er lett å blande <strong>total prosjektverdi</strong> og <strong>omsøkt
+   beløp</strong>. Det er det omsøkte beløpet som må være minst 30 000 — ikke
+   prosjektverdien. Regnet med budsjettmodellens forutsetninger blir én pulje slik:</p>
+   <div class="tabellboks"><table>
+    <tbody>
+     <tr><td>Total prosjektverdi</td><td><strong>32 570 kr</strong></td></tr>
+     <tr><td>− dugnad ført som egeninnsats</td><td>12 000 kr</td></tr>
+     <tr><td><strong>= omsøkt beløp</strong></td><td><strong>20 570 kr</strong></td></tr>
+    </tbody>
+   </table></div>
+   <p>20 570 er 9 430 kroner under gulvet. Velger klubben i stedet å utbetale
+   instruktørgodtgjørelse, blir hele 32 570 omsøkt — og da er søknaden så vidt
+   over. Valget som gjør søknaden faglig sterkere, er altså det samme valget som
+   kan diskvalifisere den på beløp.</p>
+   <p><strong>Løsningen er ikke å kutte dugnaden.</strong> Den er å søke om nok:
+   to puljer i året gir 41 140 kr omsøkt med dugnadsmodellen, og et treårig løp
+   mer enn det.</p>
+  </div>
+ </div>
+
+ <div class="ordning">
+  <h3>6 · Bufdir — tilskudd til inkludering av barn og unge</h3>
+  <dl>
+   <dt>Frist</dt><dd>Utlysning i september/oktober, søknadsfrist normalt 31. oktober / 1. november</dd>
+   <dt>Målgruppe</dt><dd>Barn og unge 0–24 år som står i fare for utenforskap</dd>
+   <dt>Hva støttes</dt><dd>Åpne møteplasser, deltakelse på fritidsaktiviteter, utstyrssentraler, aktivitetsguider</dd>
+   <dt>Krever</dt><dd>Søknaden må knyttes til en deltakende kommune. Kommunen rangerer søknader fra frivillige før Bufdir behandler dem</dd>
+  </dl>
+  <div class="vinkel"><b>Snookervinkelen:</b> dette er den sterkeste passformen
+  snooker har i hele katalogen. En snookerklubb er en rusfri, innendørs,
+  helårs møteplass med lav fysisk terskel, der ungdom og voksne møtes på tvers av
+  generasjoner. Det er nøyaktig det ordningen er laget for.</div>
+  <p>Ordningen er under omlegging fra 2027. Kommuner flyttes til et nytt program,
+  men frivillige organisasjoner kan fortsatt søke. Følg med på utlysningen.</p>
+ </div>
+
+ <div class="ordning">
+  <h3>7 · Regionale sparebankstiftelser</h3>
+  <p>Det finnes over 50 selvstendige sparebankstiftelser i Norge, og hver setter
+  sine egne frister. Det finnes ingen felles nasjonal frist. Beløpene er ofte
+  betydelige, og konkurransen lokalt er mindre enn på nasjonale ordninger.</p>
+  <div class="tabellboks"><table>
+   <thead><tr><th>Klubb</th><th>Ordning</th><th>Frister</th></tr></thead>
+   <tbody>
+    <tr><td>Oslo Snooker</td><td>Sparebankstiftelsen DNB</td><td>Over 50 000 kr: 1. februar og 1. september. Inntil 50 000 kr: løpende, men ikke 21. november–31. desember</td></tr>
+    <tr><td>Sarpsborg Snookerklubb</td><td>Sparebankstiftelsen DNB</td><td>Samme som over</td></tr>
+    <tr><td>Stord Snookerklubb</td><td>Sparebanken Norge — prosjekt- og ildsjelmidler</td><td>Vindu 20.02–15.04 og 20.08–01.10</td></tr>
+    <tr><td>Os Biljard og Snookerklubb</td><td>Sparebanken Norge — prosjekt- og ildsjelmidler</td><td>Samme to vinduer</td></tr>
+    <tr><td>Trondheim Snooker</td><td>SpareBank 1 SMN samfunnsutbytte og Sparebankstiftelsen SMN</td><td>Banken har løpende frist, ca. 30 dagers svar. Stiftelsen lyser ut halvårlig</td></tr>
+    <tr><td>Ishavsbyen Biljard og Snookerklubb</td><td>SpareBank 1 Nord-Norge, Samfunnsløftet</td><td>Tre utlysninger, frist 1. oktober</td></tr>
+    <tr><td>Helgeland Snooker</td><td>SpareBank 1 Helgeland Drivkraftstøtte og Sparebankstiftelsen Helgeland</td><td>15.03, 15.05, 15.08, 15.11</td></tr>
+   </tbody>
+  </table></div>
+  <div class="panel varsel">
+   <h3>Navnet er en felle: banken og stiftelsen dekker ikke samme område</h3>
+   <p><strong>Sparebanken Norge</strong> (banken) er fusjonen av Sparebanken Vest
+   og Sparebanken Sør, og har kontorer over hele Vestlandet — blant annet i
+   Leirvik på Stord og på Osøyro. <strong>Sparebankstiftelsen Sparebanken
+   Norge</strong> (stiftelsen) deler bare ut i Agder og Telemark, og ingen av de
+   sju snookerklubbene ligger innenfor.</p>
+   <p>For Stord og Os er det derfor bankens egne prosjekt- og ildsjelmidler som
+   gjelder, ikke stiftelsen.</p>
+  </div>
+  <p>Klubben kjenner sin egen lokalbank bedre enn vi gjør, og bankstrukturen
+  endrer seg fortsatt. Stemmer ikke raden over for din klubb, si fra — så rettes
+  den for alle.</p>
+ </div>
+
+ <div class="ordning">
+  <h3>8 · Grasrotandelen</h3>
+  <dl>
+   <dt>Forvalter</dt><dd>Norsk Tipping</dd>
+   <dt>Frist</dt><dd>Ingen. Løpende</dd>
+   <dt>Hva</dt><dd>En andel av innsatsen til spillere som har knyttet klubben til spillekortet sitt</dd>
+   <dt>Krever</dt><dd>Registrering i Frivillighetsregisteret</dd>
+  </dl>
+  <div class="vinkel"><b>Snookervinkelen:</b> krever null søknadsarbeid, men må
+  markedsføres til medlemmene minst to ganger i året. De fleste klubber setter
+  dette opp og glemmer det.</div>
+ </div>
+
+ <div class="ordning">
+  <h3>9 · Kommunale kulturmidler og aktivitetstilskudd</h3>
+  <p>Varierer fullstendig mellom kommunene. Hver klubb må finne sin kommunes
+  ordning og frist én gang, og deretter er det rutine. Se kommunens nettside
+  under «tilskudd» eller «kultur og fritid».</p>
+ </div>
+</div></section>
+
+<section id="tretti"><div class="wrap">
+ <h2>Hva klubben bør gjøre de neste 30 dagene</h2>
+ <ol class="liste">
+  <li>Sjekk at klubben står i <strong>Frivillighetsregisteret</strong>. Står dere ikke der, er de fleste ordningene stengt uansett hvor gode søknader dere skriver.</li>
+  <li>Sjekk om <strong>grasrotandelen</strong> er aktiv, og hvor mange som er tilknyttet.</li>
+  <li>Gå gjennom <strong>medlemsregisteret</strong>. Er alle aktive medlemmer registrert med betalt kontingent og riktig fødselsår? Hvert medlem mellom 6 og 19 år som står korrekt oppført, utløser LAM-kroner.</li>
+  <li>Finn <strong>kommunens kontaktperson for Bufdir-ordningen</strong> og send en e-post om at klubben vurderer å søke. Fristen er 31. oktober / 1. november.</li>
+  <li><strong>Momskompensasjon 2027:</strong> fristen for 2026 er passert og kan ikke tas igjen. Sett i stedet av punktet på årsmøtet i mars — det er det årsmøtegodkjente regnskapet som er hele søknaden. Finn brutto driftskostnader fra siste godkjente regnskap allerede nå, så ligger tallet klart.</li>
+ </ol>
+ <div class="panel god">
+  <p style="margin-top:0">Punkt 1–3 tar under en time samlet, og er det klart mest
+  lønnsomme klubben gjør i år.</p>
+ </div>
+ <a class="nedlast" href="Arshjul%20og%20tilskuddskalender.docx" download>Last ned som Word-dokument</a>
+ <p class="ajour">Frister og beløp er kontrollert mot ordningenes egne sider
+ <strong>11. august 2026</strong>. Frister endres, og klubben må alltid sjekke
+ gjeldende utlysning før innsending. Har du funnet en feil, eller en ordning som
+ mangler — gi beskjed, så oppdateres dokumentet for alle klubbene.</p>
+</div></section>
+
+<footer><div class="wrap">
+ <a class="tilbake" href="index.html">← Tilbake til forsiden</a>
+ <p>Del av verktøykassen for norske snookerklubber. Fritt tilgjengelig for alle
+ klubber i Norge, også de som ikke driver med snooker.</p>
+ <p>Dette er ikke et offisielt nettsted for Norges Biljardforbund. Ordningene
+ forvaltes av dem som står oppført, og det er deres egne utlysninger som gjelder.</p>
+</div></footer>
+
+</body></html>

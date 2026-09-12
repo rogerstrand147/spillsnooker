@@ -443,7 +443,7 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
 <section id="se"><div class="wrap">
  <div class="merk">Når det er som best</div>
  <h2>Se hvordan det ser ut når det er som best</h2>
- <p class="led">Én spilleliste med offisielle klipp fra World Snooker Tour. Innholdet styres i YouTube, så siden trenger aldri endres.</p>
+ <p class="led">Én spilleliste med offisielle klipp fra World Snooker Tour — tre av dem med Kurt Maflin, blant annet der han forklarer snookersjargong på norsk. Innholdet styres i YouTube, så siden trenger aldri endres.</p>
  <div id="spilleliste"></div>
  <p class="kilde">Videoene tilhører World Snooker Tour og vises via YouTube.</p>
 </div></section>
@@ -605,7 +605,7 @@ const SKJEMA_ENDEPUNKT = "https://formspree.io/f/xppzngky"; // Formspree: "https
 const TERSKEL = 15;                // felles utgangspunkt til klubben sier sitt
 const VIDEO_URL = "";              // mp4/webm, 5–8 s, uten lyd. Tom = plassholderen står
 const VIDEO_STILL = "";            // stillbilde (jpg). Vises ved datasparing og redusert bevegelse
-const SPILLELISTE = "";            // YouTube-spilleliste-ID (PL…). Innholdet styres i YouTube, aldri her
+const SPILLELISTE = "PLPdN-xCmTUW0"; // YouTube-spilleliste-ID. Innholdet styres i YouTube, aldri her
 const EKSEMPELTALL = true;         // ventelistetallene er eksempler til skjemaet er koblet
 const REDUSERT = matchMedia('(prefers-reduced-motion: reduce)').matches;
 /* Hver klubb kan overstyre med terskel: <tall>. Ingen av de sju har svart ennå,
@@ -1023,11 +1023,7 @@ function observerTellere(){ document.querySelectorAll('.teller b[data-mal]').for
  const ramme = SPILLELISTE
   ? `<iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=${encodeURIComponent(SPILLELISTE)}" title="Spilleliste: snooker når det er som best" loading="lazy" allowfullscreen allow="encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>`
   : `<div><b>YouTube-spilleliste</b><span>Sett SPILLELISTE til spillelistas ID, så vises den her. Rekkefølge og innhold styres i YouTube.</span></div>`;
- b.innerHTML=`<div class="ramme">${ramme}</div>
-  <div class="klipp">
-   <div class="klipp-kort"><small>Eksempel · World Snooker Tour</small><b>Ronnie O'Sullivan — 147 på 5 minutter og 8 sekunder (1997)</b></div>
-   <div class="klipp-kort"><small>Eksempel · World Snooker Tour</small><b>Kurt Maflin — Crucible-debut (2020)</b></div>
-  </div>`;
+ b.innerHTML=`<div class="ramme">${ramme}</div>`;
 })();
 
 /* ══════════════════════════════════════════════════════════════════

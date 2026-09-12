@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="no"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Fjernes samtidig med FORHANDSVIS = false i index.html -->
+<meta name="robots" content="noindex,nofollow">
+<title>Klubbrating og handicap &middot; Snooker i Norge</title>
+<meta name="description" content="Forslag, versjon 1.0 — juli 2026 Femte del av verktøykassen.">
+<style>
+:root{
+ --svart:#0C0E0D; --flate:#161B18; --hevet:#1D2320; --kant:#2A322D;
+ --filt:#157F4C; --filt-lys:#2FA86D; --filt-mork:#0E5533;
+ --lampe:#E07A4D; --lampe-lys:#F0A181;
+ --elfenben:#F4F1EA; --dempet:#9AA39C; --svak:#6B746E;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--svart);color:var(--elfenben);
+ font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+ font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px}
+a{color:var(--filt-lys)}
+#forhand{background:var(--lampe);color:#0C0E0D;text-align:center;padding:9px 16px;
+ font-size:.82rem;font-weight:650;letter-spacing:.02em}
+header{padding:28px 0 8px;
+ background:radial-gradient(ellipse 950px 420px at 50% -10%,rgba(21,127,76,.22),transparent 66%)}
+.tilbake{font-size:.85rem;color:var(--dempet);text-decoration:none}
+.tilbake:hover{color:var(--filt-lys)}
+.merk{font-size:.74rem;text-transform:uppercase;letter-spacing:.16em;color:var(--lampe);font-weight:650;margin-top:26px}
+h1{font-size:clamp(1.7rem,4.4vw,2.7rem);line-height:1.1;letter-spacing:-.03em;font-weight:700;max-width:24ch;margin-top:8px}
+.led{color:var(--dempet);font-size:1.04rem;margin-top:14px;max-width:62ch}
+section{padding:30px 0;scroll-margin-top:12px}
+h2{font-size:1.35rem;letter-spacing:-.02em;margin:4px 0 8px}
+h3{font-size:1.02rem;letter-spacing:-.01em;margin:22px 0 6px}
+h4{font-size:.95rem;margin:18px 0 4px;color:var(--dempet)}
+p{margin-top:10px;max-width:68ch}
+code{background:var(--hevet);border:1px solid var(--kant);border-radius:5px;
+ padding:1px 6px;font-size:.88em;font-family:ui-monospace,Menlo,monospace}
+pre{background:var(--flate);border:1px solid var(--kant);border-radius:10px;
+ padding:14px 16px;margin-top:12px;overflow-x:auto}
+pre code{background:none;border:0;padding:0}
+.felt{display:inline-block;background:rgba(224,122,77,.16);color:var(--lampe-lys);
+ border-radius:5px;padding:0 7px;font-size:.86em;font-weight:600;letter-spacing:.02em}
+.hopp{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.hopp a{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:99px;
+ border:1px solid var(--kant);background:var(--flate);color:var(--dempet);
+ text-decoration:none;font-size:.86rem;font-weight:600}
+.hopp a:hover{border-color:var(--filt);color:var(--filt-lys)}
+.panel{background:var(--flate);border:1px solid var(--kant);border-radius:14px;padding:18px 20px;margin-top:16px}
+.panel.varsel{border-color:rgba(224,122,77,.42);background:linear-gradient(135deg,rgba(224,122,77,.10),rgba(224,122,77,.02))}
+.panel.god{border-color:rgba(47,168,109,.32);background:linear-gradient(135deg,rgba(21,127,76,.14),rgba(21,127,76,.03))}
+.panel h3{margin-top:0}
+.panel p:first-of-type{margin-top:0}
+.tabellboks{overflow-x:auto;margin-top:14px}
+table{border-collapse:collapse;width:100%;font-size:.93rem;min-width:460px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--kant);vertical-align:top}
+th{font-size:.74rem;text-transform:uppercase;letter-spacing:.1em;color:var(--svak);font-weight:650}
+td strong{color:var(--elfenben)}
+ul.liste,ol.liste{margin-top:10px;padding-left:22px}
+ul.liste li,ol.liste li{margin-top:7px;max-width:66ch}
+ul.liste ul,ol.liste ol{margin-top:4px}
+.rutenett{display:grid;gap:12px;margin-top:16px}
+@media(min-width:720px){.rutenett{grid-template-columns:1fr 1fr}}
+.rutenett .kort{background:var(--flate);border:1px solid var(--kant);border-radius:12px;padding:14px 16px}
+.rutenett .kort h3{margin:0 0 6px;font-size:.78rem;text-transform:uppercase;
+ letter-spacing:.12em;color:var(--filt-lys)}
+.rutenett .kort p,.rutenett .kort li{font-size:.9rem;color:var(--dempet)}
+.rutenett .kort ul.liste,.rutenett .kort ol.liste{margin-top:4px;padding-left:18px}
+.nedlast{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 20px;border-radius:11px;
+ border:1px solid var(--filt);background:rgba(21,127,76,.14);color:var(--filt-lys);
+ text-decoration:none;font-weight:650;font-size:.95rem;margin-top:18px}
+.nedlast:hover{background:rgba(21,127,76,.24)}
+.ajour{margin-top:18px;font-size:.86rem;color:var(--svak);max-width:68ch}
+footer{margin-top:20px;padding:34px 0 50px;border-top:1px solid var(--kant);color:var(--svak);font-size:.82rem;line-height:1.6}
+footer p{margin-top:8px;max-width:70ch}
+</style>
+</head><body>
+<div id="forhand">Kontrollert 2026-08-11. Sjekk alltid gjeldende kilde før innsending.</div>
+<header><div class="wrap">
+ <a class="tilbake" href="index.html">&larr; Hvor kan du spille snooker i Norge?</a>
+ <div class="merk">Femte del av verktøykassen</div>
+ <h1>Klubbrating og handicap</h1>
+ <p class="led"><strong>Forslag, versjon 1.0 — juli 2026</strong> <strong>Femte del av verktøykassen.</strong></p>
+ 
+ <a class="nedlast" href="klubbrating-handicap.docx" download>Last ned som Word-dokument</a>
+</div></header>
+<section><div class="wrap"></div></section><section id="problemet"><div class="wrap"><h2>Problemet</h2><p>En fersk spiller møter en erfaren og taper 78–4. Ingen av dem hadde det gøy. Den ferske kommer ikke tilbake neste uke.</p><p>Dette er den vanligste grunnen til at nye slutter i snooker — ikke at sporten er vanskelig, men at den er <em>ujevn</em> i starten. En nybegynner og en klubbspiller kan ikke ha en reell kamp uten hjelp.</p><p>Handicap løser det. Og et ratingtall er det som gjør handicapen rettferdig, gjennomsiktig og selvregulerende.</p></div></section><section id="kort-om-systemet"><div class="wrap"><h2>Kort om systemet</h2><p>Tre setninger:</p><ol class="liste"><li>Alle har et tall. Nye starter på <strong>300</strong>.</li><li>Er forskjellen mellom to spillere 180 poeng, får den svakeste <strong>18 poeng forsprang i hver frame</strong>. Differansen delt på ti.</li><li>Etter kampen flytter tallene seg. Vinneren opp, taperen ned, like mye.</li></ol><p>Det er hele systemet. Resten av dokumentet er detaljer.</p></div></section><section id="hvorfor-ikke-ren-elo"><div class="wrap"><h2>Hvorfor ikke ren Elo</h2><p>Sjakkens Elo bruker en formel med eksponenter for å regne ut hvor stor sjanse hver spiller har. Den er presis, men ingen regner den i hodet ved bordet.</p><p>Her er poenget: <strong>når handicapen er satt riktig, er kampen per definisjon jevn.</strong> Forventet resultat er 50/50 for begge. Da trengs ingen formel — bare et fast tall opp eller ned.</p><p>Det er den forenklingen som gjør at dette faktisk kan tas i bruk av en klubb med tretti medlemmer og ingen systemansvarlig.</p></div></section><section id="ratingskalaen"><div class="wrap"><h2>Ratingskalaen</h2><div class="tabellboks"><table><thead><tr><th>Rating</th><th>Nivå</th><th>Kjennetegn</th></tr></thead><tbody><tr><td>100–250</td><td>Helt fersk</td><td>Har spilt noen ganger. Treffer ballen, men ikke alltid der hun vil.</td></tr><tr><td>250–400</td><td>Nybegynner</td><td>Forstår spillet. Serier på 10–20 poeng.</td></tr><tr><td>400–550</td><td>Klubbspiller</td><td>Serier på 20–40. Kan legge en snooker med vilje.</td></tr><tr><td>550–700</td><td>God klubbspiller</td><td>Serier over 40. Spiller posisjon bevisst.</td></tr><tr><td>700–850</td><td>Turneringsspiller</td><td>Serier over 60. Deltar i nasjonale turneringer.</td></tr><tr><td>850+</td><td>Elite</td><td>Century-serier. Landslagsnivå.</td></tr></tbody></table></div><p><strong>Nye spillere starter på 300.</strong> Ikke på 0 — det gir for stort utslag i starten, og det føles som å begynne på bunnen av en kjeller.</p><p>Er det åpenbart at en ny spiller hører høyere, kan klubben plassere hen etter høyeste serie:</p><div class="tabellboks"><table><thead><tr><th>Høyeste serie</th><th>Startrating</th></tr></thead><tbody><tr><td>Under 10</td><td>250</td></tr><tr><td>10–20</td><td>350</td></tr><tr><td>20–40</td><td>450</td></tr><tr><td>40–60</td><td>600</td></tr><tr><td>Over 60</td><td>750</td></tr></tbody></table></div><p>Det er et anslag. Systemet retter seg selv i løpet av ti kamper.</p></div></section><section id="handicapen"><div class="wrap"><h2>Handicapen</h2><p><strong>Startpoeng = ratingdifferanse ÷ 10</strong>, avrundet til nærmeste hele. Den svakeste starter hver frame med disse poengene på tavla.</p><div class="tabellboks"><table><thead><tr><th>Differanse</th><th>Startpoeng</th></tr></thead><tbody><tr><td>0–50</td><td>0 — spill likt</td></tr><tr><td>60</td><td>6</td></tr><tr><td>100</td><td>10</td></tr><tr><td>150</td><td>15</td></tr><tr><td>200</td><td>20</td></tr><tr><td>250</td><td>25</td></tr><tr><td>300</td><td>30</td></tr><tr><td>400</td><td>40</td></tr><tr><td>450 eller mer</td><td>45 (tak)</td></tr></tbody></table></div><p><strong>Taket på 45</strong> er der fordi et større forsprang gjør at den sterke spilleren må rydde nesten hele bordet for å vinne. Da blir det ikke gøy for noen. Er differansen større enn 450, er handicap uansett feil verktøy — spill heller en treningsøkt eller en kortere spilleform.</p><p><strong>Under 50 i differanse spilles det likt.</strong> Småjusteringer skaper mer administrasjon enn de er verdt.</p></div></section><section id="etter-kampen"><div class="wrap"><h2>Etter kampen</h2><p>Regn ut andelen frames den ene vant, trekk fra 0,5, og gang med K.</p><p><strong>K er 40 for spillere med under 20 registrerte kamper, og 20 for alle andre.</strong> Nye spillere finner riktig nivå raskt; etablerte beveger seg rolig.</p><h3>Eksempel</h3><p>Anne har 520. Bjørn har 340.</p><ul class="liste"><li>Differanse: 180 → <strong>Bjørn starter med 18 poeng i hver frame</strong></li><li>De spiller best av tre. Bjørn vinner 2–1.</li><li>Bjørns andel: 2/3 = 0,67</li><li>Bjørn har spilt over 20 kamper, så K = 20</li><li>Endring: 20 × (0,67 − 0,5) = <strong>+3,3 → +3</strong></li></ul><p><strong>Bjørn: 340 → 343. Anne: 520 → 517.</strong></p><p>Bjørn vant, men fordi han fikk forsprang var det ventet at det kunne gå begge veier. Derfor flytter tallet seg lite. Hadde han vunnet 3–0, ville endringen vært 20 × (1 − 0,5) = +10.</p><h3>Hurtigtabell</h3><p>For dem som ikke vil regne. Gjelder K = 20; doble tallene for nye spillere.</p><div class="tabellboks"><table><thead><tr><th>Resultat</th><th>Vinner</th><th>Taper</th></tr></thead><tbody><tr><td>2–0</td><td>+10</td><td>−10</td></tr><tr><td>2–1</td><td>+3</td><td>−3</td></tr><tr><td>3–0</td><td>+10</td><td>−10</td></tr><tr><td>3–1</td><td>+5</td><td>−5</td></tr><tr><td>3–2</td><td>+2</td><td>−2</td></tr></tbody></table></div><p>Heng den på veggen ved siden av tavla.</p></div></section><section id="slik-tar-klubben-det-i-bruk"><div class="wrap"><h2>Slik tar klubben det i bruk</h2><p><strong>Uke 1.</strong> Skriv opp alle aktive medlemmer med et anslag. Ikke bruk lang tid — systemet korrigerer seg selv.</p><p><strong>Uke 2.</strong> Heng opp en liste ved bordene. Én kolonne med navn, én med tall, én med dato for siste endring.</p><p><strong>Fra uke 3.</strong> Spillerne fører selv. Én person i klubben har ansvar for å rydde i listen én gang i måneden.</p><p>Det trengs ikke programvare. Et ark på veggen fungerer for tretti medlemmer. Blir dere hundre, flytt det til et regneark.</p><p><strong>Én regel er viktig:</strong> ratingen skal bare telle når begge er enige om at kampen er en ratingkamp. Ellers blir hver tilfeldige frame en prestisjekamp, og da har systemet skapt det problemet det skulle løse.</p></div></section><section id="forholdet-til-den-nasjonale-rankingen"><div class="wrap"><h2>Forholdet til den nasjonale rankingen</h2><p>Dette er ikke en konkurrent til CueScore. Det er noe annet.</p><div class="tabellboks"><table><thead><tr><th></th><th>Klubbrating</th><th>CueScore-ranking</th></tr></thead><tbody><tr><td>Formål</td><td>Jevne kamper i klubben</td><td>Rangere de beste nasjonalt</td></tr><tr><td>Hvem</td><td>Alle, fra første kveld</td><td>De som spiller turnering</td></tr><tr><td>Handicap</td><td>Ja</td><td>Nei</td></tr><tr><td>Nivå</td><td>Klubben</td><td>Nasjonalt</td></tr></tbody></table></div><p>En spiller kan gjerne ha begge. Klubbratingen er et rekrutteringsverktøy; rankingen er et konkurranseverktøy.</p><p><strong>CueScore kan ikke føre klubbratingen for dere.</strong> Bekreftet av CueScore support 11. august 2026: egne ratinglister er forbeholdt nettverkskontoer, ikke klubber, og ratingen deres bygger uansett bare på turneringer <em>uten</em> handicap. Ikke bruk tid på å lete etter funksjonen — den finnes ikke på klubbnivå.</p><p>Det endrer ingenting for opplegget her. Et ark på veggen var alltid framgangsmåten.</p></div></section><section id="hva-dette-gir-klubben-utover-jevnere-kamper"><div class="wrap"><h2>Hva dette gir klubben utover jevnere kamper</h2><p><strong>En vei inn i konkurranse.</strong> Med handicap kan en nybegynner delta i en klubbturnering fra første måned og faktisk ha sjanse til å vinne. Det finnes ikke i dag.</p><p><strong>Et synlig framskritt.</strong> Tallet stiger. Det er den samme mekanismen som gjør at folk fortsetter med språkapper og løpeklokker — progresjon som kan ses.</p><p><strong>En grunn til å komme tilbake.</strong> «Jeg er 340 nå, jeg vil over 400 før jul» er en helt annen motivasjon enn «jeg burde spille mer».</p><p><strong>Et tall til søknadene.</strong> Antall spillere med aktiv rating er en langt bedre aktivitetsindikator enn medlemstall — og det er akkurat den typen dokumentasjon tilskuddsordningene ber om. Se Soknadspakke.</p></div></section><section id="apne-sporsmal"><div class="wrap"><h2>Åpne spørsmål</h2><p><strong>Trondheim Snooker har allerede noe lignende.</strong> Det bør undersøkes før dette rulles ut — hvis deres system fungerer, er det bedre å ta det i bruk enn å innføre et konkurrerende. Spørsmål å stille: hvordan settes handicapen, hvordan oppdateres tallet, og hva har de lært om hva som ikke fungerte?</p><p><strong>Kalibreringen er uprøvd.</strong> Delingen på ti, taket på 45 og K-verdiene er fornuftige anslag, ikke etterprøvde tall. Etter en sesong bør de justeres mot faktiske resultater. Blir kampene systematisk vunnet av den svakeste, er handicapen for raus.</p><p><strong>Frameformat.</strong> Systemet forutsetter at det spilles flere frames. Spilles bare én, blir utslagene store og tilfeldige. Best av tre bør være minimum for ratingkamper.</p></div></section><section id="navneforslag"><div class="wrap"><h2>Navneforslag</h2><p>«Rating» er greit, men litt kaldt. Alternativer klubbene kan velge mellom:</p><ul class="liste"><li><strong>Klubbrating</strong> — nøytralt og selvforklarende</li><li><strong>Snookertallet</strong> — enkelt, litt lekent</li><li><strong>Formtall</strong> — signaliserer at det svinger, ikke er en dom</li></ul><p>Jeg heller mot Klubbrating. Det sier hva det er, og det skiller det tydelig fra den nasjonale rankingen.</p></div></section><section><div class="wrap"><a class="nedlast" href="klubbrating-handicap.docx" download>Last ned som Word-dokument</a><p class="ajour">Innholdet er kontrollert <strong>2026-08-11</strong>. Frister og beløp endres — kontroller alltid mot ordningens egen utlysning før dere sender noe. Finner du en feil, si fra, så rettes den for alle klubbene.</p></div></section>
+<footer><div class="wrap">
+ <a class="tilbake" href="index.html">&larr; Tilbake til forsiden</a>
+ 
+ <p>Del av verktøykassen for norske snookerklubber. Fritt tilgjengelig for alle
+ klubber i Norge, også de som ikke driver med snooker.</p>
+ <p>Dette er ikke et offisielt nettsted for Norges Biljardforbund.</p>
+</div></footer>
+</body></html>

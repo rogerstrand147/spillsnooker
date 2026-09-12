@@ -595,7 +595,7 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
    1. INNSTILLINGER
    ══════════════════════════════════════════════════════════════════ */
 const FORHANDSVIS = true;          // false når SKJEMA_ENDEPUNKT er satt og alle sju klubber er bekreftet
-const SKJEMA_ENDEPUNKT = "";       // URL til e-postlista. Tom = knappen viser bare kvittering
+const SKJEMA_ENDEPUNKT = "https://formspree.io/f/xppzngky"; // Formspree: "https://formspree.io/f/<skjema-ID>". Tom = knappen viser bare kvittering
 const TERSKEL = 15;                // felles utgangspunkt til klubben sier sitt
 const VIDEO_URL = "";              // mp4/webm, 5–8 s, uten lyd. Tom = plassholderen står
 const VIDEO_STILL = "";            // stillbilde (jpg). Vises ved datasparing og redusert bevegelse
@@ -1099,10 +1099,14 @@ function tegnKlubber(){
   const epost=f.querySelector('input[type=email]').value;
   let lagret=false;
   if(SKJEMA_ENDEPUNKT){
+   /* Formspree: JSON inn, JSON ut når Accept-headeren er satt. Bare 2xx er lagret —
+      et avslag (kvote brukt opp, skjema slått av) skal ikke gi falsk kvittering. */
    try{
-    await fetch(SKJEMA_ENDEPUNKT,{method:'POST',headers:{'Content-Type':'application/json'},
-     body:JSON.stringify({epost,by:k.sted,klubb:k.navn})});
-    lagret=true;
+    const res=await fetch(SKJEMA_ENDEPUNKT,{method:'POST',
+     headers:{'Content-Type':'application/json','Accept':'application/json'},
+     body:JSON.stringify({email:epost,by:k.sted,klubb:k.navn,
+      _subject:`Venteliste ${k.sted} — spillsnooker.no`})});
+    lagret=res.ok;
    }catch(err){ /* stille — brukeren skal ikke straffes for nettfeil */ }
   }
   f.classList.remove('aap');
@@ -1117,8 +1121,11 @@ function tegnKlubber(){
    ? (k.kurs
       ? `Takk — du er påmeldt. ${esc(k.navn)} tar kontakt før ${esc(k.kurs)}.`
       : `Takk. Du får beskjed så snart ${esc(k.navn)} setter opp neste pulje.`)
-   : `<b>Dette er en forhåndsvisning.</b> Adressen ble ikke lagret noe sted, og du
-      får ingen beskjed. Skjemaet kobles til når nettstedet settes opp for alvor.`;
+   : (SKJEMA_ENDEPUNKT
+      ? `<b>Det gikk ikke.</b> Adressen ble ikke lagret. Prøv igjen om litt, eller
+         ta kontakt med klubben direkte${k.kontakt?': '+esc(k.kontakt):''}.`
+      : `<b>Dette er en forhåndsvisning.</b> Adressen ble ikke lagret noe sted, og du
+      får ingen beskjed. Skjemaet kobles til når nettstedet settes opp for alvor.`);
   kv.classList.add('vis');
   if(!lagret) kv.classList.add('advarsel');
  });

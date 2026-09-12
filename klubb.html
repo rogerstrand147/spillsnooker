@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="no"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Fjernes samtidig med FORHANDSVIS = false i index.html -->
+<meta name="robots" content="noindex,nofollow">
+<title>For klubbene — rekrutteringskalkulatoren · Snooker i Norge</title>
+<meta name="description" content="Hva blir det egentlig av å kjøre ett kurs? Klubben taster inn sine egne tall og ser medlemstallet om ett, to og tre år — mot det bordene tåler.">
+<style>
+:root{
+ --svart:#0C0E0D; --flate:#161B18; --hevet:#1D2320; --kant:#2A322D;
+ --filt:#157F4C; --filt-lys:#2FA86D; --filt-mork:#0E5533;
+ --lampe:#E07A4D; --lampe-lys:#F0A181;
+ --elfenben:#F4F1EA; --dempet:#9AA39C; --svak:#6B746E;
+ --gul:#E8C33D; --rosa:#E58BA6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--svart);color:var(--elfenben);
+ font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+ font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px}
+a{color:var(--filt-lys)}
+#forhand{background:var(--lampe);color:#0C0E0D;text-align:center;padding:9px 16px;
+ font-size:.82rem;font-weight:650;letter-spacing:.02em}
+header{padding:28px 0 8px;
+ background:radial-gradient(ellipse 950px 420px at 50% -10%,rgba(21,127,76,.22),transparent 66%)}
+.tilbake{font-size:.85rem;color:var(--dempet);text-decoration:none}
+.tilbake:hover{color:var(--filt-lys)}
+.merk{font-size:.74rem;text-transform:uppercase;letter-spacing:.16em;color:var(--lampe);font-weight:650;margin-top:26px}
+h1{font-size:clamp(1.7rem,4.4vw,2.7rem);line-height:1.1;letter-spacing:-.03em;font-weight:700;max-width:22ch;margin-top:8px}
+h1 em{font-style:normal;color:var(--filt-lys)}
+.led{color:var(--dempet);font-size:1.04rem;margin-top:14px;max-width:60ch}
+section{padding:34px 0}
+h2{font-size:1.35rem;letter-spacing:-.02em;margin-bottom:6px}
+.kalk{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:22px;margin-top:22px}
+@media(max-width:760px){.kalk{grid-template-columns:1fr}}
+.panel{background:var(--flate);border:1px solid var(--kant);border-radius:14px;padding:20px}
+.felt{display:grid;grid-template-columns:1fr 112px;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid var(--kant)}
+.felt:last-of-type{border-bottom:none}
+.felt label{font-size:.92rem}
+.felt label small{display:block;color:var(--svak);font-size:.74rem;line-height:1.4;margin-top:2px}
+.felt input,.felt select{background:var(--hevet);border:1px solid var(--kant);border-radius:9px;
+ padding:10px 12px;color:var(--elfenben);font:inherit;font-size:.95rem;width:100%;text-align:right}
+.felt select{text-align:left}
+.felt input:focus,.felt select:focus{outline:none;border-color:var(--filt-lys)}
+.felt input.anslag{border-color:rgba(224,122,77,.45)}
+.tag{display:inline-block;font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;padding:2px 7px;border-radius:5px;
+ background:rgba(224,122,77,.16);color:var(--lampe-lys);vertical-align:middle;margin-left:6px}
+.tag.fakta{background:rgba(21,127,76,.18);color:var(--filt-lys)}
+.res h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.12em;color:var(--dempet);font-weight:650}
+.na{margin-top:8px;padding:16px;border-radius:11px;
+ background:linear-gradient(135deg,rgba(21,127,76,.18),rgba(21,127,76,.04));border:1px solid rgba(47,168,109,.30)}
+.na b{font-size:2rem;color:var(--filt-lys);font-weight:700;letter-spacing:-.02em;line-height:1}
+.na span{display:block;color:var(--dempet);font-size:.86rem;margin-top:6px}
+.aar{margin-top:18px;display:grid;gap:12px}
+.rad{display:grid;grid-template-columns:64px 1fr 70px;gap:12px;align-items:center}
+.rad .l{font-size:.85rem;color:var(--dempet)}
+.rad .v{font-size:1.15rem;font-weight:700;text-align:right;color:var(--elfenben)}
+.stolpe{position:relative;height:22px;border-radius:6px;background:var(--hevet);border:1px solid var(--kant);overflow:hidden}
+.stolpe i{position:absolute;left:0;top:0;bottom:0;background:var(--filt);border-radius:5px 0 0 5px;
+ transition:width .45s cubic-bezier(.2,.7,.2,1)}
+.stolpe i.over{background:var(--lampe)}
+.stolpe s{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(135deg,rgba(244,241,234,.10) 0 4px,transparent 4px 8px);
+ border-left:1px dashed var(--dempet);border-right:1px dashed var(--dempet)}
+.forkl{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:.76rem;color:var(--svak)}
+.forkl i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:5px}
+.setning{margin-top:18px;font-size:1rem;line-height:1.55}
+.setning b{color:var(--filt-lys)}
+.setning.varsel b{color:var(--lampe-lys)}
+.forut{margin-top:22px;padding:16px 18px;border-radius:11px;background:var(--flate);border:1px solid var(--kant);
+ font-size:.84rem;color:var(--dempet);line-height:1.6}
+.forut b{color:var(--elfenben)}
+.forut ul{margin:8px 0 0 18px}
+.forut li{margin-top:4px}
+.kommer{margin-top:10px;padding:18px 20px;border:1px dashed var(--kant);border-radius:12px;color:var(--svak);font-size:.88rem;max-width:60ch}
+footer{margin-top:20px;padding:34px 0 50px;border-top:1px solid var(--kant);color:var(--svak);font-size:.82rem;line-height:1.6}
+footer p{margin-top:8px;max-width:70ch}
+</style>
+</head><body>
+
+<div id="forhand">Forhåndsvisning — kalkulatoren regner bare i nettleseren din. Ingenting sendes eller lagres. Konverteringsraten er et anslag: Snookerskolen er ikke kjørt ennå.</div>
+
+<header><div class="wrap">
+ <a class="tilbake" href="index.html">← Hvor kan du spille snooker i Norge?</a>
+ <div class="merk">For klubbene</div>
+ <h1>Hva blir det egentlig av å kjøre <em>ett kurs</em>?</h1>
+ <p class="led">Tast inn klubbens egne tall. Kalkulatoren viser medlemstallet om ett, to og
+ tre år — og hvor mye av det bordene tåler klubben bruker i dag. Alt kan endres.</p>
+</div></header>
+
+<section><div class="wrap">
+ <h2>Rekrutteringskalkulatoren</h2>
+ <p class="led" style="margin-top:4px;font-size:.95rem">Et bord tåler 15–25 aktive. De fleste klubber bruker en brøkdel av det.</p>
+
+ <div class="kalk">
+  <form class="panel" id="skjema" autocomplete="off">
+   <div class="felt">
+    <label for="klubb">Klubb<small>Forhåndsutfyller bordtall fra klubbregisteret. Egne tall kan skrives over.</small></label>
+    <select id="klubb"></select>
+   </div>
+   <div class="felt">
+    <label for="bord">Bord i fullstørrelse<span class="tag fakta" id="bord-tag" hidden>fra registeret</span></label>
+    <input type="number" id="bord" min="1" max="40" step="1" inputmode="numeric">
+   </div>
+   <div class="felt">
+    <label for="aktive">Aktive spillere i dag<small>Klubbens eget tall. Medlemmer som faktisk spiller.</small></label>
+    <input type="number" id="aktive" min="0" max="2000" step="1" inputmode="numeric">
+   </div>
+   <div class="felt">
+    <label for="pulje">Deltakere per pulje<small>Snookerskolen er lagt opp for 8–15 per pulje. Klubben setter terskelen selv.</small></label>
+    <input type="number" id="pulje" min="1" max="60" step="1" inputmode="numeric" value="10" class="anslag">
+   </div>
+   <div class="felt">
+    <label for="puljer">Puljer per år<small>Én om høsten og én om våren er utgangspunktet.</small></label>
+    <input type="number" id="puljer" min="0" max="12" step="1" inputmode="numeric" value="2">
+   </div>
+   <div class="felt">
+    <label for="andel">Andel som blir værende<span class="tag">anslag</span><small>Prosent av kursdeltakerne som er aktive ett år etter. <b>Vårt tall er en gjetning</b> — Snookerskolen er uprøvd. Sett ditt eget.</small></label>
+    <input type="number" id="andel" min="0" max="100" step="5" inputmode="numeric" value="40" class="anslag">
+   </div>
+  </form>
+
+  <div class="panel res" aria-live="polite">
+   <h3>I dag</h3>
+   <div class="na"><b id="na-tall">—</b><span id="na-tekst">Fyll inn bord og aktive.</span></div>
+
+   <h3 style="margin-top:22px">Medlemstall etter Snookerskolen</h3>
+   <div class="aar" id="aar"></div>
+   <div class="forkl">
+    <span><i style="background:var(--filt)"></i>Aktive</span>
+    <span><i style="background:repeating-linear-gradient(135deg,rgba(244,241,234,.35) 0 3px,transparent 3px 6px);border:1px dashed var(--dempet)"></i>Det bordene tåler (15–25 per bord)</span>
+    <span><i style="background:var(--lampe)"></i>Over det bordene tåler</span>
+   </div>
+   <p class="setning" id="setning"></p>
+  </div>
+ </div>
+
+ <div class="forut">
+  <b>Forutsetningene, sagt rett ut</b>
+  <ul>
+   <li><b>15–25 aktive per bord</b> er rammen prosjektet bruker for kapasitet. Den er et erfaringstall, ikke en måling — derfor vises kapasiteten som et spenn, aldri som ett tall.</li>
+   <li><b>Andelen som blir værende</b> er den avgjørende forutsetningen, og den er ikke målt. Første pulje som er kjørt gir det første ekte tallet. Til da er 40 % vår gjetning.</li>
+   <li>Kalkulatoren regner <b>ikke</b> med frafall blant dagens aktive. Mister klubben spillere hvert år, må kurset først dekke det.</li>
+   <li>Bordtallene er fra klubbregisteret per september 2026. Aktive-tallet er forhåndsutfylt bare der klubben selv har oppgitt det, og da som klubbens eget anslag.</li>
+   <li>Ingenting sendes eller lagres. Last siden på nytt, og alt er borte.</li>
+  </ul>
+ </div>
+
+ <div class="kommer">Resten av klubbdelen — gjeldende regler, frister og satser, tilskudds- og
+ sponsorkalkulatoren — kommer her. Inntil da ligger verktøykassen nederst på
+ <a href="index.html#klubbdrift">forsiden</a>.</div>
+</div></section>
+
+<footer><div class="wrap">
+ <div>Snooker i Norge — et felles opplegg for de sju snookerklubbene i landet.</div>
+ <p>Nettstedet lages og driftes foreløpig av Roger André Strand, som ikke har verv i noen
+ klubb eller i forbundet. Målet er at klubbene skal overta det. Denne siden er ikke et
+ offisielt NBF-nettsted.</p>
+</div></footer>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   KLUBBDATA — bord fra FAKTA (klubbregisteret 2026-08-11).
+   aktive: klubbens eget anslag der det finnes, ellers null (feltet står tomt).
+   En verdi som spriker mot FAKTA er en regresjon.
+   ══════════════════════════════════════════════════════════════════ */
+const KLUBBER=[
+ {navn:"Oslo Snooker & Carambole",           bord:8, aktive:45},
+ {navn:"Stord Snooker",                       bord:8, aktive:20},
+ {navn:"Trondheim Snooker",                   bord:6, aktive:null},
+ {navn:"Sarpsborg Snookerklubb",              bord:4, aktive:30},
+ {navn:"Helgeland Snooker",                   bord:4, aktive:15},
+ {navn:"Os Biljard og Snookerklubb",          bord:4, aktive:null},
+ {navn:"Ishavsbyen Biljard og Snookerklubb",  bord:2, aktive:null},
+];
+const PER_BORD_LAV=15, PER_BORD_HOY=25;   // kapasitetsramme, FAKTA — et spenn, aldri ett tall
+
+/* Rent regnestykke, ingen DOM. Testes for seg. */
+function regn({bord,aktive,pulje,puljer,andel}){
+ const kapLav=bord*PER_BORD_LAV, kapHoy=bord*PER_BORD_HOY;
+ const nye=Math.round(pulje*puljer*andel/100);       // blir værende per år
+ const aar=[1,2,3].map(n=>aktive+nye*n);
+ const bruktLav=kapHoy?aktive/kapHoy:0, bruktHoy=kapLav?aktive/kapLav:0; // andel av kapasitet, spenn
+ return {kapLav,kapHoy,nye,aar,bruktLav,bruktHoy};
+}
+if(typeof module!=='undefined') module.exports={regn,KLUBBER,PER_BORD_LAV,PER_BORD_HOY};
+
+/* DOM */
+if(typeof document!=='undefined'){
+ const $=id=>document.getElementById(id);
+ const sel=$('klubb');
+ sel.innerHTML='<option value="">Velg klubb, eller fyll inn selv</option>'+
+  KLUBBER.map((k,i)=>`<option value="${i}">${k.navn}</option>`).join('');
+ const les=id=>{const v=parseFloat($(id).value);return isFinite(v)&&v>=0?v:null;};
+ const pct=x=>Math.round(x*100);
+
+ function tegn(){
+  const bord=les('bord'), aktive=les('aktive'), pulje=les('pulje')??0, puljer=les('puljer')??0, andel=les('andel')??0;
+  const rader=$('aar'), setn=$('setning');
+  if(bord===null||aktive===null||bord<1){
+   $('na-tall').textContent='—'; $('na-tekst').textContent='Fyll inn bord og aktive.';
+   rader.innerHTML=''; setn.textContent=''; return;
+  }
+  const r=regn({bord,aktive,pulje,puljer,andel});
+  $('na-tall').textContent=aktive;
+  $('na-tekst').textContent=`aktive på ${bord} bord. Bordene tåler ${r.kapLav}–${r.kapHoy}. `+
+   (aktive<r.kapLav ? `Klubben bruker rundt ${pct(r.bruktLav)}–${pct(r.bruktHoy)} % av det den har.`
+   : aktive<=r.kapHoy ? `Klubben er innenfor det bordene tåler.` : `Klubben har flere aktive enn rammen tilsier — bordene er fulle.`);
+  const maks=Math.max(r.kapHoy, ...r.aar, aktive)*1.05;
+  rader.innerHTML=r.aar.map((v,i)=>{
+   const inne=Math.min(v,r.kapHoy), over=v>r.kapHoy;
+   return `<div class="rad"><span class="l">Om ${i+1} år</span>
+    <div class="stolpe"><s style="left:${r.kapLav/maks*100}%;width:${(r.kapHoy-r.kapLav)/maks*100}%"></s>
+     <i class="${over?'over':''}" style="width:${v/maks*100}%"></i></div>
+    <span class="v">${v}</span></div>`;}).join('');
+  if(r.nye===0){
+   setn.className='setning'; setn.innerHTML=`Med disse tallene blir ingen værende. Sjekk puljer per år og andelen — eller er det terskelen som er problemet?`;
+  } else if(r.aar[2]<=r.kapHoy){
+   setn.className='setning';
+   setn.innerHTML=`Om tre år: <b>${r.aar[2]} aktive</b> — ${r.aar[2]-aktive} flere enn i dag, uten ett bord til. ${r.aar[2]<r.kapLav?'Bordene tåler fortsatt flere.':'Da nærmer klubben seg det bordene tåler.'}`;
+  } else {
+   setn.className='setning varsel';
+   setn.innerHTML=`Om tre år: <b>${r.aar[2]} aktive</b>. Det er mer enn ${bord} bord tåler etter rammen (${r.kapLav}–${r.kapHoy}). Da er spørsmålet flere bord eller lengre åpningstid — et godt problem.`;
+  }
+ }
+
+ sel.addEventListener('change',()=>{
+  const k=KLUBBER[sel.value];
+  if(k){ $('bord').value=k.bord; $('aktive').value=k.aktive??''; $('bord-tag').hidden=false; }
+  else { $('bord-tag').hidden=true; }
+  tegn();
+ });
+ ['bord','aktive','pulje','puljer','andel'].forEach(id=>{
+  $(id).addEventListener('input',()=>{ if(id==='bord') $('bord-tag').hidden=true; tegn(); });
+ });
+ $('skjema').addEventListener('submit',e=>e.preventDefault());
+ tegn();
+}
+</script>
+</body></html>

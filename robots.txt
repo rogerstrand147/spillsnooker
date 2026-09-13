@@ -1,0 +1,9 @@
+# spillsnooker.no
+User-agent: *
+Allow: /
+
+# Verktøysidene er klubbmateriell og står foreløpig med noindex i selve
+# sidene. Fjernes der, ikke her — robots.txt kan ikke overstyre en
+# noindex-metatagg.
+
+Sitemap: https://spillsnooker.no/sitemap.xml

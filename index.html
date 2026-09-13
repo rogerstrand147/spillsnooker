@@ -258,6 +258,19 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
  display:inline-block;min-width:1.4ch;text-align:right;line-height:1}
 .teller .eks{font-style:normal;color:var(--svak);font-size:.72rem;border:1px solid var(--kant);
  border-radius:99px;padding:1px 7px;margin-left:6px;white-space:nowrap}
+
+/* Vannmerke: tallene er oppdiktede til skjemaet mater telleren. Merkelappen
+   alene leses av færre enn tallet, så den skrives tvers over boksen. Ligger
+   under teksten i stablingen og er skjult for skjermlesere — setningen
+   «eksempeltall» står allerede i teksten. Hele greia forsvinner med
+   EKSEMPELTALL = false. */
+.teller{position:relative;overflow:hidden;isolation:isolate}
+.teller.eksempel:not(.tom)::before{content:"EKSEMPELTALL";position:absolute;z-index:-1;
+ top:50%;left:50%;transform:translate(-50%,-50%) rotate(-11deg);
+ font-size:clamp(1.15rem,4.6vw,1.9rem);font-weight:800;letter-spacing:.16em;
+ color:var(--lampe);opacity:.16;white-space:nowrap;pointer-events:none;
+ text-transform:uppercase}
+@media (prefers-contrast:more){.teller.eksempel:not(.tom)::before{opacity:.3}}
 .klubb [data-meld][hidden]{display:none}
 
 /* ═══ v2: sitat ═══ */
@@ -311,10 +324,11 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
   </div>
   <aside class="rekrutt">
    <div class="merk">Snookerskolen</div>
-   <h2>Åtte kvelder.<br>Gratis. Utstyret låner du.</h2>
-   <p>Et nybegynnerkurs som starter på null. Klubben setter opp en pulje når nok
-   folk i byen har meldt interesse — derfor spør vi om e-posten din før vi har
-   en dato.</p>
+   <h2>Åtte kvelder.<br>Fra null, med lånt utstyr.</h2>
+   <p>Et ferdig nybegynnerkurs som klubbene kan kjøre. <b>Vi samler opp hvem som
+   vil være med, og gir lista til klubben din</b> — så avgjør de om og når de
+   setter opp en pulje, og hva den koster. Derfor spør vi om e-posten din før
+   det finnes en dato.</p>
    <a class="knapp" href="#klubber">Meld deg på — der du bor</a>
    <a class="knapp sek" href="#hva">Jeg har aldri spilt — hva er snooker?</a>
    <div class="rtall" id="rtall"></div>
@@ -527,6 +541,14 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
    <b>Snookerskolen — kursopplegg</b><span>Åtte kvelder, ferdig planlagt. Ett kort per kveld, med driller og tidsbruk</span></a>
   <a href="klubbrating.html">
    <b>Klubbrating og handicap</b><span>Så en fersk og en erfaren kan ha en jevn kamp</span></a>
+  <a href="plassbehov.html">
+   <b>Plassbehov, lys og oppmerking</b><span>Hvor mye gulv ett bord krever, hva NBF krever av lys, og hvor punktene skal ligge — før klubben bestiller</span></a>
+  <a href="presseopplegg.html">
+   <b>Presseopplegg</b><span>Ett skjema to ganger i året. Ut kommer pressemelding, søknadstall og oppdatert klubbkort</span></a>
+  <a href="presse-turnering.html">
+   <b>Presseopplegg for turneringer</b><span>Én turnering blir sju lokale saker — tre ferdige maler og rollefordelingen som må avklares før</span></a>
+  <a href="neste-steg.html">
+   <b>Neste steg — øvelseskompendium</b><span>Åtte øvelser som hver gir et tall, for spilleren som har stoppet opp. Med loggskjema klubben kan henge opp</span></a>
   <a href="klubb.html">
    <b>Tre kalkulatorer</b><span>Hva ett kurs gir av medlemmer, hva klubben kan søke om, og hva en sponsorpakke er verdt å be om. Klubbens egne tall, regnet i nettleseren</span></a>
  </div>
@@ -583,19 +605,19 @@ const KLUBBER = [
   adresse:"Ensjøveien 16, 0655 Oslo — det står 16-18 på inngangsdøra. Nær Ensjø T-bane",
   dropin:"Torsdag 17–22 og søndag 12–22. Bordet bookes på forhånd", pris:"250 kr/t for bordet — 125 kr/t hvis du spiller med et medlem", bord:8,
   bordnote:"pluss 4 carambolebord", kontakt:"info@oslosnooker.no",
-  apen:true, kurs:null, venteliste:7, bilde:null},
+  apen:true, kurs:null, venteliste:0, bilde:null},
 
  {navn:"Stord Snooker", sted:"Stord", bekreftet:true,
   adresse:"Podlen 4, 5410 Sagvåg — Stord",
   dropin:null, dropinhint:"Klubben har «pay and play», og kjørte gratis åpen trening hver torsdag våren 2025. Tider for i høst ikke bekreftet",
   pris:null, bord:8, bordnote:"pluss 2 poolbord",
-  kontakt:"stordsnooker@gmail.com", kurs:null, venteliste:3, bilde:null},
+  kontakt:"stordsnooker@gmail.com", kurs:null, venteliste:0, bilde:null},
 
  {navn:"Helgeland Snooker", sted:"Mo i Rana", bekreftet:true,
   adresse:"Strandgata 25 B, 8622 Mo i Rana",
   dropin:null, dropinhint:"Nettsiden oppgir åpent man–fre 17–22 og lør–søn 12–20. Om det gjelder ikke-medlemmer er ikke bekreftet",
   pris:null, bord:4, kontakt:"johnnyjenssen@yahoo.com",
-  pilot:true, kurs:null, venteliste:4, bilde:null},
+  pilot:true, kurs:null, venteliste:0, bilde:null},
 
  /* Ikke bekreftet — bordene vises på kartet, men klubben får ikke kort ennå. */
  {navn:"Trondheim Snooker", sted:"Trondheim", bekreftet:true,
@@ -603,14 +625,14 @@ const KLUBBER = [
   dropin:"Pay & play når det er vakt i lokalet. Avtal på forhånd. Prøvetime kan bestilles",
   pris:"150 kr for de to første timene per person, 300 kr over to timer", bord:6,
   bordnote:"pluss 2 poolbord", kontakt:"post@trondheimsnooker.org · 450 76 710",
-  apen:true, kurs:null, venteliste:11, bilde:null},
+  apen:true, kurs:null, venteliste:0, bilde:null},
  {navn:"Os Biljard og Snookerklubb", sted:"Bjørnafjorden", bekreftet:false, bord:4, kurs:null, venteliste:0, bilde:null},
  {navn:"Sarpsborg Snookerklubb", sted:"Sarpsborg", bekreftet:true,
   adresse:"Ved Hafslund, Sarpsborg — 250 m² lokale",
-  dropin:"Pay & play etter avtale — bestill time på e-post",
-  pris:"100 kr/t for voksen, 50 kr/t for ungdom", bord:4,
-  bordnote:"pluss 2 biljardbord", kontakt:"post@sarpsborgsnooker.com",
-  apen:true, kurs:null, venteliste:2, bilde:null},
+  dropin:"Pay & play etter avtale — ring eller send e-post på forhånd",
+  pris:"100 kr/t for voksen", bord:4,
+  bordnote:"pluss 2 biljardbord", kontakt:"post@pefjell.no · 950 53 450",
+  apen:true, kurs:null, venteliste:0, bilde:null},
  {navn:"Ishavsbyen Biljard og Snookerklubb", sted:"Tromsø", bekreftet:true,
   adresse:"Lars Eriksens vei 3c, Tromsø",
   dropin:null, dropinhint:"Klubben oppgir åpent mandag–fredag 18–21. Om det gjelder ikke-medlemmer er ikke bekreftet",
@@ -1020,8 +1042,9 @@ function minikart(i,k){
 function tellerHTML(k){
  const by=esc(k.sted), t=k.venteliste||0;
  const eks=EKSEMPELTALL?' <em class="eks">eksempeltall</em>':'';
- if(t===0) return `<div class="teller tom"><span><b>Bli den første i ${by}.</b> Ved ${terskelFor(k)} påmeldte setter klubben opp en pulje.${eks}</span></div>`;
- return `<div class="teller"><span class="setning">Det står <b data-mal="${t}">${REDUSERT?t:0}</b> ${t===1?'person':'personer'} i ${by} og venter.</span><span>Ved ${terskelFor(k)} setter klubben opp en pulje.${eks}</span></div>`;
+ const vm=EKSEMPELTALL?' eksempel':'';
+ if(t===0) return `<div class="teller tom${vm}"><span><b>Bli den første i ${by}.</b> Ved ${terskelFor(k)} påmeldte tar vi det opp med klubben.${eks}</span></div>`;
+ return `<div class="teller${vm}"><span class="setning">Det står <b data-mal="${t}">${REDUSERT?t:0}</b> ${t===1?'person':'personer'} i ${by} og venter.</span><span>Ved ${terskelFor(k)} tar vi det opp med klubben.${eks}</span></div>`;
 }
 
 /* Alle sju klubber får kort. «bekreftet» styrer om vi viser fakta eller åpne

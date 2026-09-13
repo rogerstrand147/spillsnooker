@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="no"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Fjernes samtidig med FORHANDSVIS = false i index.html -->
+<meta name="robots" content="noindex,nofollow">
+<title>Presseopplegg for turneringer &middot; Snooker i Norge</title>
+<meta name="description" content="Et norgesmesterskap er ingen nasjonal nyhet. Ingen riksavis trykker det, og det skal de heller ikke.">
+<style>
+:root{
+ --svart:#0C0E0D; --flate:#161B18; --hevet:#1D2320; --kant:#2A322D;
+ --filt:#157F4C; --filt-lys:#2FA86D; --filt-mork:#0E5533;
+ --lampe:#E07A4D; --lampe-lys:#F0A181;
+ --elfenben:#F4F1EA; --dempet:#9AA39C; --svak:#6B746E;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--svart);color:var(--elfenben);
+ font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+ font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px}
+a{color:var(--filt-lys)}
+#forhand{background:var(--lampe);color:#0C0E0D;text-align:center;padding:9px 16px;
+ font-size:.82rem;font-weight:650;letter-spacing:.02em}
+header{padding:28px 0 8px;
+ background:radial-gradient(ellipse 950px 420px at 50% -10%,rgba(21,127,76,.22),transparent 66%)}
+.tilbake{font-size:.85rem;color:var(--dempet);text-decoration:none}
+.tilbake:hover{color:var(--filt-lys)}
+.merk{font-size:.74rem;text-transform:uppercase;letter-spacing:.16em;color:var(--lampe);font-weight:650;margin-top:26px}
+h1{font-size:clamp(1.7rem,4.4vw,2.7rem);line-height:1.1;letter-spacing:-.03em;font-weight:700;max-width:24ch;margin-top:8px}
+.led{color:var(--dempet);font-size:1.04rem;margin-top:14px;max-width:62ch}
+section{padding:30px 0;scroll-margin-top:12px}
+h2{font-size:1.35rem;letter-spacing:-.02em;margin:4px 0 8px}
+h3{font-size:1.02rem;letter-spacing:-.01em;margin:22px 0 6px}
+h4{font-size:.95rem;margin:18px 0 4px;color:var(--dempet)}
+p{margin-top:10px;max-width:68ch}
+code{background:var(--hevet);border:1px solid var(--kant);border-radius:5px;
+ padding:1px 6px;font-size:.88em;font-family:ui-monospace,Menlo,monospace}
+pre{background:var(--flate);border:1px solid var(--kant);border-radius:10px;
+ padding:14px 16px;margin-top:12px;overflow-x:auto}
+pre code{background:none;border:0;padding:0}
+.felt{display:inline-block;background:rgba(224,122,77,.16);color:var(--lampe-lys);
+ border-radius:5px;padding:0 7px;font-size:.86em;font-weight:600;letter-spacing:.02em}
+.hopp{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.hopp a{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:99px;
+ border:1px solid var(--kant);background:var(--flate);color:var(--dempet);
+ text-decoration:none;font-size:.86rem;font-weight:600}
+.hopp a:hover{border-color:var(--filt);color:var(--filt-lys)}
+.panel{background:var(--flate);border:1px solid var(--kant);border-radius:14px;padding:18px 20px;margin-top:16px}
+.panel.varsel{border-color:rgba(224,122,77,.42);background:linear-gradient(135deg,rgba(224,122,77,.10),rgba(224,122,77,.02))}
+.panel.god{border-color:rgba(47,168,109,.32);background:linear-gradient(135deg,rgba(21,127,76,.14),rgba(21,127,76,.03))}
+.panel h3{margin-top:0}
+.panel p:first-of-type{margin-top:0}
+figure{margin:20px 0 6px}
+figure img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--kant);background:#fff}
+figcaption{margin-top:8px;font-size:.84rem;color:var(--svak);line-height:1.5}
+.tabellboks{overflow-x:auto;margin-top:14px}
+table{border-collapse:collapse;width:100%;font-size:.93rem;min-width:460px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--kant);vertical-align:top}
+th{font-size:.74rem;text-transform:uppercase;letter-spacing:.1em;color:var(--svak);font-weight:650}
+td strong{color:var(--elfenben)}
+ul.liste,ol.liste{margin-top:10px;padding-left:22px}
+ul.liste li,ol.liste li{margin-top:7px;max-width:66ch}
+ul.liste ul,ol.liste ol{margin-top:4px}
+.rutenett{display:grid;gap:12px;margin-top:16px}
+@media(min-width:720px){.rutenett{grid-template-columns:1fr 1fr}}
+.rutenett .kort{background:var(--flate);border:1px solid var(--kant);border-radius:12px;padding:14px 16px}
+.rutenett .kort h3{margin:0 0 6px;font-size:.78rem;text-transform:uppercase;
+ letter-spacing:.12em;color:var(--filt-lys)}
+.rutenett .kort p,.rutenett .kort li{font-size:.9rem;color:var(--dempet)}
+.rutenett .kort ul.liste,.rutenett .kort ol.liste{margin-top:4px;padding-left:18px}
+.nedlast{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 20px;border-radius:11px;
+ border:1px solid var(--filt);background:rgba(21,127,76,.14);color:var(--filt-lys);
+ text-decoration:none;font-weight:650;font-size:.95rem;margin-top:18px}
+.nedlast:hover{background:rgba(21,127,76,.24)}
+.ajour{margin-top:18px;font-size:.86rem;color:var(--svak);max-width:68ch}
+footer{margin-top:20px;padding:34px 0 50px;border-top:1px solid var(--kant);color:var(--svak);font-size:.82rem;line-height:1.6}
+footer p{margin-top:8px;max-width:70ch}
+</style>
+</head><body>
+<div id="forhand">Kontrollert 2026-08-09. Sjekk alltid gjeldende kilde før innsending.</div>
+<header><div class="wrap">
+ <a class="tilbake" href="index.html">&larr; Hvor kan du spille snooker i Norge?</a>
+ <div class="merk">Regionalt, Norgescup, NM og nordisk mesterskap</div>
+ <h1>Presseopplegg for turneringer</h1>
+ <p class="led">Et norgesmesterskap er ingen nasjonal nyhet. Ingen riksavis trykker det, og det skal de heller ikke.</p>
+ 
+ <a class="nedlast" href="Presseopplegg-turnering.docx" download>Last ned som Word-dokument</a>
+</div></header>
+<section id="hovedgrepet-en-turnering-blir-sju-lokale-saker"><div class="wrap"><h2>Hovedgrepet: én turnering blir sju lokale saker</h2><p>Et norgesmesterskap er ingen nasjonal nyhet. Ingen riksavis trykker det, og det skal de heller ikke.</p><p><strong>Men «Ola fra Mo i Rana ble nummer fem i NM» er en sak i Rana Blad.</strong> Hver eneste gang.</p><p>Derfor er ikke jobben til arrangøren å skrive én pressemelding. Jobben er å hente ut den lokale vinkelen for hver klubb som deltok, og sende sju korte tekster til sju lokalaviser. Det er samme arbeid som én pressemelding, fordelt riktig — og det er den eneste måten snooker faktisk kommer på trykk i Norge.</p><p>Dette gjelder like mye for en regional turnering med tolv deltakere som for et nordisk mesterskap.</p></div></section><section id="de-tre-oyeblikkene"><div class="wrap"><h2>De tre øyeblikkene</h2><p>Turneringspresse har tre anledninger. De to første er valgfrie. <strong>Den tredje er den som faktisk gir dekning, og den er også den ingen har tid til å skrive når den skal sendes.</strong> Derfor skrives den ferdig på forhånd, med blanke felt.</p><div class="tabellboks"><table><thead><tr><th>Når</th><th>Hva</th><th>Hvem sender</th><th>Effekt</th></tr></thead><tbody><tr><td>3–4 uker før</td><td>«Turneringen arrangeres hos oss» — sted, dato, hvem som kommer</td><td>Arrangørklubben</td><td>Publikum, sponsorer, frivillige</td></tr><tr><td>1–2 dager før</td><td>Startliste med lokal vinkel: «tre spillere fra distriktet deltar»</td><td>Arrangør + hver klubb</td><td>Forhåndsomtale, moderat</td></tr><tr><td><strong>Samme kveld</strong></td><td><strong>Resultat, vinner, lokale plasseringer</strong></td><td><strong>Hver klubb for sine egne</strong></td><td><strong>Høyest — dette trykkes</strong></td></tr></tbody></table></div><p>Sendes resultatet dagen etter, er saken død. Lokalaviser publiserer sport samme kveld eller ikke i det hele tatt. Har du teksten ferdig med blanke felt, tar det fire minutter fra finalen er over til e-posten er sendt.</p></div></section><section id="rollefordeling-avklares-for-ikke-under"><div class="wrap"><h2>Rollefordeling — avklares før, ikke under</h2><div class="tabellboks"><table><thead><tr><th>Nivå</th><th>Hvem uttaler seg</th><th>Merk</th></tr></thead><tbody><tr><td>Klubbturnering, regionalt</td><td>Arrangørklubben</td><td>Fritt fram</td></tr><tr><td>Norgescup</td><td>Arrangørklubben om arrangementet, klubbene om sine egne spillere</td><td>—</td></tr><tr><td>Norgesmesterskap</td><td>Arrangørklubben på lik linje med NBF</td><td>Under avklaring</td></tr><tr><td>Nordisk mesterskap</td><td>Arrangørklubben på lik linje med NBF</td><td>Under avklaring. Navn, logoer og bilderettigheter kan være begrenset</td></tr></tbody></table></div><p><strong>Prosjektets posisjon:</strong> arrangørklubben skal kunne uttale seg om arrangementet på lik linje med forbundet. Arrangøren er den som står i lokalet, kjenner resultatene og kan svare lokalavisa samme kveld. Forbundet uttaler seg om det nasjonale, arrangøren om arrangementet — de to er ikke i konflikt.</p><p>Én ting står fast uansett hva avklaringen lander på: <strong>klubbene kan alltid omtale sine egne spilleres resultater lokalt.</strong> Det er noe annet enn å uttale seg <em>på vegne av</em> mesterskapet.</p><div class="panel"><p><strong>Under avklaring.</strong> Spørsmålet ligger hos generalsekretæren i NBF sammen med to andre. Sier forbundet noe annet, rettes dette dokumentet. Se 2026-08-09-presse-hvem-uttaler-seg.</p></div><p>En praktisk grunn til at posisjonen må være slik: en resultatsak skal sendes samme kveld. Ingen rekker å innhente godkjenning mens finalen spilles. En sperre ville i praksis fjernet mesterskapene fra opplegget.</p></div></section><section id="data-fra-cuescore"><div class="wrap"><h2>Data fra CueScore</h2><p>CueScore har et <strong>åpent API i beta</strong> på <code>api.cuescore.com</code>. Det gir JSON for turneringer, kamper, resultater, deltakere, rankinglister, poengsystem, spillesteder og handicaplister.</p><div class="panel"><p><strong>Beta betyr beta.</strong> CueScore skriver selv at datasettet kan endres når som helst, og at dokumentasjonen er så godt som fraværende. Endepunkter og feltnavn må bekreftes med <code>support@cuescore.com</code> før noe bygges som er avhengig av dem. Til å fylle ut en pressemelding trengs det uansett ikke — resultatsiden i nettleseren har alt.</p></div><p><strong>To ting må avklares før prosjektet bygger noe på CueScore:</strong></p><ol class="liste"><li>Hva NBFs eksisterende CueScore-lisens dekker. Spørsmålet ligger allerede hos generalsekretæren. Vi skal ikke kjøpe eller be om noe forbundet allerede har.</li><li>Om API-et kan kalles fra en nettleser, eller bare fra en server. Det avgjør om resultater kan vises direkte på nettstedet.</li></ol><h3>Felter som skal hentes, og hvor de havner i teksten</h3><div class="tabellboks"><table><thead><tr><th>Fra CueScore</th><th>Inn i pressemeldingen</th></tr></thead><tbody><tr><td>Turneringsnavn og dato</td><td>Overskrift og ingress</td></tr><tr><td>Spillested</td><td>«arrangert hos {KLUBB} i {STED}»</td></tr><tr><td>Antall deltakere</td><td>«{N} spillere fra hele landet»</td></tr><tr><td>Vinner og finalist</td><td>Hovedsaken</td></tr><tr><td>Finaleresultat i frames</td><td>«vant finalen 5–3»</td></tr><tr><td>Plassering per spiller</td><td><strong>Den lokale vinkelen — viktigst</strong></td></tr><tr><td>Klubbtilhørighet per spiller</td><td>Sorteringen som gir sju saker av én</td></tr><tr><td>Høyeste break</td><td>Egen liten sak hvis tallet er høyt</td></tr></tbody></table></div><p>Høyeste break er verdt å merke seg særskilt. Det er det eneste tallet i snooker en utenforstående umiddelbart forstår som en prestasjon, og det er også hovedargumentet for at CueScore bør registrere poeng innen frame. I dag må det noteres manuelt.</p></div></section><section id="mal-a-forhandsomtale-sendes-av-arrangoren"><div class="wrap"><h2>Mal A — forhåndsomtale, sendes av arrangøren</h2><div class="panel"><p><strong>{TURNERINGSNAVN} arrangeres i {STED} {DATO}</strong></p><p>{STED}: {ARRANGØRKLUBB} er vertskap når {TURNERINGSNAVN} spilles {DATO}. {ANTALL} spillere fra {ANTALL} klubber deltar.</p><p>«{SITAT — hvorfor det betyr noe at turneringen kommer hit}», sier {NAVN}, {ROLLE} i {ARRANGØRKLUBB}.</p><p>Det spilles i {ADRESSE}. {PUBLIKUMSINFO — gratis inngang, når finalen går, om det er kafé}. {EVENTUELL STREAMING-LENKE}.</p><p>Snooker spilles på bord som er {BORDSTØRRELSE}, og en kamp avgjøres i {FORMAT}. {ÉN SETNING SOM FORKLARER SPILLET FOR EN SOM IKKE KAN DET}.</p><p><strong>Kontakt:</strong> {NAVN}, {TELEFON} <strong>Resultater underveis:</strong> {CUESCORE-LENKE}</p></div></div></section><section id="mal-b-resultatet-sendes-samme-kveld"><div class="wrap"><h2>Mal B — resultatet, sendes samme kveld</h2><p>Denne skrives ferdig <strong>før</strong> turneringen, med blanke felt. Fyll ut og send.</p><div class="panel"><p><strong>{VINNERNAVN} vant {TURNERINGSNAVN} i {STED}</strong></p><p>{STED}: {VINNERNAVN} fra {VINNERKLUBB} vant {TURNERINGSNAVN} {DATO} etter {RESULTAT} mot {FINALISTNAVN} fra {FINALISTKLUBB}. {ANTALL} spillere deltok.</p><p>«{SITAT FRA VINNEREN — ett spørsmål på vei ut av salen holder}»</p><p>{HØYESTE BREAK-SETNING hvis tallet er verdt å nevne.}</p><p>Turneringen ble arrangert av {ARRANGØRKLUBB} i {ADRESSE}.</p><p><strong>Fullstendige resultater:</strong> {CUESCORE-LENKE} <strong>Kontakt:</strong> {NAVN}, {TELEFON} <strong>Bilder:</strong> vedlagt, fri bruk med kreditering {FOTOGRAF}</p></div></div></section><section id="mal-c-den-lokale-vinkelen-sendes-av-hver-klubb"><div class="wrap"><h2>Mal C — den lokale vinkelen, sendes av hver klubb</h2><p>Den viktigste av de tre. Kort, konkret, og sendt til klubbens egen lokalavis.</p><div class="panel"><p><strong>{SPILLERNAVN} fra {KLUBB} ble nummer {PLASSERING} i {TURNERINGSNAVN}</strong></p><p>{SPILLERNAVN} ({ALDER}) fra {KLUBB} endte på {PLASSERING}. plass da {TURNERINGSNAVN} ble spilt i {STED} {DATO}. {ANTALL} spillere deltok.</p><p>{ÉN SETNING OM VEIEN DIT — hvem han slo, eller hvor jevnt det var.}</p><p>«{SITAT}», sier {SPILLERNAVN}.</p><p>{KLUBB} holder til i {ADRESSE} og har {MEDLEMSTALL} medlemmer. {SETNING OM NESTE SNOOKERSKOLE, hvis en pulje er satt opp.}</p><p><strong>Kontakt:</strong> {NAVN}, {TELEFON}</p></div><p><strong>Legg alltid inn den siste setningen om neste kurs.</strong> En resultatsak leses av folk som synes snooker virker interessant. Uten en vei videre gjør de ingenting med det. Dette er koblingen mellom turneringspresse og rekruttering, og den er gratis.</p></div></section><section id="hva-som-skiller-nivaene"><div class="wrap"><h2>Hva som skiller nivåene</h2><div class="tabellboks"><table><thead><tr><th>Nivå</th><th>Vinkel som virker</th><th>Hvem sender mal C</th></tr></thead><tbody><tr><td>Regional turnering</td><td>«Klubben arrangerte, {N} deltok» — lokalavisa dekker gjerne</td><td>Arrangøren, for alle</td></tr><tr><td>Norgescup</td><td>Plassering og poeng i sammendraget</td><td>Hver klubb for sine</td></tr><tr><td>Norgesmesterskap</td><td>«Norgesmester» er et ord som åpner dører. Bruk det</td><td>Hver klubb for sine</td></tr><tr><td>Nordisk mesterskap</td><td>Norsk deltakelse i utlandet, eller at Norge arrangerer</td><td>Hver klubb, etter NBF-avklaring</td></tr></tbody></table></div><p>En regional turnering med tolv deltakere kan gi like mye lokal dekning som et NM. Terskelen i lokalavisa er ikke hvor stort arrangementet er — den er om det er folk derfra i saken.</p></div></section><section id="bilder"><div class="wrap"><h2>Bilder</h2><p>Samme regler som ellers i prosjektet:</p><ul class="liste"><li>Ta bildene underveis, ikke etterpå. Et tomt bord er ikke et bilde.</li><li><strong>Personer som kan kjennes igjen må ha sagt ja</strong> til bruk i avis og på nett. Er noen under 18, må foresatte ha sagt ja. Avklar dette ved påmelding, ikke i finalen.</li><li>Legg bildet ved i e-posten, ikke som lenke til en delt mappe.</li><li>Oppgi fotograf. Aviser trenger kreditering for å kunne bruke bildet.</li></ul></div></section><section id="sjekkliste-for-arrangoren"><div class="wrap"><h2>Sjekkliste for arrangøren</h2><p><strong>Fire uker før</strong></p><ul class="liste"><li>&#9744; Mal A fylt ut og sendt til lokalavis og NBF</li><li>&#9744; Ved NM eller nordisk: gitt NBF beskjed om at dere sender pressemateriell, og spurt om de vil ha teksten til eget bruk</li><li>&#9744; CueScore-lenken opprettet og delbar</li></ul><p><strong>Uka før</strong></p><ul class="liste"><li>&#9744; Mal B forhåndsutfylt med alt unntatt resultatene</li><li>&#9744; Én person utpekt som tar bilder</li><li>&#9744; Samtykke til bildebruk innhentet ved påmelding</li></ul><p><strong>Turneringsdagen</strong></p><ul class="liste"><li>&#9744; Ett spørsmål til vinneren på vei ut av salen — det blir sitatet</li><li>&#9744; Høyeste break notert</li><li>&#9744; Mal B fylt ut og sendt <strong>samme kveld</strong></li></ul><p><strong>Dagen etter</strong></p><ul class="liste"><li>&#9744; Resultatlista sortert per klubb</li><li>&#9744; Mal C sendt til hver klubb, så de kan sende til sin egen lokalavis</li></ul><p>Det siste punktet er arrangørens viktigste bidrag til hele koalisjonen, og det tar tjue minutter.</p></div></section><section><div class="wrap"><a class="nedlast" href="Presseopplegg-turnering.docx" download>Last ned som Word-dokument</a><p class="ajour">Innholdet er kontrollert <strong>2026-08-09</strong>. Frister og beløp endres — kontroller alltid mot ordningens egen utlysning før dere sender noe. Finner du en feil, si fra, så rettes den for alle klubbene.</p></div></section>
+<footer><div class="wrap">
+ <a class="tilbake" href="index.html">&larr; Tilbake til forsiden</a>
+ 
+ <p>Del av verktøykassen for norske snookerklubber. Fritt tilgjengelig for alle
+ klubber i Norge, også de som ikke driver med snooker.</p>
+ <p>Dette er ikke et offisielt nettsted for Norges Biljardforbund.</p>
+</div></footer>
+</body></html>

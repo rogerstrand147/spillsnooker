@@ -1068,7 +1068,7 @@ function tegnKlubber(){
      : `<div class="rad"><span>Bord</span>${hull('Vi bekrefter tallet med klubben nå')}</div>`;
    f+=`<div class="rad"><span>Kontakt</span>${k.kontakt?`<span><a href="mailto:${esc(k.kontakt)}">${esc(k.kontakt)}</a></span>`:hull('Vi henter inn kontaktadressen nå')}</div>`;
   }else{
-   f+=`<div class="rad"><span>Drop-in</span>${hull('Vi ringer klubben nå')}</div>`;
+   f+=`<div class="rad"><span>Drop-in</span>${hull('Vi har spurt klubben')}</div>`;
    f+=`<div class="rad"><span>Pris</span>${hull('Ikke bekreftet')}</div>`;
    f+=`<div class="rad"><span>Bord</span>${k.bord?`<span>${k.bord} <em style="color:var(--svak);font-style:normal">— fra registeret, ikke bekreftet</em></span>`:hull('Ikke bekreftet')}</div>`;
   }

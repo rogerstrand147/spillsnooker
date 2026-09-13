@@ -526,7 +526,7 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
   i NM i dag har stått i et klubblokale og bommet på sin første rød.</p>
  </div>
 
- <div class="regler">
+ <div class="regler" id="klubbdrift">
   <h3>Vil du se mer?</h3>
   <div class="lenker">
   <a href="arshjul.html">
@@ -629,9 +629,9 @@ const KLUBBER = [
  {navn:"Os Biljard og Snookerklubb", sted:"Bjørnafjorden", bekreftet:false, bord:4, kurs:null, venteliste:0, bilde:null},
  {navn:"Sarpsborg Snookerklubb", sted:"Sarpsborg", bekreftet:true,
   adresse:"Ved Hafslund, Sarpsborg — 250 m² lokale",
-  dropin:"Pay & play etter avtale — ring eller send e-post på forhånd",
+  dropin:"Pay & play etter avtale — send e-post på forhånd",
   pris:"100 kr/t for voksen", bord:4,
-  bordnote:"pluss 2 biljardbord", kontakt:"post@pefjell.no · 950 53 450",
+  bordnote:"pluss 2 biljardbord", kontakt:"post@sarpsborgsnooker.com",
   apen:true, kurs:null, venteliste:0, bilde:null},
  {navn:"Ishavsbyen Biljard og Snookerklubb", sted:"Tromsø", bekreftet:true,
   adresse:"Lars Eriksens vei 3c, Tromsø",
@@ -669,7 +669,6 @@ const STEDER=[
  {n:"General Hotell",s:"Hønefoss",f:"Buskerud",b:1,k:"bedrift",lat:60.168,lng:10.257,note:"10 fot"},
  {n:"Hotel Alexandra",s:"Loen",f:"Vestland",b:1,k:"bedrift",lat:61.871,lng:6.851},
  {n:"Inside Rock Café",s:"Stavanger",f:"Rogaland",b:1,k:"bedrift",lat:58.970,lng:5.733},
- {n:"Kong Oscar",s:"Bergen",f:"Vestland",b:1,k:"bedrift",lat:60.393,lng:5.328},
  {n:"Spillehall Tau",s:"Tau",f:"Rogaland",b:1,k:"bedrift",lat:59.066,lng:5.929},
  {n:"Risøbank",s:"Mandal",f:"Agder",b:1,k:"bedrift",lat:58.028,lng:7.458},
  {n:"Royal Bowling",s:"Bodø",f:"Nordland",b:1,k:"bedrift",lat:67.283,lng:14.375},
@@ -788,7 +787,7 @@ dots.innerHTML=STEDER.map((p,i)=>{
 
 const list=document.getElementById('list');
 
-/* Lista er gruppert på fylke. 51 steder i én lang rekke er ikke til å lese —
+/* Lista er gruppert på fylke. 50 steder i én lang rekke er ikke til å lese —
    fylket er det folk faktisk leter etter. Klikk på en fylkesrad zoomer til
    alle bordene i det fylket. */
 function fylkesgrupper(kunKlubb){

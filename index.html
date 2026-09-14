@@ -535,13 +535,17 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
  </div>
 
  <div class="regler" id="klubbdrift">
-  <h3>Vil du se mer?</h3>
+  <h3>For klubber — alt ferdig utfylt, og gratis</h3>
   <div class="lenker">
   <a href="arshjul.html">
    <b>Årshjul og tilskuddskalender</b><span>Hvilken støtte som finnes, når fristene går ut, og hva hver ordning er verdt</span></a>
   <a href="soknadspakke.html">
    <b>Søknadspakke</b><span>Ferdig skrevne søknader — klubben fyller inn navn, tall og lokale forhold</span></a>
-  <a href="sponsorpakke.html">
+  <a href="Budsjettmodell-Snookerskolen.xlsx" download>
+     <b>Budsjettmodell for Snookerskolen</b><span>Regnearket søknadspakken viser til — fyll inn klubbens tall, så er budsjettet ferdig</span></a>
+    <a href="rapportering.html">
+     <b>Rapporteringspakke</b><span>Når pengene er kommet: hva hver ordning krever, hva som må samles inn underveis, og en ferdig skrevet sluttrapport</span></a>
+    <a href="sponsorpakke.html">
    <b>Sponsorpakke</b><span>Hva en klubb faktisk kan tilby en lokal bedrift, og hva det er verdt å be om</span></a>
   <a href="rekruttering.html">
    <b>Rekrutteringsopplegg</b><span>Fem trinn fra «fant fram» til «ble værende»</span></a>
@@ -626,7 +630,12 @@ const KLUBBER = [
   adresse:"Strandgata 25 B, 8622 Mo i Rana",
   dropin:"Ikke drop-in — lokalet er for medlemmer. Interesserte får en gratis prøvetime med en erfaren spiller",
   pris:"Medlemskap 700 kr/mnd, 350 for skoleelev og student. I tillegg 50 kr i året for registrering i idrettsregisteret", bord:4, kontakt:"johnnyjenssen@yahoo.com",
-  pilot:true, kurs:null, venteliste:0, bilde:null},
+  /* Teksten er klubbens egen, fra helgelandsnooker.no lest 13.09.2026: åtte
+     kurskvelder, 13–24 år, gratis med utstyrslån, oppstart 2027. Sto tidligere
+     som «Pilotklubb — første Snookerskole høsten 2026», hardkodet i malen. Det
+     var et halvt år tidligere enn klubben selv sier, og ordet «pilotklubb» er
+     ikke klubbens eget. Skriv aldri mer her enn klubben har publisert. */
+  pilot:"Snookerskolen fra 2027 — klubbens egen plan", kurs:null, venteliste:0, bilde:null},
 
  /* Ikke bekreftet — bordene vises på kartet, men klubben får ikke kort ennå. */
  {navn:"Trondheim Snooker", sted:"Trondheim", bekreftet:true,
@@ -1069,6 +1078,25 @@ function tellerHTML(k){
 /* Alle sju klubber får kort. «bekreftet» styrer om vi viser fakta eller åpne
    hull — ikke om byen finnes. Ventelista må virke i alle sju byer, for det er
    nettopp i byene uten åpningstider at etterspørselen må dokumenteres (Å6). */
+/* Kontaktfeltet kan inneholde både e-post og telefon, skilt med «·».
+   Lagt rått inn i en mailto: ga ubrukelige lenker — Ishavsbyen fikk
+   «mailto:Leder 416 52 690 · kasserer 924 33 552», altså en e-postlenke uten
+   e-postadresse. Her deles feltet opp: e-post blir mailto, nummer blir tel,
+   og resten står som ren tekst. */
+function kontaktlenker(s){
+ return s.split('·').map(d=>{
+  const b=d.trim();
+  if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(b))
+   return `<a href="mailto:${esc(b)}">${esc(b)}</a>`;
+  const m=b.match(/(\+?\d[\d\s]{6,})$/);
+  if(m){
+   const nr=m[1].trim(), for_=b.slice(0,b.length-m[1].length).trim();
+   return (for_?esc(for_)+' ':'')+`<a href="tel:${nr.replace(/\s/g,'')}">${esc(nr)}</a>`;
+  }
+  return esc(b);
+ }).join(' · ');
+}
+
 function tegnKlubber(){
  const boks=document.getElementById('klubbkort');
  boks.innerHTML=KLUBBER.map((k,i)=>{
@@ -1081,7 +1109,7 @@ function tegnKlubber(){
    f+=k.bord
      ? `<div class="rad"><span>Bord</span><span>${k.bord} i fullstørrelse${k.bordnote?` <em style="color:var(--svak);font-style:normal">— ${esc(k.bordnote)}</em>`:''}</span></div>`
      : `<div class="rad"><span>Bord</span>${hull('Vi bekrefter tallet med klubben nå')}</div>`;
-   f+=`<div class="rad"><span>Kontakt</span>${k.kontakt?`<span><a href="mailto:${esc(k.kontakt)}">${esc(k.kontakt)}</a></span>`:hull('Vi henter inn kontaktadressen nå')}</div>`;
+   f+=`<div class="rad"><span>Kontakt</span>${k.kontakt?`<span>${kontaktlenker(k.kontakt)}</span>`:hull('Vi henter inn kontaktadressen nå')}</div>`;
   }else{
    f+=`<div class="rad"><span>Drop-in</span>${hull('Vi har spurt klubben')}</div>`;
    f+=`<div class="rad"><span>Pris</span>${hull('Ikke bekreftet')}</div>`;
@@ -1096,7 +1124,7 @@ function tegnKlubber(){
    <h3>${esc(k.navn)}</h3>
    <div class="sted">${esc(k.adresse||k.sted)}</div>
    ${minikart(i,k)}
-   ${k.pilot?`<div class="stempel">Pilotklubb — første Snookerskole høsten 2026</div>`:''}
+   ${k.pilot?`<div class="stempel">${esc(k.pilot)}</div>`:''}
    ${k.apen?`<div class="stempel apen">Åpent for deg som ikke er medlem</div>`:''}
    ${!k.bekreftet?`<div class="stempel vent">Vi snakker med klubben nå</div>`:''}
    ${f}
@@ -1146,8 +1174,8 @@ function tegnKlubber(){
   /* Uten endepunkt lagres ingenting. Da skal det stå, ikke skjules bak et banner. */
   kv.innerHTML = lagret
    ? (k.kurs
-      ? `Takk — du er påmeldt. ${esc(k.navn)} tar kontakt før ${esc(k.kurs)}.`
-      : `Takk. Du får beskjed så snart ${esc(k.navn)} setter opp neste pulje.`)
+      ? `Takk. Adressen din er lagret og gis videre til ${esc(k.navn)}. Klubben avgjør selv hvem den kontakter og når.`
+      : `Takk. Adressen din er lagret og gis videre til ${esc(k.navn)}. Vi sier fra hvis klubben setter opp en pulje.`)
    : (SKJEMA_ENDEPUNKT
       ? `<b>Det gikk ikke.</b> Adressen ble ikke lagret. Prøv igjen om litt, eller
          ta kontakt med klubben direkte${k.kontakt?': '+esc(k.kontakt):''}.`

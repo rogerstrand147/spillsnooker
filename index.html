@@ -641,11 +641,18 @@ const KLUBBER = [
   pris:null, bord:4,
   bordnote:"pluss poolbord", kontakt:"osbiljardogsnooker@gmail.com",
   kurs:null, venteliste:0, bilde:null},
+ /* Kontakten går til Per-Egil «Peggy» Fjell, styreleder, og ikke til
+    klubbadressen. post@sarpsborgsnooker.com tar ikke imot e-post — to
+    leveringsvarsler 12. og 13.09.2026, connect timeout mot alle fire IP-er,
+    Gmail ga opp 14.09. Carl Henrik Simensen bekreftet 13.09 at adressen er
+    klubbens riktige, så det er serveren som er nede, ikke adressen som er
+    feil. Dette er en midlertidig omruting, besluttet av Roger 14.09.2026.
+    Sett den tilbake når klubbens egen e-post virker igjen — ikke før. */
  {navn:"Sarpsborg Snookerklubb", sted:"Sarpsborg", bekreftet:true,
   adresse:"Torpebaugen 4, Sarpsborg — 250 m² lokale",
   dropin:"Pay & play etter avtale — send e-post på forhånd",
   pris:"100 kr/t for voksen", bord:4,
-  bordnote:"pluss 2 biljardbord", kontakt:"post@sarpsborgsnooker.com",
+  bordnote:"pluss 2 biljardbord", kontakt:"post@pefjell.no · 950 53 450",
   apen:true, kurs:null, venteliste:0, bilde:null},
  {navn:"Ishavsbyen Biljard og Snookerklubb", sted:"Tromsø", bekreftet:true,
   adresse:"Lars Eriksens veg 3c, 9016 Tromsø",
@@ -1153,10 +1160,18 @@ function tegnKlubber(){
 }
 tegnKlubber();
 
-/* Tallene i hero regnes ut av dataene, så de aldri kan bli utdaterte i teksten. */
+/* Tallene i hero regnes ut av dataene, så de aldri kan bli utdaterte i teksten.
+
+   Bordtallet teller ALLE sju klubbene, også dem som står bekreftet:false.
+   Flagget avgjør om klubben får et klubbkort — altså om klubben selv har
+   bekreftet adresse, pris og åpningstider. Bordtallet er en annen sak: Os'
+   fire bord er bekreftet av Roger 13.09.2026, og det tallet overstyrte både
+   klubbens egen CueScore-side (6) og Hermunds register (8).
+
+   Telles bare bekreftet:true, står det «7 klubber · 32 bord» — Os telles som
+   klubb, men bordene faller ut. Ikke slå de to reglene sammen igjen. */
 (()=>{
- const bek=KLUBBER.filter(k=>k.bekreftet);
- const bord=bek.reduce((n,k)=>n+(k.bord||0),0);
+ const bord=KLUBBER.reduce((n,k)=>n+(k.bord||0),0);
  document.getElementById('rtall').innerHTML=
   `${KLUBBER.length} klubber · ${bord} bord bekreftet så langt<br>fra Tromsø til Sarpsborg`;
 })();

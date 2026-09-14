@@ -619,9 +619,17 @@ const terskelFor = k => k.terskel || TERSKEL;
    ══════════════════════════════════════════════════════════════════ */
 const KLUBBER = [
  /* Bekreftet av klubben selv. null = ikke innhentet ennå og vises som åpent hull. */
+ /* Rettet 14.09.2026 etter gjennomgang av Arild Burud, klubbens egen kontakt.
+    Tre ting var galt eller ufullstendig: drop-in sa ikke at det bare gjelder
+    snooker, medlemsprisene manglet helt, og Maps-lenken brukte hele
+    adressestrengen. Minidrett-linja er hans poeng, ikke vårt: 1500 kr/mnd er
+    et treningsabonnement, mens Minidrett er det formelle idrettsmedlemskapet
+    som gir klubben tilskuddsgrunnlag og stemmerett på tinget. To forskjellige
+    ting, som blandes sammen. */
  {navn:"Oslo Snooker & Carambole", sted:"Oslo", bekreftet:true,
   adresse:"Ensjøveien 16, 0655 Oslo — det står 16-18 på inngangsdøra. Nær Ensjø T-bane",
-  dropin:"Torsdag 17–22 og søndag 12–22. Bordet bookes på forhånd", pris:"250 kr/t for bordet — 125 kr/t hvis du spiller med et medlem", bord:8,
+  kartadresse:"Ensjøveien 16, 0655 Oslo",
+  dropin:"Torsdag 17–22 og søndag 12–22. Bordet bookes på forhånd. Drop-in gjelder bare snooker — ikke carambole", pris:"Drop-in 250 kr/t for bordet, 125 kr/t hvis du spiller med et medlem. Medlemskap 1500 kr/mnd for voksen, 1000 kr/mnd for ungdom, student og over 67. I tillegg 100 kr i året for Minidrett, 50 for deg under 18 — det formelle idrettsmedlemskapet", bord:8,
   bordnote:"pluss 4 carambolebord", kontakt:"info@oslosnooker.no",
   apen:true, kurs:null, venteliste:0, bilde:null},
 
@@ -658,12 +666,28 @@ const KLUBBER = [
   pris:"150 kr for de to første timene per person, 300 kr over to timer", bord:6,
   bordnote:"pluss 2 poolbord", kontakt:"post@trondheimsnooker.org · 450 76 710",
   apen:true, kurs:null, venteliste:0, bilde:null},
- {navn:"Os Biljard og Snookerklubb", sted:"Bjørnafjorden", bekreftet:false,
+ /* Bekreftet av klubben selv 14.09.2026, på melding til klubbens Facebook-side.
+    Alle fire spørsmålene besvart: pris, om det er åpent for ikke-medlemmer,
+    kontakt og bordtall. Klubben sier fire snookerbord — samme tall Roger
+    bekreftet 13.09, og det avgjør spriket mot CueScore (6) og Hermunds
+    register (8). At de har ti biljardbord i tillegg forklarer trolig åtte-
+    tallet: registeret har talt biljardbord, ikke snookerbord.
+
+    Åpningstidene står som et forsøk, ikke en garanti. Klubbens egne ord er
+    «prøver vi å holde åpnet slik beskrevet». Skriv aldri mer her enn klubben
+    selv gjør.
+
+    Reidar Rundsveen er klubbens snookeransvarlige og kanalen for vår dialog,
+    oppgitt av klubben samme dag. Adressen hans skal IKKE stå her — klubben
+    oppga gmail-adressen som sin offentlige kontakt, og Reidar har ikke sagt
+    ja til å stå på en nettside. */
+ {navn:"Os Biljard og Snookerklubb", sted:"Bjørnafjorden", bekreftet:true,
   adresse:"Ulvenvegen 34, 5210 Osøyro",
-  dropin:null, dropinhint:"Klubbens Facebook-side oppgir åpent man–fre og søn 18–23, stengt lørdag. Om det gjelder ikke-medlemmer er ikke bekreftet",
-  pris:null, bord:4,
-  bordnote:"pluss poolbord", kontakt:"osbiljardogsnooker@gmail.com",
-  kurs:null, venteliste:0, bilde:null},
+  dropin:"Dagskort for alle, også for deg som ikke er medlem",
+  dropinhint:"Klubben oppgir man–fre og søn 18–23, stengt lørdag, og sier de forsøker å holde disse tidene. Det er stort sett noen med nøkkel i lokalet",
+  pris:"Dagskort 250 kr for deg som ikke er medlem, 150 kr for medlem. Månedskort 800 kr", bord:4,
+  bordnote:"pluss 10 biljardbord og 1 heyball", kontakt:"osbiljardogsnooker@gmail.com",
+  apen:true, kurs:null, venteliste:0, bilde:null},
  /* Kontakten går til Per-Egil «Peggy» Fjell, styreleder, og ikke til
     klubbadressen. post@sarpsborgsnooker.com tar ikke imot e-post — to
     leveringsvarsler 12. og 13.09.2026, connect timeout mot alle fire IP-er,
@@ -1062,7 +1086,14 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
    Ved siden av ligger lenka som faktisk får noen til døra. */
 function minikart(i,k){
  const pos=KLUBBPOS[i];
- const sok=encodeURIComponent((k.bekreftet&&k.adresse)?k.adresse:(k.navn+', '+k.sted));
+ /* Maps-lenken skal ha adressen, ikke veibeskrivelsen. Arild Burud meldte
+    14.09.2026 at Oslo-lenken ikke traff punktet — hele strengen «Ensjøveien
+    16, 0655 Oslo — det står 16-18 på inngangsdøra. Nær Ensjø T-bane» ble
+    sendt til Google, og da finner den ingenting. Feilen gjaldt også Stord og
+    Sarpsborg. Alt etter tankestreken er hjelpetekst til mennesker og skal
+    ikke være med. `kartadresse` overstyrer der delingen ikke holder. */
+ const rein=k.kartadresse||(k.adresse||'').split(' — ')[0].trim();
+ const sok=encodeURIComponent((k.bekreftet&&rein)?rein:(k.navn+', '+k.sted));
  const url='https://www.google.com/maps/search/?api=1&query='+sok;
  const nal=pos?(()=>{const q=P(pos[0],pos[1]);
   return `<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="26" fill="#E07A4D" opacity=".16"/>

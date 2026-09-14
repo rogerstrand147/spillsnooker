@@ -163,6 +163,10 @@ ol.punkt.tall li b{color:var(--elfenben);font-weight:500}
 .klubb .stempel{display:inline-block;margin:10px 8px 0 0;padding:4px 11px;border-radius:99px;
   border:1px solid var(--filt);color:var(--filt-lys);font-size:.78rem;letter-spacing:.01em}
 .klubb .stempel.apen{border-color:var(--lampe);color:var(--lampe-lys)}
+/* Sier hva klubben faktisk har bestemt om Snookerskolen. Dempet med vilje —
+   dette er en opplysning, ikke et salgsargument. */
+.skolestatus{margin-top:10px;font-size:.82rem;line-height:1.5;color:var(--svak)}
+.skolestatus.egen{color:var(--dempet)}
 
 /* Seksjoner */
 section{padding:64px 0}
@@ -635,7 +639,15 @@ const KLUBBER = [
      som «Pilotklubb — første Snookerskole høsten 2026», hardkodet i malen. Det
      var et halvt år tidligere enn klubben selv sier, og ordet «pilotklubb» er
      ikke klubbens eget. Skriv aldri mer her enn klubben har publisert. */
-  pilot:"Snookerskolen fra 2027 — klubbens egen plan", kurs:null, venteliste:0, bilde:null},
+  pilot:"Snookerskolen fra 2027 — klubbens egen plan",
+  /* Klubben skriver selv «Vi planlegger oppstart av Snookerskolen i 2027, med
+     ett kurs på vårsemesteret og ett kurs på høstsemesteret», og henviser til
+     Friskus Rana for påmelding. Lest på helgelandsnooker.no 14.09.2026.
+     Ingen klikkbar URL finnes — verken hos klubben eller som oppføring hos
+     Friskus — så det står som navn, ikke som lenke. Legg inn URL først når
+     den er sett. */
+  skolestatus:"planlagt", egenpaamelding:"Friskus Rana",
+  kurs:null, venteliste:0, bilde:null},
 
  /* Ikke bekreftet — bordene vises på kartet, men klubben får ikke kort ennå. */
  {navn:"Trondheim Snooker", sted:"Trondheim", bekreftet:true,
@@ -1118,6 +1130,15 @@ function tegnKlubber(){
 
   const teller = k.kurs ? '' : tellerHTML(k);
 
+  /* Tre tilstander, og de skal se forskjellige ut.
+     satt_opp  — klubben har publisert datoer. Da er påmelding ekte, og går
+                 til klubbens egen kanal hvis den finnes.
+     planlagt  — klubben har selv sagt at de skal, uten datoer. Vi samler
+                 interesse og sier hvor den ekte påmeldingen kommer.
+     udefinert — klubben har ikke tatt stilling. Vi lover ingenting.
+     Skriv aldri mer her enn klubben selv har publisert. */
+  const status = k.skolestatus || 'ikke_avklart';
+
   return `
   <div class="klubb" id="klubb-${i}" data-by="${esc(by)}">
    <div class="bilde">${k.bilde?`<img src="${esc(k.bilde)}" alt="Lokalet hos ${esc(k.navn)}" loading="lazy">`:`<span>${esc(k.navn)}</span>`}</div>
@@ -1128,13 +1149,23 @@ function tegnKlubber(){
    ${k.apen?`<div class="stempel apen">Åpent for deg som ikke er medlem</div>`:''}
    ${!k.bekreftet?`<div class="stempel vent">Vi snakker med klubben nå</div>`:''}
    ${f}
+   ${status==='ikke_avklart'
+     ? `<div class="skolestatus">Ingen Snookerskole er satt opp her ennå. Klubben har ikke tatt stilling.</div>`
+     : ''}
+   ${k.egenpaamelding
+     ? `<div class="skolestatus egen">Når kurset settes opp, går påmeldingen gjennom ${esc(k.egenpaamelding)} — ikke gjennom oss.</div>`
+     : ''}
    ${k.kurs
      ? `<a class="knapp" href="#" data-meld="${i}">Snookerskolen starter ${esc(k.kurs)} — meld deg på</a>`
-     : `${teller}<button class="knapp" data-meld="${i}">Meld deg på</button>`}
+     : `${teller}<button class="knapp" data-meld="${i}">Meld interesse</button>`}
    <form class="skjema" data-skjema="${i}">
      <input type="email" required placeholder="E-postadresse" aria-label="E-postadresse">
      <button class="knapp" type="submit">${k.kurs?'Meld meg på':'Sett meg på lista'}</button>
-     <small>Vi bruker adressen kun til å si fra om kurs i ${esc(by)}.
+     <small>${k.kurs
+       ? `Vi bruker adressen kun til å si fra om kurs i ${esc(by)}.`
+       : status==='planlagt'
+         ? `Dette er ikke selve påmeldingen — klubben har ikke satt datoer ennå. Vi gir lista til klubben.`
+         : `Dette er ikke en påmelding til et kurs. Det finnes ikke noe kurs å melde seg på her ennå. Vi gir lista til klubben, og klubben avgjør selv.`}
      Ingen nyhetsbrev, og du kan melde deg av når som helst.</small>
    </form>
    <div class="kvittering" data-kvit="${i}"></div>

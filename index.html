@@ -1230,11 +1230,16 @@ tegnKlubber();
    klubbens egen CueScore-side (6) og Hermunds register (8).
 
    Telles bare bekreftet:true, står det «7 klubber · 32 bord» — Os telles som
-   klubb, men bordene faller ut. Ikke slå de to reglene sammen igjen. */
+   klubb, men bordene faller ut. Ikke slå de to reglene sammen igjen.
+
+   Ordet «bekreftet» er tatt ut av teksten 14.09. Summen inneholder Os' fire
+   bord, og Os-kortet sier selv «fra registeret, ikke bekreftet». Da kan ikke
+   overskriften kalle hele summen bekreftet — vi lover ikke mer enn klubben
+   selv gjør. */
 (()=>{
  const bord=KLUBBER.reduce((n,k)=>n+(k.bord||0),0);
  document.getElementById('rtall').innerHTML=
-  `${KLUBBER.length} klubber · ${bord} bord bekreftet så langt<br>fra Tromsø til Sarpsborg`;
+  `${KLUBBER.length} klubber · ${bord} bord til sammen<br>fra Tromsø til Sarpsborg`;
 })();
 
 /* Maflin-seksjonen står bare når Kurt har godkjent ordene sine. Uten sitat

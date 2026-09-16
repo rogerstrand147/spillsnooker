@@ -41,6 +41,7 @@ html{scroll-padding-top:64px}
 .toppmeny nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .toppmeny nav a{color:var(--dempet);text-decoration:none;font-size:.85rem;padding:6px 10px;border-radius:8px;white-space:nowrap}
 .toppmeny nav a:hover{color:var(--elfenben);background:var(--hevet)}
+.toppmeny nav a.hoved{color:var(--elfenben);border:1px solid var(--kant)}
 @media(max-width:480px){.toppmeny nav a.valgfri{display:none}}
 .bunnlenker{display:flex;gap:16px;flex-wrap:wrap}
 .merk{font-size:.74rem;text-transform:uppercase;letter-spacing:.16em;color:var(--lampe);font-weight:650;margin-top:26px}
@@ -123,7 +124,7 @@ footer p{margin-top:8px;max-width:70ch}
 
 <div class="toppmeny"><div class="wrap">
  <a class="hjem" href="index.html"><i aria-hidden="true"></i>spillsnooker.no</a>
- <nav aria-label="Hovedmeny"><a class="valgfri" href="index.html#klubber">Finn et sted</a><a href="index.html#klubbdrift">Verktøykassen</a></nav>
+ <nav aria-label="Hovedmeny"><a class="valgfri" href="index.html#klubber">Finn et sted</a><a class="hoved" href="index.html#klubbdrift">&larr; For klubbene</a></nav>
 </div></div>
 <header><div class="wrap">
  <div class="merk">For klubbene</div>
@@ -365,7 +366,7 @@ footer p{margin-top:8px;max-width:70ch}
 </div></section>
 
 <footer><div class="wrap">
- <div class="bunnlenker"><a class="tilbake" href="index.html">&larr; Til forsiden</a><a class="tilbake" href="index.html#klubbdrift">Til verktøykassen</a></div>
+ <div class="bunnlenker"><a class="tilbake" href="index.html#klubbdrift">&larr; Tilbake til For klubbene</a><a class="tilbake" href="index.html">Forsiden</a></div>
  <div>Snooker i Norge — et felles opplegg for de sju snookerklubbene i landet.</div>
  <p>Nettstedet lages og driftes foreløpig av Roger André Strand, som ikke har verv i noen
  klubb eller i forbundet. Målet er at klubbene skal overta det. Denne siden er ikke et

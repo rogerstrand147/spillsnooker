@@ -4,14 +4,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://spillsnooker.no/klubb.html">
-<title>For klubbene — tre kalkulatorer · Snooker i Norge</title>
-<meta name="description" content="Tre regnestykker for snookerklubber: hva ett kurs gir av medlemmer, hva klubben kan søke om, og hva en sponsorpakke er verdt å be om. Klubbens egne tall, regnet i nettleseren.">
+<title>For klubbene — fire kalkulatorer · Snooker i Norge</title>
+<meta name="description" content="Fire regnestykker for snookerklubber: hva ett kurs gir av medlemmer, hva klubben kan søke om, hva en sponsorpakke er verdt, og hva driften og bordene koster. Klubbens egne tall, regnet i nettleseren.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://spillsnooker.no/klubb.html">
 <meta property="og:site_name" content="Snooker i Norge">
 <meta property="og:locale" content="nb_NO">
-<meta property="og:title" content="For klubbene — tre kalkulatorer">
-<meta property="og:description" content="Tre regnestykker for snookerklubber: hva ett kurs gir av medlemmer, hva klubben kan søke om, og hva en sponsorpakke er verdt å be om. Klubbens egne tall, regnet i nettleseren.">
+<meta property="og:title" content="For klubbene — fire kalkulatorer">
+<meta property="og:description" content="Fire regnestykker for snookerklubber: hva ett kurs gir av medlemmer, hva klubben kan søke om, hva en sponsorpakke er verdt, og hva driften og bordene koster. Klubbens egne tall, regnet i nettleseren.">
 <meta name="twitter:card" content="summary">
 <style>
 :root{
@@ -115,11 +115,11 @@ footer p{margin-top:8px;max-width:70ch}
  <a class="tilbake" href="index.html">← Hvor kan du spille snooker i Norge?</a>
  <div class="merk">For klubbene</div>
  <h1>Hva blir det egentlig av å kjøre <em>ett kurs</em>?</h1>
- <p class="led">Tre regnestykker med klubbens egne tall. Rekruttering først — det er
- det som inspirerer. Deretter hva det er verdt å søke om, og hva en sponsorpakke er
- verdt å be om. Alt kan endres, ingenting lagres.</p>
+ <p class="led">Fire regnestykker med klubbens egne tall. Rekruttering først — det er
+ det som inspirerer. Deretter hva det er verdt å søke om, hva en sponsorpakke er
+ verdt å be om, og hva driften og bordene faktisk koster. Alt kan endres, ingenting lagres.</p>
  <nav class="hopp" aria-label="Kalkulatorene">
-  <a href="#rekruttering">1 · Rekruttering</a><a href="#tilskudd">2 · Tilskudd</a><a href="#sponsor">3 · Sponsor</a>
+  <a href="#rekruttering">1 · Rekruttering</a><a href="#tilskudd">2 · Tilskudd</a><a href="#sponsor">3 · Sponsor</a><a href="#drift">4 · Drift og bord</a>
  </nav>
 </div></header>
 
@@ -290,6 +290,67 @@ footer p{margin-top:8px;max-width:70ch}
  </div>
 </div></section>
 
+<section id="drift"><div class="wrap">
+ <h2>4 · Drift og bord</h2>
+ <p class="led" style="margin-top:4px;font-size:.95rem">Hva klubben må ta inn for å holde lokalet, bordene og sparingen i gang — og hvor mange betalende det krever. Reglene og prisene står på <a href="okonomi.html">siden om økonomi og drift</a>.</p>
+
+ <div class="kalk">
+  <form class="panel" id="d-skjema" autocomplete="off">
+   <div class="felt"><label for="d-bord">Bord i fullstørrelse</label>
+    <input type="number" id="d-bord" min="0" max="40" step="1" inputmode="numeric" value="4"></div>
+   <div class="felt"><label for="d-leie">Husleie per måned, kr<span class="tag">eksempel</span></label>
+    <input type="number" id="d-leie" min="0" step="500" inputmode="numeric" value="6000" class="anslag"></div>
+   <div class="felt"><label for="d-strom">Strøm per måned, kr<span class="tag">eksempel</span><small>Bordvarme bruker rundt 1 kWh per bord per spilleøkt.</small></label>
+    <input type="number" id="d-strom" min="0" step="100" inputmode="numeric" value="1500" class="anslag"></div>
+   <div class="felt"><label for="d-fast">Andre faste kostnader per år, kr<span class="tag">eksempel</span><small>Forsikring, medlemssystem, bank, regnskap, lisenser.</small></label>
+    <input type="number" id="d-fast" min="0" step="500" inputmode="numeric" value="12000" class="anslag"></div>
+   <div class="felt"><label for="d-duk">Omtrekking per bord, kr<span class="tag">anslag</span><small>Duk og montering. Duken alene koster 5 400–8 100 kr.</small></label>
+    <input type="number" id="d-duk" min="0" step="500" inputmode="numeric" value="14000" class="anslag"></div>
+   <div class="felt"><label for="d-dukaar">Ny duk hvert … år<span class="tag">anslag</span><small>1–3 år er vanlig i klubbruk.</small></label>
+    <input type="number" id="d-dukaar" min="1" max="10" step="1" inputmode="numeric" value="2" class="anslag"></div>
+   <div class="felt"><label for="d-nytt">Pris for et nytt eller brukt bord, kr<small>Brukt 35 000–70 000, nytt 65 000–215 000 før frakt.</small></label>
+    <input type="number" id="d-nytt" min="0" step="5000" inputmode="numeric" value="60000"></div>
+   <div class="felt"><label for="d-nyttant">Bord å spare til<small>0 hvis klubben ikke skal kjøpe.</small></label>
+    <input type="number" id="d-nyttant" min="0" max="20" step="1" inputmode="numeric" value="1"></div>
+   <div class="felt"><label for="d-nyttaar">Innen … år</label>
+    <input type="number" id="d-nyttaar" min="1" max="30" step="1" inputmode="numeric" value="5"></div>
+   <div class="felt"><label for="d-medl">Betalende medlemmer</label>
+    <input type="number" id="d-medl" min="0" step="1" inputmode="numeric" value="20"></div>
+   <div class="felt"><label for="d-kont">Kontingent per år, kr<small>Minst 50 kr. Vedtas av årsmøtet.</small></label>
+    <input type="number" id="d-kont" min="0" step="50" inputmode="numeric" value="50"></div>
+   <div class="felt"><label for="d-avg">Treningsavgift per måned, kr<small>Snitt over alle betalende, etter rabatter.</small></label>
+    <input type="number" id="d-avg" min="0" step="50" inputmode="numeric" value="500"></div>
+   <div class="felt"><label for="d-andre">Andre inntekter per år, kr<small>Turneringer, bedriftskvelder, sponsorer, momskompensasjon. Ikke tilskudd som er bundet til prosjekter.</small></label>
+    <input type="number" id="d-andre" min="0" step="1000" inputmode="numeric" value="10000"></div>
+   <div class="felt"><label for="d-lan">Lån, kr<small>0 hvis ingen. Regnes som serielt nedbetalt over årene over.</small></label>
+    <input type="number" id="d-lan" min="0" step="5000" inputmode="numeric" value="0"></div>
+   <div class="felt"><label for="d-rente">Rente, prosent per år<span class="tag">forutsetning</span></label>
+    <input type="number" id="d-rente" min="0" max="30" step="0.5" inputmode="decimal" value="0" class="anslag"></div>
+  </form>
+
+  <div class="panel res" aria-live="polite">
+   <h3>Per år</h3>
+   <div class="sum" id="d-sum"></div>
+   <div class="dom" id="d-dom"></div>
+   <h3 style="margin-top:22px">For å gå i balanse</h3>
+   <div class="sum" id="d-balanse"></div>
+   <p class="setning" id="d-setning"></p>
+  </div>
+ </div>
+
+ <div class="forut">
+  <b>Forutsetningene, sagt rett ut</b>
+  <ul>
+   <li><b>Husleie, strøm og faste kostnader er eksempeltall.</b> Bytt dem med klubbens egne før tallet brukes til noe.</li>
+   <li><b>Vedlikehold per bord per år</b> = omtrekking delt på antall år, pluss vant (2 400 kr hvert 10. år) og kuler (2 800 kr hvert 5. år). Intervallene er anslag.</li>
+   <li><b>Lån</b> regnes med like store avdrag og renten av det som står igjen i gjennomsnitt. Banker regner ofte annerledes.</li>
+   <li><b>Driftsreserve</b> er satt til tre måneders husleie og strøm. Det er en anbefaling, ikke et krav.</li>
+   <li>Kontingenten teller med i inntektene, men hovedpoenget med den er at medlemmene blir registrert og teller i idrettens tall.</li>
+   <li>Ingenting sendes eller lagres.</li>
+  </ul>
+ </div>
+</div></section>
+
 <footer><div class="wrap">
  <div>Snooker i Norge — et felles opplegg for de sju snookerklubbene i landet.</div>
  <p>Nettstedet lages og driftes foreløpig av Roger André Strand, som ikke har verv i noen
@@ -361,7 +422,28 @@ function regnSponsor({medl,bord,bordp,turn,kveld,klubbp,hoved}){
  const tot=Object.values(l).reduce((a,x)=>({lav:a.lav+x.lav,hoy:a.hoy+x.hoy,midt:a.midt+x.midt}),{lav:0,hoy:0,midt:0});
  return {...l,tot,antBordp,pos};
 }
-if(typeof module!=='undefined') module.exports={regn,KLUBBER,PER_BORD_LAV,PER_BORD_HOY,regnTilskudd,ORDNINGER,regnSponsor,PRIS};
+
+/* ── Drift ── */
+const VANT_PRIS=2400, VANT_AAR=10, KULE_PRIS=2800, KULE_AAR=5, RESERVE_MND=3;
+function regnDrift({bord,leie,strom,fast,duk,dukaar,nytt,nyttant,nyttaar,medl,kont,avg,andre,lan,rente}){
+ const drift=leie*12+strom*12+fast;
+ const vedPerBord=duk/Math.max(1,dukaar)+VANT_PRIS/VANT_AAR+KULE_PRIS/KULE_AAR;
+ const ved=bord*vedPerBord;
+ const aar=Math.max(1,nyttaar);
+ const spar=nytt*nyttant/aar;
+ const avdrag=lan/aar, renter=lan*(rente/100)/2;          // snittrente ved serielån
+ const lanKost=lan>0?avdrag+renter:0;
+ const kost=drift+ved+spar+lanKost;
+ const innMedl=medl*(kont+avg*12);
+ const inn=innMedl+andre;
+ const res=inn-kost;
+ const avgBehov=medl>0?Math.max(0,(kost-andre-medl*kont)/(medl*12)):null;
+ const perMedlAar=kont+avg*12;
+ const medlBehov=perMedlAar>0?Math.ceil(Math.max(0,kost-andre)/perMedlAar):null;
+ const reserve=RESERVE_MND*(leie+strom);
+ return {drift,vedPerBord,ved,spar,lanKost,avdrag,renter,kost,innMedl,inn,res,avgBehov,medlBehov,reserve,perMedlAar};
+}
+if(typeof module!=='undefined') module.exports={regn,KLUBBER,PER_BORD_LAV,PER_BORD_HOY,regnTilskudd,ORDNINGER,regnSponsor,PRIS,regnDrift};
 
 /* DOM */
 if(typeof document!=='undefined'){
@@ -472,6 +554,44 @@ if(typeof document!=='undefined'){
  ['s-medl','s-bord','s-bordp','s-turn','s-kveld','s-klubbp','s-hoved'].forEach(id=>$(id).addEventListener('input',tegnS));
  $('s-skjema').addEventListener('submit',e=>e.preventDefault());
  tegnS();
+
+ /* ── Drift ── */
+ const D=['d-bord','d-leie','d-strom','d-fast','d-duk','d-dukaar','d-nytt','d-nyttant','d-nyttaar','d-medl','d-kont','d-avg','d-andre','d-lan','d-rente'];
+ function tegnD(){
+  const v=id=>les(id)??0;
+  const a={bord:v('d-bord'),leie:v('d-leie'),strom:v('d-strom'),fast:v('d-fast'),duk:v('d-duk'),dukaar:Math.max(1,v('d-dukaar')),
+   nytt:v('d-nytt'),nyttant:v('d-nyttant'),nyttaar:Math.max(1,v('d-nyttaar')),medl:v('d-medl'),kont:v('d-kont'),avg:v('d-avg'),
+   andre:v('d-andre'),lan:v('d-lan'),rente:v('d-rente')};
+  const r=regnDrift(a);
+  $('d-sum').innerHTML=`
+   <div class="r"><span>Husleie, strøm og faste kostnader</span><b>${kr(r.drift)}</b></div>
+   <div class="r"><span>Avsetning til duk, vant og kuler (${a.bord} bord × ${kr(r.vedPerBord)})</span><b>${kr(r.ved)}</b></div>
+   <div class="r"><span>Sparing til ${a.nyttant} bord over ${a.nyttaar} år</span><b>${kr(r.spar)}</b></div>
+   ${a.lan>0?`<div class="r"><span>Lån: avdrag ${kr(r.avdrag)} + renter ca. ${kr(r.renter)}</span><b>${kr(r.lanKost)}</b></div>`:''}
+   <div class="r tot"><span>= Kostnader</span><b>${kr(r.kost)}</b></div>
+   <div class="r"><span>Medlemmer: ${a.medl} × (${kr(a.kont)} + 12 × ${kr(a.avg)})</span><b>${kr(r.innMedl)}</b></div>
+   <div class="r"><span>Andre inntekter</span><b>${kr(a.andre)}</b></div>
+   <div class="r tot"><span>= Inntekter</span><b>${kr(r.inn)}</b></div>`;
+  const dom=$('d-dom');
+  if(r.res>=0){ dom.className='dom ok'; dom.innerHTML=`<b>Overskudd ${kr(r.res)} i året</b>, etter at vedlikehold og sparing er satt av. Det tilsvarer ${kr(r.res/12)} i måneden.`; }
+  else { dom.className='dom nei'; dom.innerHTML=`<b>Underskudd ${kr(-r.res)} i året.</b> Det tilsvarer ${kr(-r.res/12)} i måneden som mangler for å holde bordene og sparingen i gang.`; }
+  const b=$('d-balanse');
+  b.innerHTML=`
+   <div class="r"><span>Treningsavgift som trengs med ${a.medl} betalende</span><b>${r.avgBehov===null?'—':kr(r.avgBehov)+' / mnd'}</b></div>
+   <div class="r"><span>Betalende som trengs med ${kr(a.avg)} i måneden</span><b>${r.medlBehov===null?'—':r.medlBehov}</b></div>
+   <div class="r"><span>Driftsreserve å ha på konto (3 mnd leie og strøm)</span><b>${kr(r.reserve)}</b></div>
+   <div class="r"><span>Bordfond: sett av per måned</span><b>${kr(r.spar/12)}</b></div>`;
+  const s=$('d-setning'); const mangler=r.medlBehov!==null?r.medlBehov-a.medl:0;
+  let t='';
+  if(a.kont<50) t+=`<b>Kontingenten er under 50 kr</b>, som er minstekravet i idretten. `;
+  if(mangler>0) t+=`Klubben trenger <b>${mangler} flere betalende</b> med dagens avgift. Rekrutteringskalkulatoren over viser hva et kurs kan gi. `;
+  else if(r.medlBehov!==null) t+=`Klubben har ${a.medl-r.medlBehov} betalende mer enn den trenger for å gå i balanse. `;
+  if(a.bord>0) t+=`Hvert bord koster ${kr(r.vedPerBord/12)} i måneden å holde i stand.`;
+  s.className='setning'+(a.kont<50?' varsel':''); s.innerHTML=t;
+ }
+ D.forEach(id=>$(id).addEventListener('input',tegnD));
+ $('d-skjema').addEventListener('submit',e=>e.preventDefault());
+ tegnD();
 }
 </script>
 </body></html>

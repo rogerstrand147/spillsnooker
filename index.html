@@ -71,6 +71,20 @@ svg#svg.drag{cursor:grabbing}
 .dot.privat{opacity:.5}
 .dot.dempet{opacity:.18}
 .dot.uthevet .kule{stroke:var(--lampe);stroke-width:1.8}
+/* Ønskeliste: stiplet ring = «her vil folk spille, men det finnes ikke noe sted». Antall, aldri navn. */
+.onske{cursor:default}
+.onske .ring{fill:rgba(224,122,77,.10);stroke:var(--lampe);stroke-width:1.2;stroke-dasharray:3 2.4}
+.onske text{fill:var(--elfenben);font-size:8.5px;font-weight:700;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.onske.dempet{opacity:.25}
+#onske .onskeboks{background:var(--flate);border:1px solid var(--kant);border-radius:14px;padding:22px;max-width:620px}
+#onske .skjema{display:flex}
+#onske label.valg{display:flex;gap:10px;align-items:flex-start;font-size:.86rem;color:var(--dempet);line-height:1.45}
+#onske label.valg input{width:auto;margin-top:3px;accent-color:var(--filt-lys)}
+#onske .rad{display:grid;grid-template-columns:2fr 1fr;gap:9px}
+@media (max-width:520px){#onske .rad{grid-template-columns:1fr}}
+#onske .skjult-felt{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+#onske .onsketall{font-size:.86rem;color:var(--dempet);margin-top:14px}
+#q-svar a{color:var(--lampe)}
 .klubb .hull{color:var(--lampe);font-size:.93em}
 .klubb .stempel.vent{border-color:var(--svak);color:var(--dempet)}
 .klubb .teller.tom span{color:var(--dempet)}
@@ -412,6 +426,7 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
      <g id="dybde"></g>
      <path id="coast"></path>
      <g id="dots"></g>
+     <g id="onsker"></g>
     </g>
     <rect id="vignett" x="0" y="0" width="600" height="700" fill="url(#vignett-g)"></rect>
    </svg>
@@ -428,6 +443,7 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
     <span><b style="background:#E58BA6"></b>6+</span>
     <span style="color:#6B746E">bord — som verdien på ballen</span>
     <span style="color:#6B746E">Nedtonet = privat bord</span>
+    <span id="onske-forkl" hidden><b style="background:transparent;border:1.5px dashed #E07A4D"></b>ønsker seg et sted å spille</span>
    </div>
   </div>
   <div class="liste" id="list"></div>
@@ -441,6 +457,35 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
    Send oss en linje</a> — sted, by og hva som er feil. Vi retter det og sier fra til
   bordregisteret.</p>
 </div>
+
+<section id="onske"><div class="wrap">
+ <div class="merk">Ingen bord der du bor?</div>
+ <h2>Si fra hvor du skulle ønske det var et sted å spille</h2>
+ <p class="led">Vi viser på kartet hvor mange som ønsker det samme — aldri hvem. Når tre
+ fra samme område har sagt ja til å bli kontaktet, sender vi én e-post til dere alle,
+ med det som trengs for å starte en klubb. Resten bestemmer dere selv.</p>
+ <div class="onskeboks">
+  <form class="skjema" id="onske-skjema" novalidate>
+   <div class="rad">
+    <input type="text" id="onske-sted" required maxlength="60" placeholder="Kommune eller tettsted" aria-label="Kommune eller tettsted" autocomplete="address-level2">
+    <input type="text" id="onske-postnr" required inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="Postnummer" aria-label="Postnummer" autocomplete="postal-code">
+   </div>
+   <input type="email" id="onske-epost" required placeholder="E-postadresse" aria-label="E-postadresse" autocomplete="email">
+   <label class="valg"><input type="checkbox" id="onske-varsle" required>
+    <span>Si fra til meg hvis det starter noe der jeg bor.</span></label>
+   <label class="valg"><input type="checkbox" id="onske-kontakt">
+    <span>Andre fra samme område som vil det samme, kan få e-postadressen min. <i>Valgfritt.</i></span></label>
+   <label class="valg"><input type="checkbox" id="onske-alder" required>
+    <span>Jeg er 16 år eller eldre.</span></label>
+   <div class="skjult-felt" aria-hidden="true"><label>Ikke fyll ut<input type="text" name="_gotcha" id="onske-gotcha" tabindex="-1" autocomplete="off"></label></div>
+   <button class="knapp" type="submit">Registrer ønsket</button>
+   <small>Kartet oppdateres én gang i måneden. Ingen nyhetsbrev. Du kan be om å bli slettet
+   når som helst. Les <a href="personvern.html">hvordan vi behandler opplysningene</a>.</small>
+  </form>
+  <div class="kvittering" id="onske-kvit"></div>
+  <p class="onsketall" id="onske-tall"></p>
+ </div>
+</div></section>
 
 <section id="klubber"><div class="wrap">
  <div class="merk">Klubbene</div>
@@ -769,6 +814,19 @@ const STEDER=[
 ];
 
 /* ══════════════════════════════════════════════════════════════════
+   3b. ØNSKELISTA — «jeg skulle ønske det var et sted å spille her»
+   ══════════════════════════════════════════════════════════════════
+   Føres for hånd én gang i måneden fra Formspree-e-postene (se
+   Koalisjonen/Nettsted/Rutine-onskelista.md). ÉN rad per sted, med
+   ANTALL — aldri navn eller e-post. Steder med under ONSKE_MIN vises
+   ikke, så ingen kan kjennes igjen. Koordinat: kommunesenteret.
+   Eksempel: {s:"Bodø",f:"Nordland",n:3,lat:67.280,lng:14.405},     */
+const ONSKE_MIN = 2;
+const ONSKER = [
+];
+const ONSKE_OPPDATERT = "";   // «2026-10-01» når lista er ført første gang
+
+/* ══════════════════════════════════════════════════════════════════
    4. KART
    ══════════════════════════════════════════════════════════════════ */
 const LAT0=57.6,LAT1=71.4,LNG0=4.0,LNG1=31.5,W=600,H=700,PAD=22;
@@ -855,6 +913,25 @@ dots.innerHTML=STEDER.map((p,i)=>{
   <circle class="kule" cx="${x}" cy="${ky}" r="${r.toFixed(1)}" fill="url(#b${v})"/>
  </g>`;
 }).join('');
+
+/* Ønskelaget: stiplet ring med tallet inni. Tegnes under klubbkulene i
+   rekkefølge, men ligger i egen gruppe så modusbytte ikke skjuler det. */
+const ONSKE_VIS = ONSKER.filter(o=>o.n>=ONSKE_MIN);
+document.getElementById('onsker').innerHTML = ONSKE_VIS.map(o=>{
+ const q=P(o.lat,o.lng), r=(7+Math.min(o.n,12)*0.7).toFixed(1);
+ return `<g class="onske" role="img" aria-label="${o.n} ønsker seg et sted å spille i ${o.s}">
+  <title>${o.n} ønsker seg et sted å spille i ${o.s}</title>
+  <circle class="ring" cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="${r}"/>
+  <text x="${q[0].toFixed(1)}" y="${q[1].toFixed(1)}">${o.n}</text></g>`;
+}).join('');
+if(ONSKE_VIS.length) document.getElementById('onske-forkl').hidden=false;
+(()=>{
+ const el=document.getElementById('onske-tall'); if(!el) return;
+ const sum=ONSKE_VIS.reduce((a,o)=>a+o.n,0);
+ el.textContent = ONSKE_VIS.length
+  ? `${sum} personer på ${ONSKE_VIS.length} steder uten klubb står på lista${ONSKE_OPPDATERT?' (oppdatert '+ONSKE_OPPDATERT+')':''}. Stiplede ringer på kartet.`
+  : `Ingen steder vises på kartet ennå. Et sted kommer med når minst ${ONSKE_MIN} har meldt seg.`;
+})();
 
 const list=document.getElementById('list');
 
@@ -1008,7 +1085,10 @@ function sok(){
  document.querySelectorAll('.dot').forEach(d=>{
   const inn=treff.includes(+d.dataset.i);
   d.classList.toggle('uthevet',inn); d.classList.toggle('dempet',!inn);});
- if(!treff.length){qsvar.textContent='Ingen treff. Prøv fylket i stedet.';return;}
+ if(!treff.length){qsvar.innerHTML='Ingen bord her. <a href="#onske" id="q-onske">Si fra at du ønsker et sted å spille</a>.';
+  const lenke=document.getElementById('q-onske');
+  if(lenke) lenke.onclick=()=>{const f=document.getElementById('onske-sted'); if(f&&!f.value) f.value=q.value.trim();};
+  return;}
  qsvar.textContent=treff.length===1?'1 sted':treff.length+' steder';
  const pk=treff.map(i=>P(STEDER[i].lat,STEDER[i].lng));
  const xs=pk.map(a=>a[0]),ys=pk.map(a=>a[1]);
@@ -1203,7 +1283,7 @@ function tegnKlubber(){
        : status==='planlagt'
          ? `Dette er ikke selve påmeldingen — klubben har ikke satt datoer ennå. Vi gir lista til klubben.`
          : `Dette er ikke en påmelding til et kurs. Det finnes ikke noe kurs å melde seg på her ennå. Vi gir lista til klubben, og klubben avgjør selv.`}
-     Ingen nyhetsbrev, og du kan melde deg av når som helst.</small>
+     Ingen nyhetsbrev, og du kan melde deg av når som helst. <a href="personvern.html">Personvern</a>.</small>
    </form>
    <div class="kvittering" data-kvit="${i}"></div>
    <div class="nbf">Medlemsklubb i
@@ -1255,6 +1335,45 @@ function tegnKlubber(){
  observerTellere();
 }
 tegnKlubber();
+
+/* Ønskeskjemaet. Samme Formspree-skjema som ventelista, skilt med «type».
+   Bare 2xx gir kvittering. Honningkrukka (_gotcha) stopper enkle roboter. */
+(()=>{
+ const f=document.getElementById('onske-skjema'); if(!f) return;
+ const kv=document.getElementById('onske-kvit');
+ f.onsubmit=async e=>{
+  e.preventDefault();
+  if(!f.checkValidity()){ f.reportValidity(); return; }
+  const sted=document.getElementById('onske-sted').value.trim();
+  const data={type:'onske', sted,
+   postnummer:document.getElementById('onske-postnr').value.trim(),
+   email:document.getElementById('onske-epost').value.trim(),
+   varsle:'ja',
+   kontakt:document.getElementById('onske-kontakt').checked?'ja':'nei',
+   alder16:'ja',
+   _gotcha:document.getElementById('onske-gotcha').value,
+   _subject:`Ønsker et sted å spille — ${sted} — spillsnooker.no`};
+  let lagret=false;
+  if(SKJEMA_ENDEPUNKT){
+   try{
+    const res=await fetch(SKJEMA_ENDEPUNKT,{method:'POST',
+     headers:{'Content-Type':'application/json','Accept':'application/json'},
+     body:JSON.stringify(data)});
+    lagret=res.ok;
+   }catch(err){}
+  }
+  kv.classList.remove('advarsel');
+  if(lagret){
+   f.style.display='none';
+   kv.innerHTML=`Takk. Vi har registrert at du ønsker et sted å spille i ${esc(sted)}. Kartet oppdateres én gang i måneden${data.kontakt==='ja'?', og når tre fra samme område har sagt ja til kontakt, får dere en felles e-post':''}.`;
+  }else{
+   kv.innerHTML=`<b>Det gikk ikke.</b> Ønsket ble ikke lagret. Prøv igjen om litt, eller send en e-post til
+    <a href="mailto:rogerstrand147@gmail.com?subject=Jeg%20%C3%B8nsker%20et%20sted%20%C3%A5%20spille">rogerstrand147@gmail.com</a>.`;
+   kv.classList.add('advarsel');
+  }
+  kv.classList.add('vis');
+ };
+})();
 
 /* Tallene i hero regnes ut av dataene, så de aldri kan bli utdaterte i teksten.
 

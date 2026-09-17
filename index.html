@@ -790,7 +790,8 @@ const STEDER=[
  {n:"Sarpsborg Snookerklubb",s:"Sarpsborg",f:"Østfold",b:4,k:"klubb",lat:59.283,lng:11.110,note:"Bekreftet 4 snookerbord og 2 biljardbord via klubbens egen nettside."},
  {n:"Ishavsbyen Biljard & Snooker",s:"Tromsø",f:"Troms",b:2,k:"klubb",lat:69.649,lng:18.956,note:"2 bord, bekreftet av Roger 13.09.2026. Klubben fikk 340 500 i lån fra NBF til bordkjøp — beløpet er ikke bekreftet av klubben."},
  {n:"Grenland Biljardsenter",s:"Porsgrunn",f:"Telemark",b:1,k:"klubb",lat:59.141,lng:9.656},
- {n:"Arctic Biljardklubb",s:"Bodø",f:"Nordland",b:1,k:"klubb",lat:67.280,lng:14.405,note:"Usikker — finnes denne ennå?"},
+ /* Arctic Biljardklubb, Bodø: fjernet 17.09.2026. Roger har snakket med klubben —
+    de har ikke snookerbord. Meldt til Hermunds register 13.09, og fjernet der 16.09. */
  {n:"Bjerke Biljardpark",s:"Oslo",f:"Oslo",b:1,k:"klubb",lat:59.941,lng:10.831},
  {n:"Hyllestad Biljardklubb",s:"Hyllestad",f:"Vestland",b:1,k:"klubb",lat:61.163,lng:5.302},
  {n:"Molde Biljardklubb",s:"Molde",f:"Møre og Romsdal",b:1,k:"klubb",lat:62.737,lng:7.161},
@@ -955,7 +956,7 @@ if(ONSKE_VIS.length) document.getElementById('onske-forkl').hidden=false;
 
 const list=document.getElementById('list');
 
-/* Lista er gruppert på fylke. 49 steder i én lang rekke er ikke til å lese —
+/* Lista er gruppert på fylke. 48 steder i én lang rekke er ikke til å lese —
    fylket er det folk faktisk leter etter. Klikk på en fylkesrad zoomer til
    alle bordene i det fylket. */
 function fylkesgrupper(kunKlubb){

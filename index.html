@@ -285,6 +285,9 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
  display:grid;place-items:center;margin-bottom:16px;
  background:radial-gradient(ellipse 72% 62% at 50% 46%,#0F3D27 0%,#0A1C13 68%,#07110C 100%)}
 .klubb .bilde img{width:100%;height:100%;object-fit:cover;display:block}
+.klubb .bilde{position:relative}
+.klubb .bilde .bildenote{position:absolute;left:8px;bottom:8px;background:rgba(12,14,13,.82);color:var(--elfenben);
+ font-family:ui-monospace,Menlo,monospace;font-size:.72rem;padding:3px 8px;border-radius:6px}
 .klubb .bilde span{color:var(--filt-lys);font-weight:650;letter-spacing:-.01em;font-size:1.05rem;text-align:center;padding:12px}
 
 /* ═══ v2: telleren ═══ */
@@ -678,6 +681,12 @@ const terskelFor = k => k.terskel || TERSKEL;
       bekreftet: false → bordene vises på kartet, men ingen klubbkort
    ══════════════════════════════════════════════════════════════════ */
 const KLUBBER = [
+ /* lenker: klubbens egne sider. Vi viser alltid videre til klubben.
+    Lagt inn 17.09.2026: nettside og Facebook/Instagram slik de er lenket fra
+    klubbens egen nettside (Oslo, Helgeland) eller funnet ved søk (resten).
+    Klubbene blir spurt hva de vil vi skal lenke til — svaret deres overstyrer.
+    bildenote: vises oppå bildet. Helgelands bilde er redigert med KI av
+    klubben selv, og det skal stå. */
  /* Bekreftet av klubben selv. null = ikke innhentet ennå og vises som åpent hull. */
  /* Rettet 14.09.2026 etter gjennomgang av Arild Burud, klubbens egen kontakt.
     Tre ting var galt eller ufullstendig: drop-in sa ikke at det bare gjelder
@@ -686,21 +695,21 @@ const KLUBBER = [
     et treningsabonnement, mens Minidrett er det formelle idrettsmedlemskapet
     som gir klubben tilskuddsgrunnlag og stemmerett på tinget. To forskjellige
     ting, som blandes sammen. */
- {navn:"Oslo Snooker & Carambole", sted:"Oslo", bekreftet:true,
+ {navn:"Oslo Snooker & Carambole", lenker:[["Nettside","https://www.oslosnooker.no/"],["Facebook","https://www.facebook.com/oslosnooker/"],["Instagram","https://www.instagram.com/oslosnooker/"]], sted:"Oslo", bekreftet:true,
   adresse:"Ensjøveien 16, 0655 Oslo — det står 16-18 på inngangsdøra. Nær Ensjø T-bane",
   kartadresse:"Ensjøveien 16, 0655 Oslo",
   dropin:"Torsdag 17–22 og søndag 12–22. Bordet bookes på forhånd. Drop-in gjelder bare snooker — ikke carambole", pris:"Drop-in 250 kr/t for bordet, 125 kr/t hvis du spiller med et medlem. Medlemskap 1500 kr/mnd for voksen, 1000 kr/mnd for ungdom, student og over 67. I tillegg 100 kr i året for Minidrett, 50 for deg under 18 — det formelle idrettsmedlemskapet", bord:8,
   bordnote:"pluss 4 carambolebord", kontakt:"info@oslosnooker.no",
   apen:true, kurs:null, venteliste:0, bilde:null},
 
- {navn:"Stord Snooker", sted:"Stord", bekreftet:true,
+ {navn:"Stord Snooker", lenker:[["Facebook","https://www.facebook.com/stordsnooker/"]], sted:"Stord", bekreftet:true,
   adresse:"Podlen 4, 5410 Sagvåg — Stord",
   dropin:"Drop-in for alle — 100 kr for første time per person, 200 kr for to timer eller mer",
   dropinhint:"Åpningstider er ikke oppgitt. Klubben kjørte gratis åpen trening torsdager våren 2025",
   pris:"Medlemskap 450 kr/mnd, 350 for kvinner, 250 for ungdom og student. Uke 400 kr, måned 700 kr. Klubbens prisliste for 2025–26", bord:8, bordnote:"pluss 2 poolbord",
   kontakt:"stordsnooker@gmail.com", kurs:null, venteliste:0, bilde:null},
 
- {navn:"Helgeland Snooker", sted:"Mo i Rana", bekreftet:true,
+ {navn:"Helgeland Snooker", lenker:[["Nettside","https://helgelandsnooker.no/"],["Facebook","https://www.facebook.com/profile.php?id=100064810750321"]], sted:"Mo i Rana", bekreftet:true,
   adresse:"Strandgata 25 B, 8622 Mo i Rana",
   dropin:"Ikke drop-in — lokalet er for medlemmer. Interesserte får en gratis prøvetime med en erfaren spiller",
   pris:"Medlemskap 700 kr/mnd, 350 for skoleelev og student. I tillegg 50 kr i året for registrering i idrettsregisteret", bord:4, kontakt:"johnnyjenssen@yahoo.com",
@@ -717,10 +726,10 @@ const KLUBBER = [
      Friskus — så det står som navn, ikke som lenke. Legg inn URL først når
      den er sett. */
   skolestatus:"planlagt", egenpaamelding:"Friskus Rana",
-  kurs:null, venteliste:0, bilde:null},
+  kurs:null, venteliste:0, bilde:"helgeland-inngang.jpg", bildenote:"KI-redigert — klubbens eget bilde"},
 
  /* Ikke bekreftet — bordene vises på kartet, men klubben får ikke kort ennå. */
- {navn:"Trondheim Snooker", sted:"Trondheim", bekreftet:true,
+ {navn:"Trondheim Snooker", lenker:[["Nettside","https://trondheimsnooker.org/"],["Facebook","https://www.facebook.com/TrondheimSnooker/"],["Instagram","https://www.instagram.com/trondheimsnooker/"]], sted:"Trondheim", bekreftet:true,
   adresse:"Brøsetvegen 168, kjelleren — Moholt, Trondheim",
   dropin:"Pay & play når det er vakt i lokalet. Avtal på forhånd. Prøvetime kan bestilles",
   pris:"150 kr for de to første timene per person, 300 kr over to timer", bord:6,
@@ -741,7 +750,7 @@ const KLUBBER = [
     oppgitt av klubben samme dag. Adressen hans skal IKKE stå her — klubben
     oppga gmail-adressen som sin offentlige kontakt, og Reidar har ikke sagt
     ja til å stå på en nettside. */
- {navn:"Os Biljard og Snookerklubb", sted:"Bjørnafjorden", bekreftet:true,
+ {navn:"Os Biljard og Snookerklubb", lenker:[["Facebook","https://www.facebook.com/Osbiljardogsnookerklubb/"],["Instagram","https://www.instagram.com/osbiljardogsnooker/"]], sted:"Bjørnafjorden", bekreftet:true,
   adresse:"Ulvenvegen 34, 5210 Osøyro",
   dropin:"Dagskort for alle, også for deg som ikke er medlem",
   dropinhint:"Klubben oppgir man–fre og søn 18–23, stengt lørdag, og sier de forsøker å holde disse tidene. Det er stort sett noen med nøkkel i lokalet",
@@ -755,13 +764,13 @@ const KLUBBER = [
     klubbens riktige, så det er serveren som er nede, ikke adressen som er
     feil. Dette er en midlertidig omruting, besluttet av Roger 14.09.2026.
     Sett den tilbake når klubbens egen e-post virker igjen — ikke før. */
- {navn:"Sarpsborg Snookerklubb", sted:"Sarpsborg", bekreftet:true,
+ {navn:"Sarpsborg Snookerklubb", lenker:[["Nettside","https://sarpsborgsnooker.com/"],["Facebook","https://www.facebook.com/344177185301"]], sted:"Sarpsborg", bekreftet:true,
   adresse:"Torpebaugen 4, Sarpsborg — 250 m² lokale",
   dropin:"Pay & play etter avtale — send e-post på forhånd",
   pris:"100 kr/t for voksen", bord:4,
   bordnote:"pluss 2 biljardbord", kontakt:"post@pefjell.no · 950 53 450",
   apen:true, kurs:null, venteliste:0, bilde:null},
- {navn:"Ishavsbyen Biljard og Snookerklubb", sted:"Tromsø", bekreftet:true,
+ {navn:"Ishavsbyen Biljard og Snookerklubb", lenker:[["Facebook","https://www.facebook.com/100063700624556/"]], sted:"Tromsø", bekreftet:true,
   adresse:"Lars Eriksens veg 3c, 9016 Tromsø",
   dropin:null, dropinhint:"Klubben oppgir åpent mandag–fredag 18–21. Om det gjelder ikke-medlemmer er ikke bekreftet",
   pris:null, bord:2,
@@ -1256,6 +1265,10 @@ function tegnKlubber(){
    f+=`<div class="rad"><span>Bord</span>${k.bord?`<span>${k.bord} <em style="color:var(--svak);font-style:normal">— fra registeret, ikke bekreftet</em></span>`:hull('Ikke bekreftet')}</div>`;
   }
 
+  if(k.lenker&&k.lenker.length){
+   f+=`<div class="rad"><span>Klubbens sider</span><span>${k.lenker.map(([n,u])=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(n)}</a>`).join(' · ')}</span></div>`;
+  }
+
   const teller = k.kurs ? '' : tellerHTML(k);
 
   /* Tre tilstander, og de skal se forskjellige ut.
@@ -1269,7 +1282,7 @@ function tegnKlubber(){
 
   return `
   <div class="klubb" id="klubb-${i}" data-by="${esc(by)}">
-   <div class="bilde">${k.bilde?`<img src="${esc(k.bilde)}" alt="Lokalet hos ${esc(k.navn)}" loading="lazy">`:`<span>${esc(k.navn)}</span>`}</div>
+   <div class="bilde">${k.bilde?`<img src="${esc(k.bilde)}" alt="Lokalet hos ${esc(k.navn)}" loading="lazy">${k.bildenote?`<small class="bildenote">${esc(k.bildenote)}</small>`:''}`:`<span>${esc(k.navn)}</span>`}</div>
    <h3>${esc(k.navn)}</h3>
    <div class="sted">${esc(k.adresse||k.sted)}</div>
    ${minikart(i,k)}

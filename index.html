@@ -656,9 +656,16 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
 /* ══════════════════════════════════════════════════════════════════
    1. INNSTILLINGER
    ══════════════════════════════════════════════════════════════════ */
-const FORHANDSVIS = true;          // false når SKJEMA_ENDEPUNKT er satt og alle sju klubber er bekreftet
+const FORHANDSVIS = false;         /* Banneret tatt ned 18.09.2026 (Roger). Det sa
+   «ventelistetallene er eksempler» og «fire av sju klubber mangler åpningstider»,
+   og begge deler var blitt usant: alle sju står venteliste:0, og bare Ishavsbyen
+   mangler pris og drop-in. Et banner med to gale påstander er verre enn ingen. */
 const SKJEMA_ENDEPUNKT = "https://formspree.io/f/xppzngky"; // Formspree: "https://formspree.io/f/<skjema-ID>". Tom = knappen viser bare kvittering
-const TERSKEL = 15;                // felles utgangspunkt til klubben sier sitt
+/* TERSKEL er fjernet 18.09.2026 (Roger). Siden lovet «ved 15 påmeldte tar vi
+   det opp med klubben» på vegne av sju klubber som aldri hadde sagt ja til et
+   tall. Nå varsles klubben for hver påmelding, og ingen blir liggende og vente
+   på at et tall skal fylles opp. Ikke innfør en terskel igjen uten at klubben
+   selv har bedt om den. */
 const VIDEO_URL = "";              // mp4/webm, 5–8 s, uten lyd. Tom = plassholderen står
 /* Midlertidig hero-bilde: eget foto fra et norsk klubblokale, oktober 2023.
    Lagt inn som data-URI og ikke som egen fil, så siden fortsatt er én fil
@@ -669,11 +676,12 @@ const VIDEO_STILL = HERO_BILDE;    // stillbilde. Står alene til videoen finnes
 const SPILLELISTE = "PLPdN-xCmTUW0"; // YouTube-spilleliste-ID. Innholdet styres i YouTube, aldri her
 const MAFLIN_SITAT = "";           // Kurts egne ord, når han har godkjent dem. Tom = hele seksjonen er skjult
 const MAFLIN_BILDE = "";           // portrett, når det er innhentet. Tom = seksjonen står uten bilde
-const EKSEMPELTALL = true;         // ventelistetallene er eksempler til skjemaet er koblet
+const EKSEMPELTALL = false;        // 18.09.2026: alle sju står venteliste:0 — tallene er ekte, ikke eksempler
 const REDUSERT = matchMedia('(prefers-reduced-motion: reduce)').matches;
-/* Hver klubb kan overstyre med terskel: <tall>. Ingen av de sju har svart ennå,
-   så alle bruker fellestallet — og det står på siden at det er slik. */
-const terskelFor = k => k.terskel || TERSKEL;
+/* Klubbens eget tilbud, ordrett slik klubben selv har publisert det. Vi lover
+   ingenting på klubbens vegne: står det ikke i dropin-feltet, står det ikke
+   i kvitteringen. Ishavsbyen har dropin:null og får derfor ingen setning. */
+const provetilbud = k => k.dropin ? ` Klubbens eget tilbud: ${esc(k.dropin)}` : '';
 
 /* ══════════════════════════════════════════════════════════════════
    2. KLUBBDATA  — én rad per klubb, hentes fra regnearket
@@ -728,13 +736,16 @@ const KLUBBER = [
   skolestatus:"planlagt", egenpaamelding:"Friskus Rana",
   kurs:null, venteliste:0, bilde:"helgeland-inngang.jpg", bildenote:"KI-redigert — klubbens eget bilde"},
 
- /* Ikke bekreftet — bordene vises på kartet, men klubben får ikke kort ennå. */
+ /* Bekreftet av klubben selv 18.09.2026: Sondre Sundt på e-post, alle tre
+    spørsmålene besvart. Drop-in og priser stemmer. Seks full size snookerbord,
+    og biljardbordene er borte — derfor er bordnote fjernet. Lenkene er godkjent
+    som de står. Klubben sendte også bilde av lokalet (IMG_8974.jpeg). */
  {navn:"Trondheim Snooker", lenker:[["Nettside","https://trondheimsnooker.org/"],["Facebook","https://www.facebook.com/TrondheimSnooker/"],["Instagram","https://www.instagram.com/trondheimsnooker/"]], sted:"Trondheim", bekreftet:true,
   adresse:"Brøsetvegen 168, kjelleren — Moholt, Trondheim",
   dropin:"Pay & play når det er vakt i lokalet. Avtal på forhånd. Prøvetime kan bestilles",
   pris:"150 kr for de to første timene per person, 300 kr over to timer", bord:6,
-  bordnote:"pluss 2 poolbord", kontakt:"post@trondheimsnooker.org · 450 76 710",
-  apen:true, kurs:null, venteliste:0, bilde:null},
+  kontakt:"post@trondheimsnooker.org · 450 76 710",
+  apen:true, kurs:null, venteliste:0, bilde:"trondheim-lokalet.jpg"},
  /* Bekreftet av klubben selv 14.09.2026, på melding til klubbens Facebook-side.
     Alle fire spørsmålene besvart: pris, om det er åpent for ikke-medlemmer,
     kontakt og bordtall. Klubben sier fire snookerbord — samme tall Roger
@@ -1221,8 +1232,8 @@ function tellerHTML(k){
  const by=esc(k.sted), t=k.venteliste||0;
  const eks=EKSEMPELTALL?' <em class="eks">eksempeltall</em>':'';
  const vm=EKSEMPELTALL?' eksempel':'';
- if(t===0) return `<div class="teller tom${vm}"><span><b>Bli den første i ${by}.</b> Ved ${terskelFor(k)} påmeldte tar vi det opp med klubben.${eks}</span></div>`;
- return `<div class="teller${vm}"><span class="setning">Det står <b data-mal="${t}">${REDUSERT?t:0}</b> ${t===1?'person':'personer'} i ${by} og venter.</span><span>Ved ${terskelFor(k)} tar vi det opp med klubben.${eks}</span></div>`;
+ if(t===0) return `<div class="teller tom${vm}"><span><b>Bli den første i ${by}.</b> Klubben får beskjed om hver påmelding.${eks}</span></div>`;
+ return `<div class="teller${vm}"><span class="setning">Det står <b data-mal="${t}">${REDUSERT?t:0}</b> ${t===1?'person':'personer'} i ${by} og venter.</span><span>Klubben får beskjed om hver påmelding.${eks}</span></div>`;
 }
 
 /* Alle sju klubber får kort. «bekreftet» styrer om vi viser fakta eller åpne
@@ -1347,8 +1358,8 @@ function tegnKlubber(){
   /* Uten endepunkt lagres ingenting. Da skal det stå, ikke skjules bak et banner. */
   kv.innerHTML = lagret
    ? (k.kurs
-      ? `Takk. Adressen din er lagret og gis videre til ${esc(k.navn)}. Klubben avgjør selv hvem den kontakter og når.`
-      : `Takk. Adressen din er lagret og gis videre til ${esc(k.navn)}. Vi sier fra hvis klubben setter opp en pulje.`)
+      ? `Takk. Adressen din er lagret, og ${esc(k.navn)} får beskjed om påmeldingen din. Klubben avgjør selv hvem den kontakter og når.${provetilbud(k)}`
+      : `Takk. Adressen din er lagret, og ${esc(k.navn)} får beskjed om påmeldingen din.${provetilbud(k)}`)
    : (SKJEMA_ENDEPUNKT
       ? `<b>Det gikk ikke.</b> Adressen ble ikke lagret. Prøv igjen om litt, eller
          ta kontakt med klubben direkte${k.kontakt?': '+esc(k.kontakt):''}.`

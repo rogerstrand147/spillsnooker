@@ -265,7 +265,17 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
 .hero::after{content:"";position:absolute;inset:0;pointer-events:none;
  background:linear-gradient(to top,rgba(12,14,13,.94) 0%,rgba(12,14,13,.6) 38%,rgba(12,14,13,.1) 100%)}
 .hero .ord{position:absolute;left:0;right:0;bottom:0;padding:clamp(22px,5vw,56px);z-index:2}
-.hero .topp{position:absolute;top:0;left:0;right:0;z-index:2;display:flex;justify-content:flex-end;padding:clamp(14px,2.5vw,22px)}
+.hero .topp{position:absolute;top:0;left:0;right:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:clamp(14px,2.5vw,22px)}
+/* Logoen over hero-bildet. Forsiden har ingen toppmeny, så dette er eneste
+   sted navnetrekket står på index.html. Besluttet av Roger 18.09.2026.
+   MERK: logoen hører hjemme HER, på vår egen forside — aldri oppå et
+   klubbkort. Kortene er klubbenes, og vårt merke på deres lokale ville
+   lest som om vi eide rommet. */
+.hero .merke{display:flex;align-items:center;gap:9px;color:var(--elfenben);font-weight:700;font-size:clamp(.95rem,2.2vw,1.15rem);letter-spacing:-.01em;white-space:nowrap;text-shadow:0 1px 10px rgba(12,14,13,.75)}
+.hero .merke i{width:22px;height:22px;background:url(favicon.svg) center/contain no-repeat;display:inline-block;flex:none;filter:drop-shadow(0 1px 6px rgba(12,14,13,.6))}
+.hero .merke .g{color:var(--filt-lys)}
+.hero .merke .d{color:var(--dempet)}
+@media(max-width:420px){.hero .merke span{display:none}}
 .hero .topp a{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:99px;
  background:rgba(12,14,13,.55);border:1px solid var(--kant);color:var(--elfenben);text-decoration:none;
  font-size:.9rem;font-weight:600;backdrop-filter:blur(6px)}
@@ -348,7 +358,10 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
     <b>Video: rød ball mot hull, filmes på klubbens bord</b>
     <span>5–8 sekunder, uten lyd, i sløyfe. 16:9 på skjerm, beskåret til 4:5 på mobil. Stillbilde som fallback ved datasparing.</span>
    </div></div>
-   <nav class="topp" aria-label="For klubber"><a href="#klubbdrift">For klubber</a></nav>
+   <div class="topp">
+    <span class="merke"><i aria-hidden="true"></i><span>spill<span class="g">snooker</span><span class="d">.no</span></span></span>
+    <nav aria-label="For klubber"><a href="#klubbdrift">For klubber</a></nav>
+   </div>
    <div class="ord"><h1>Hvor kan du spille <em>snooker</em> i Norge?</h1></div>
   </div>
  </div>

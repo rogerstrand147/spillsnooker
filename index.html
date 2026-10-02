@@ -281,6 +281,14 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
  font-size:.9rem;font-weight:600;backdrop-filter:blur(6px)}
 .hero .topp a:hover{border-color:var(--filt-lys);color:var(--filt-lys)}
 .hero h1{max-width:18ch}
+/* Toppfelt-video (02.10.2026): spilles én gang og blir stående på nærbildet.
+   Overskrift og knapp toner inn først når videoen er ferdig. Klassen «venter»
+   settes bare av skriptet, så uten skript står teksten fra start. */
+.hero .ord .knapp{display:inline-block;width:auto;margin-top:18px;padding-left:22px;padding-right:22px;text-decoration:none}
+.hero::after,.hero .ord{transition:opacity .9s ease,transform .9s ease}
+.hero.venter::after{opacity:0}
+.hero.venter .ord{opacity:0;transform:translateY(10px);pointer-events:none}
+@media(prefers-reduced-motion:reduce){.hero::after,.hero .ord{transition:none}}
 .heroflate{padding-top:36px}
 
 /* ═══ v2: kulestripa ═══ */
@@ -355,14 +363,14 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
  <div class="wrap">
   <div class="hero" id="hero">
    <div class="plassholder" id="plassholder"><div>
-    <b>Video: rød ball mot hull, filmes på klubbens bord</b>
-    <span>5–8 sekunder, uten lyd, i sløyfe. 16:9 på skjerm, beskåret til 4:5 på mobil. Stillbilde som fallback ved datasparing.</span>
+    <b>Lyset tennes over ett bord i en mørk hall</b>
+    <span>13 sekunder, uten lyd, spilles én gang. 16:9 på skjerm, 4:5 på mobil. Stillbilde ved datasparing.</span>
    </div></div>
    <div class="topp">
     <span class="merke"><i aria-hidden="true"></i><span>spill<span class="g">snooker</span><span class="d">.no</span></span></span>
     <nav aria-label="For klubber"><a href="#klubbdrift">For klubber</a></nav>
    </div>
-   <div class="ord"><h1>Hvor kan du spille <em>snooker</em> i Norge?</h1></div>
+   <div class="ord"><h1>Hvor kan du spille <em>snooker</em> i Norge?</h1><a class="knapp" href="#klubber">Finn en klubb</a></div>
   </div>
  </div>
 </header>
@@ -695,7 +703,9 @@ const SKJEMA_ENDEPUNKT = "https://formspree.io/f/xppzngky"; // Formspree: "https
    tall. Nå varsles klubben for hver påmelding, og ingen blir liggende og vente
    på at et tall skal fylles opp. Ikke innfør en terskel igjen uten at klubben
    selv har bedt om den. */
-const VIDEO_URL = "";              // mp4/webm, 5–8 s, uten lyd. Tom = plassholderen står
+const VIDEO_URL = matchMedia('(max-width:700px)').matches ? "toppfelt-4x5.mp4" : "toppfelt-16x9.mp4"; // 13,4 s, uten lyd, spilles én gang (Higgsfield runde 7, godkjent 02.10.2026)
+const VIDEO_PLAKAT = "toppfelt-plakat.jpg"; // første bilde: mørk hall
+const VIDEO_SLUTT = "toppfelt-slutt.jpg";   // siste bilde: nærbildet. Vises alene ved redusert bevegelse eller datasparing
 /* Midlertidig hero-bilde: eget foto fra et norsk klubblokale, oktober 2023.
    Lagt inn som data-URI og ikke som egen fil, så siden fortsatt er én fil
    uten eksterne avhengigheter. 1280x960, 179 kB. Byttes ut med video (eller
@@ -1180,14 +1190,22 @@ q.addEventListener('keydown',e=>{if(e.key!=='Enter')return;
  let el;
  if(REDUSERT||spar||!VIDEO_URL){
   if(!VIDEO_STILL) return;
-  el=document.createElement('img'); el.src=VIDEO_STILL;
-  el.alt='Snookerbord med ballene satt opp i et norsk klubblokale';
+  el=document.createElement('img'); el.src=VIDEO_URL?VIDEO_SLUTT:VIDEO_STILL;
+  el.alt='Snookerbord med ballene satt opp under lampa';
   el.loading='eager'; el.decoding='async';
  }else{
   el=document.createElement('video');
-  el.muted=true; el.loop=true; el.autoplay=true; el.playsInline=true; el.preload='metadata';
-  if(VIDEO_STILL) el.poster=VIDEO_STILL;
+  el.muted=true; el.loop=false; el.autoplay=true; el.playsInline=true; el.preload='auto';
+  el.setAttribute('aria-hidden','true');
+  el.poster=VIDEO_PLAKAT;
   el.src=VIDEO_URL;
+  /* Teksten venter til videoen er ferdig. Starter den ikke (blokkert autoplay, feil), kommer teksten likevel. */
+  hero.classList.add('venter');
+  const vis=()=>hero.classList.remove('venter');
+  el.addEventListener('ended',vis);
+  el.addEventListener('error',vis);
+  setTimeout(()=>{ if(el.paused&&el.currentTime===0) vis(); },2500);
+  setTimeout(vis,20000);
  }
  ph.replaceWith(el);
 })();

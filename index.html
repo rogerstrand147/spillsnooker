@@ -289,6 +289,13 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
 .hero.venter::after{opacity:0}
 .hero.venter .ord{opacity:0;transform:translateY(10px);pointer-events:none}
 @media(prefers-reduced-motion:reduce){.hero::after,.hero .ord{transition:none}}
+/* Stoppknapp (R08.19, 05.10.2026): videoen går 13,4 s, over grensen på 5 s for bevegelse
+   som starter av seg selv. Trykk viser sluttbildet og teksten med en gang. */
+.hero .stopp{position:absolute;right:clamp(14px,2.5vw,22px);bottom:clamp(14px,2.5vw,22px);z-index:3;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:99px;
+ background:rgba(12,14,13,.55);border:1px solid var(--kant);color:var(--elfenben);font:inherit;font-size:.9rem;font-weight:600;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.hero .stopp:hover{border-color:var(--filt-lys);color:var(--filt-lys)}
+.hero .stopp:focus-visible{outline:2px solid var(--filt-lys);outline-offset:2px}
+.hero .stopp svg{width:12px;height:12px;flex:none}
 .heroflate{padding-top:36px}
 
 /* ═══ v2: kulestripa ═══ */
@@ -1206,6 +1213,22 @@ q.addEventListener('keydown',e=>{if(e.key!=='Enter')return;
   el.addEventListener('error',vis);
   setTimeout(()=>{ if(el.paused&&el.currentTime===0) vis(); },2500);
   setTimeout(vis,20000);
+  /* Stoppknapp: sluttbildet erstatter videoen, og teksten kommer med en gang. */
+  const stopp=document.createElement('button');
+  stopp.type='button'; stopp.className='stopp';
+  stopp.innerHTML='<svg viewBox="0 0 12 12" aria-hidden="true"><rect x="1" y="1" width="10" height="10" rx="1.5" fill="currentColor"/></svg>Stopp video';
+  const bortStopp=()=>stopp.remove();
+  stopp.addEventListener('click',()=>{
+   el.pause();
+   const bilde=document.createElement('img');
+   bilde.src=VIDEO_SLUTT; bilde.alt='Snookerbord med ballene satt opp under lampa'; bilde.decoding='async';
+   el.replaceWith(bilde); bortStopp(); vis();
+   const lenke=hero.querySelector('.ord .knapp'); if(lenke) lenke.focus({preventScroll:true});
+  });
+  el.addEventListener('ended',bortStopp);
+  el.addEventListener('error',bortStopp);
+  setTimeout(()=>{ if(el.paused&&el.currentTime===0) bortStopp(); },2500);
+  hero.appendChild(stopp);
  }
  ph.replaceWith(el);
 })();

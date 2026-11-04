@@ -764,8 +764,13 @@ const KLUBBER = [
 
  {navn:"Helgeland Snooker", lenker:[["Nettside","https://helgelandsnooker.no/"],["Facebook","https://www.facebook.com/profile.php?id=100064810750321"]], sted:"Mo i Rana", bekreftet:true,
   adresse:"Strandgata 25 B, 8622 Mo i Rana",
-  dropin:"Ikke drop-in — lokalet er for medlemmer. Interesserte får en gratis prøvetime med en erfaren spiller",
-  pris:"Medlemskap 700 kr/mnd, 350 for skoleelev og student. I tillegg 50 kr i året for registrering i idrettsregisteret", bord:4, kontakt:"johnnyjenssen@yahoo.com",
+  /* Drop-in og gjestespill lagt inn 04.11.2026 etter e-post fra Bjørn Sverre
+     Gåsland 03.11 (kopi Johnny Jenssen): «Drop in/Pay to Play: 200 kr/t (inkl.
+     kuler og lånekø)» og «medlemmer fra andre snookerklubber spiller gratis».
+     Til da sto det «Ikke drop-in — lokalet er for medlemmer». Tider for drop-in
+     er ikke oppgitt. Prøvetimen står fordi klubben ikke har trukket den. */
+  dropin:"Drop-in / pay to play 200 kr/t, kuler og lånekø inkludert. Interesserte kan også få en gratis prøvetime med en erfaren spiller",
+  pris:"Drop-in 200 kr/t. Er du medlem i en annen snookerklubb, spiller du gratis. Medlemskap 700 kr/mnd, 350 for skoleelev og student. I tillegg 50 kr i året for registrering i idrettsregisteret", bord:4, kontakt:"johnnyjenssen@yahoo.com",
   /* Teksten er klubbens egen, fra helgelandsnooker.no lest 13.09.2026: åtte
      kurskvelder, 13–24 år, gratis med utstyrslån, oppstart 2027. Sto tidligere
      som «Pilotklubb — første Snookerskole høsten 2026», hardkodet i malen. Det
@@ -779,7 +784,7 @@ const KLUBBER = [
      Friskus — så det står som navn, ikke som lenke. Legg inn URL først når
      den er sett. */
   skolestatus:"planlagt", egenpaamelding:"Friskus Rana",
-  kurs:null, venteliste:0, bilde:"helgeland-inngang.jpg"},
+  apen:true, kurs:null, venteliste:0, bilde:"helgeland-inngang.jpg"},
 
  /* Bekreftet av klubben selv 18.09.2026: Sondre Sundt på e-post, alle tre
     spørsmålene besvart. Drop-in og priser stemmer. Seks full size snookerbord,

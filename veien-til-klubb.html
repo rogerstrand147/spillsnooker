@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="nb">
+<html lang="no">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -146,6 +146,25 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="spillsnooker.no &ndash; gr&oslash;nn kartn&aring;l med r&oslash;d snookerball">
 <meta name="twitter:image" content="https://spillsnooker.no/og-bilde.png">
+<style>
+  h1.tittel{ margin:0 }
+  @media (max-width:820px){
+    .stativ{ height:auto !important; overflow:visible !important; display:block !important }
+    .ark{ width:auto; height:auto; transform:none !important; border:0; background:transparent;
+          display:flex; flex-direction:column; gap:12px }
+    .tittel,.undertittel,.banenavn,.stasjon,.fotnote,.bunn{
+      position:static !important; width:auto !important; height:auto !important;
+      left:auto !important; top:auto !important; right:auto !important }
+    .tittel{ font-size:34px; line-height:1.1 }
+    .undertittel{ font-size:18px }
+    .banenavn{ text-align:left; margin-top:22px }
+    .stasjon .inni{ padding:14px 44px 14px 14px }
+    .stasjon h3 br{ display:none }
+    .stasjon li,.stasjon p{ font-size:16px }
+    .fotnote{ font-size:16px; margin-top:16px }
+    .linjal,.tegning,#storrelse,#maal{ display:none }
+  }
+</style>
 </head>
 <body>
 
@@ -154,7 +173,7 @@
   <div class="stativ">
   <div class="ark" id="ark">
 
-    <div class="tittel">Veien til en snookerklubb</div>
+    <h1 class="tittel">Veien til en snookerklubb</h1>
     <div class="undertittel">Papiret tar 6–8 uker. Klubben tar lengre tid — og den begynner først.</div>
     <div class="linjal" style="top:180px"></div>
 
@@ -343,6 +362,7 @@
   var fri = false;
 
   function skaler(){
+    if (window.matchMedia('(max-width:820px)').matches){ ark.style.transform='none'; stativ.style.height=''; stativ.style.overflow='visible'; return; }
     if (fri){
       ark.style.transform = 'none';
       stativ.style.height = '';

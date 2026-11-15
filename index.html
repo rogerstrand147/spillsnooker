@@ -101,6 +101,19 @@ svg#svg.drag{cursor:grabbing}
 .kvittering.advarsel{border-color:var(--lampe);color:var(--dempet)}
 .kvittering.advarsel b{color:var(--lampe)}
 .klubb.peket{outline:2px solid var(--lampe);outline-offset:3px}
+/* Klubbkort på mobil (15.11.2026): kort som standard, mer bak knappen.
+   Kort uten bilde viser ikke plassholderflaten på mobil. */
+.klubb .vismer{display:none}
+@media(max-width:700px){
+ .klubb .vismer{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:44px;margin-top:14px;padding:0 16px;
+  border-radius:11px;border:1px solid var(--kant);background:transparent;color:var(--elfenben);font:inherit;font-size:.95rem;cursor:pointer}
+ .klubb .vismer::after{content:"+";color:var(--filt-lys);font-size:1.2rem}
+ .klubb.vis-mer .vismer::after{content:"−"}
+ .klubb .mer{display:none}
+ .klubb.vis-mer .mer{display:block}
+ .klubb.utenbilde .bilde{display:none}
+}
+
 .minikart{display:flex;align-items:center;gap:14px;margin:14px 0 4px;
  padding:12px 14px;background:var(--svart);border:1px solid var(--kant);border-radius:10px}
 .minikart svg{width:54px;height:63px;flex:none;display:block}
@@ -362,6 +375,7 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
 .kilde{color:var(--svak);font-size:.82rem;margin-top:16px}
 </style>
 
+<!--klubbdata-ld:start--><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"spillsnooker.no","url":"https://spillsnooker.no/","inLanguage":"nb-NO","description":"Hvor du kan spille snooker i Norge: klubbene, bordene, drop-in og priser."},{"@type":"SportsActivityLocation","name":"Oslo Snooker & Carambole","sport":"Snooker","address":"Ensjøveien 16, 0655 Oslo","url":"https://www.oslosnooker.no/","sameAs":["https://www.oslosnooker.no/","https://www.facebook.com/oslosnooker/","https://www.instagram.com/oslosnooker/"],"description":"Drop-in: Torsdag 17–22 og søndag 12–22. Bordet bookes på forhånd. Drop-in gjelder bare snooker — ikke carambole","memberOf":{"@type":"SportsOrganization","name":"Norges Biljardforbund","url":"https://www.biljardforbundet.no"}},{"@type":"SportsActivityLocation","name":"Stord Snooker","sport":"Snooker","address":"Gruevegen 40, 5415 Stord","url":"https://www.facebook.com/stordsnooker/","sameAs":["https://www.facebook.com/stordsnooker/"],"description":"Drop-in: Drop-in for alle — 100 kr for første time per person, 200 kr for to timer eller mer","memberOf":{"@type":"SportsOrganization","name":"Norges Biljardforbund","url":"https://www.biljardforbundet.no"}},{"@type":"SportsActivityLocation","name":"Helgeland Snooker","sport":"Snooker","address":"Strandgata 25 B, 8622 Mo i Rana","url":"https://helgelandsnooker.no/","sameAs":["https://helgelandsnooker.no/","https://www.facebook.com/profile.php?id=100064810750321"],"description":"Drop-in: Drop-in / pay to play 200 kr/t, kuler og lånekø inkludert. Interesserte kan også få en gratis prøvetime med en erfaren spiller","memberOf":{"@type":"SportsOrganization","name":"Norges Biljardforbund","url":"https://www.biljardforbundet.no"}},{"@type":"SportsActivityLocation","name":"Trondheim Snooker","sport":"Snooker","address":"Brøsetvegen 168, kjelleren — Moholt, Trondheim","url":"https://trondheimsnooker.org/","sameAs":["https://trondheimsnooker.org/","https://www.facebook.com/TrondheimSnooker/","https://www.instagram.com/trondheimsnooker/"],"description":"Drop-in: Pay & play når det er vakt i lokalet. Avtal på forhånd. Prøvetime kan bestilles","memberOf":{"@type":"SportsOrganization","name":"Norges Biljardforbund","url":"https://www.biljardforbundet.no"}},{"@type":"SportsActivityLocation","name":"Os Biljard og Snookerklubb","sport":"Snooker","address":"Ulvenvegen 34, 5210 Osøyro","url":"https://www.facebook.com/Osbiljardogsnookerklubb/","sameAs":["https://www.facebook.com/Osbiljardogsnookerklubb/","https://www.instagram.com/osbiljardogsnooker/"],"description":"Drop-in: Dagskort for alle, også for deg som ikke er medlem","priceRange":"Dagskort 250 kr for deg som ikke er medlem, 150 kr for medlem. Månedskort 800 kr","memberOf":{"@type":"SportsOrganization","name":"Norges Biljardforbund","url":"https://www.biljardforbundet.no"}},{"@type":"SportsActivityLocation","name":"Sarpsborg Snookerklubb","sport":"Snooker","address":"Torpebaugen 4, Sarpsborg — 250 m² lokale","url":"https://sarpsborgsnooker.com/","sameAs":["https://sarpsborgsnooker.com/","https://www.facebook.com/344177185301"],"description":"Drop-in: Pay & play etter avtale — send e-post på forhånd","priceRange":"100 kr/t for voksen","memberOf":{"@type":"SportsOrganization","name":"Norges Biljardforbund","url":"https://www.biljardforbundet.no"}},{"@type":"SportsActivityLocation","name":"Ishavsbyen Biljard og Snookerklubb","sport":"Snooker","address":"Lars Eriksens veg 3c, 9016 Tromsø","url":"https://www.facebook.com/100063700624556/","sameAs":["https://www.facebook.com/100063700624556/"],"memberOf":{"@type":"SportsOrganization","name":"Norges Biljardforbund","url":"https://www.biljardforbundet.no"}}]}</script><!--klubbdata-ld:end-->
 </head>
 <body>
 
@@ -536,7 +550,7 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
  og da sier vi det. Ring gjerne før du drar.</p>
  <p class="led liten">Hver klubb bestemmer selv hvor mange som må stå på lista før de
  setter opp en pulje. Der vi ikke har spurt ennå, viser vi 15 som felles utgangspunkt.</p>
- <div class="kort-grid" id="klubbkort"></div>
+ <div class="kort-grid" id="klubbkort"><!--klubbdata-html:start--><div class="klubb utenbilde"><h3>Oslo Snooker &amp; Carambole</h3><div class="sted">Ensjøveien 16, 0655 Oslo — det står 16-18 på inngangsdøra. Nær Ensjø T-bane</div><p><b>Drop-in:</b> Torsdag 17–22 og søndag 12–22. Bordet bookes på forhånd. Drop-in gjelder bare snooker — ikke carambole</p><p><b>Pris:</b> Drop-in 250 kr/t for bordet, 125 kr/t hvis du spiller med et medlem. Medlemskap 1500 kr/mnd for voksen, 1000 kr/mnd for ungdom, student og over 67. I tillegg 100 kr i året for Minidrett, 50 for deg under 18 — det formelle idrettsmedlemskapet</p><p><b>Bord:</b> 8 i fullstørrelse, pluss 4 carambolebord</p><p><b>Kontakt:</b> info@oslosnooker.no</p><p><a href="https://www.oslosnooker.no/">Nettside</a> · <a href="https://www.facebook.com/oslosnooker/">Facebook</a> · <a href="https://www.instagram.com/oslosnooker/">Instagram</a></p></div><div class="klubb utenbilde"><h3>Stord Snooker</h3><div class="sted">Gruevegen 40, 5415 Stord — nytt lokale, planlagt åpning ca. før jul 2026. Det gamle lokalet i Sagvåg er tomt</div><p><b>Drop-in:</b> Drop-in for alle — 100 kr for første time per person, 200 kr for to timer eller mer</p><p><b>Pris:</b> Medlemskap 450 kr/mnd, 350 for kvinner, 250 for ungdom og student. Uke 400 kr, måned 700 kr. Klubbens prisliste for 2025–26</p><p><b>Bord:</b> 8 i fullstørrelse, pluss 2 poolbord</p><p><b>Kontakt:</b> stordsnooker@gmail.com</p><p><a href="https://www.facebook.com/stordsnooker/">Facebook</a></p></div><div class="klubb utenbilde"><h3>Helgeland Snooker</h3><div class="sted">Strandgata 25 B, 8622 Mo i Rana</div><p><b>Drop-in:</b> Drop-in / pay to play 200 kr/t, kuler og lånekø inkludert. Interesserte kan også få en gratis prøvetime med en erfaren spiller</p><p><b>Pris:</b> Drop-in 200 kr/t. Er du medlem i en annen snookerklubb, spiller du gratis. Medlemskap 700 kr/mnd, 350 for skoleelev og student. I tillegg 50 kr i året for registrering i idrettsregisteret</p><p><b>Bord:</b> 4 i fullstørrelse</p><p><b>Kontakt:</b> johnnyjenssen@yahoo.com</p><p><a href="https://helgelandsnooker.no/">Nettside</a> · <a href="https://www.facebook.com/profile.php?id=100064810750321">Facebook</a></p></div><div class="klubb utenbilde"><h3>Trondheim Snooker</h3><div class="sted">Brøsetvegen 168, kjelleren — Moholt, Trondheim</div><p><b>Drop-in:</b> Pay &amp; play når det er vakt i lokalet. Avtal på forhånd. Prøvetime kan bestilles</p><p><b>Pris:</b> 150 kr for de to første timene per person, 300 kr over to timer. Månedskort 950 kr, 700 for honnør, 500 for student</p><p><b>Bord:</b> 6 i fullstørrelse</p><p><b>Kontakt:</b> post@trondheimsnooker.org · 450 76 710</p><p><a href="https://trondheimsnooker.org/">Nettside</a> · <a href="https://www.facebook.com/TrondheimSnooker/">Facebook</a> · <a href="https://www.instagram.com/trondheimsnooker/">Instagram</a></p></div><div class="klubb utenbilde"><h3>Os Biljard og Snookerklubb</h3><div class="sted">Ulvenvegen 34, 5210 Osøyro</div><p><b>Drop-in:</b> Dagskort for alle, også for deg som ikke er medlem</p><p><b>Pris:</b> Dagskort 250 kr for deg som ikke er medlem, 150 kr for medlem. Månedskort 800 kr</p><p><b>Bord:</b> 4 i fullstørrelse, pluss 10 biljardbord og 1 heyball</p><p><b>Kontakt:</b> osbiljardogsnooker@gmail.com</p><p><a href="https://www.facebook.com/Osbiljardogsnookerklubb/">Facebook</a> · <a href="https://www.instagram.com/osbiljardogsnooker/">Instagram</a></p></div><div class="klubb utenbilde"><h3>Sarpsborg Snookerklubb</h3><div class="sted">Torpebaugen 4, Sarpsborg — 250 m² lokale</div><p><b>Drop-in:</b> Pay &amp; play etter avtale — send e-post på forhånd</p><p><b>Pris:</b> 100 kr/t for voksen</p><p><b>Bord:</b> 4 i fullstørrelse, pluss 2 biljardbord</p><p><b>Kontakt:</b> post@pefjell.no · 950 53 450</p><p><a href="https://sarpsborgsnooker.com/">Nettside</a> · <a href="https://www.facebook.com/344177185301">Facebook</a></p></div><div class="klubb utenbilde"><h3>Ishavsbyen Biljard og Snookerklubb</h3><div class="sted">Lars Eriksens veg 3c, 9016 Tromsø</div><p><b>Drop-in:</b> Klubben oppgir åpent mandag–fredag 18–21. Om det gjelder ikke-medlemmer er ikke bekreftet</p><p><b>Bord:</b> 2 i fullstørrelse</p><p><b>Kontakt:</b> Leder 416 52 690 · kasserer 924 33 552</p><p><a href="https://www.facebook.com/100063700624556/">Facebook</a></p></div><!--klubbdata-html:end--></div>
 </div></section>
 
 <section id="maflin"><div class="wrap">
@@ -1141,7 +1155,8 @@ function apneKlubbkort(p){
  const kort=document.getElementById('klubb-'+n);
  if(!kort) return false;
  document.querySelectorAll('.klubb.peket').forEach(x=>x.classList.remove('peket'));
- kort.classList.add('peket');
+ kort.classList.add('peket','vis-mer');
+ const vb=kort.querySelector('.vismer'); if(vb) vb.setAttribute('aria-expanded','true');
  window.scrollTo({top:kort.getBoundingClientRect().top+scrollY-(innerHeight-kort.offsetHeight)/2,behavior:'smooth'});
  setTimeout(()=>kort.classList.remove('peket'),2600);
  return true;
@@ -1342,16 +1357,16 @@ function tegnKlubber(){
  boks.innerHTML=KLUBBER.map((k,i)=>{
   const by=k.sted;
   const hull=t=>`<span class="hull">${t}</span>`;
-  let f='';
+  let f='', fd='';
   if(k.bekreftet){
-   f+=`<div class="rad"><span>Drop-in</span>${k.dropin?`<span>${esc(k.dropin)}</span>`:hull(esc(k.dropinhint||'Klubben har ikke oppgitt åpningstider'))}</div>`;
+   fd=`<div class="rad"><span>Drop-in</span>${k.dropin?`<span>${esc(k.dropin)}</span>`:hull(esc(k.dropinhint||'Klubben har ikke oppgitt åpningstider'))}</div>`;
    f+=`<div class="rad"><span>Pris</span>${k.pris?`<span>${esc(k.pris)}</span>`:hull('Klubben har ikke oppgitt pris')}</div>`;
    f+=k.bord
      ? `<div class="rad"><span>Bord</span><span>${k.bord} i fullstørrelse${k.bordnote?` <em style="color:var(--svak);font-style:normal">— ${esc(k.bordnote)}</em>`:''}</span></div>`
      : `<div class="rad"><span>Bord</span>${hull('Ikke bekreftet av klubben')}</div>`;
    f+=`<div class="rad"><span>Kontakt</span>${k.kontakt?`<span>${kontaktlenker(k.kontakt)}</span>`:hull('Klubben har ikke oppgitt kontaktadresse')}</div>`;
   }else{
-   f+=`<div class="rad"><span>Drop-in</span>${hull('Ikke bekreftet av klubben')}</div>`;
+   fd=`<div class="rad"><span>Drop-in</span>${hull('Ikke bekreftet av klubben')}</div>`;
    f+=`<div class="rad"><span>Pris</span>${hull('Ikke bekreftet')}</div>`;
    f+=`<div class="rad"><span>Bord</span>${k.bord?`<span>${k.bord} <em style="color:var(--svak);font-style:normal">— fra registeret, ikke bekreftet</em></span>`:hull('Ikke bekreftet')}</div>`;
   }
@@ -1372,14 +1387,17 @@ function tegnKlubber(){
   const status = k.skolestatus || 'ikke_avklart';
 
   return `
-  <div class="klubb" id="klubb-${i}" data-by="${esc(by)}">
+  <div class="klubb${k.bilde?'':' utenbilde'}" id="klubb-${i}" data-by="${esc(by)}">
    <div class="bilde">${k.bilde?`<img src="${esc(k.bilde)}" alt="Lokalet hos ${esc(k.navn)}" loading="lazy">${k.bildenote?`<small class="bildenote">${esc(k.bildenote)}</small>`:''}`:`<span>${esc(k.navn)}</span>`}</div>
    <h3>${esc(k.navn)}</h3>
    <div class="sted">${esc(k.adresse||k.sted)}</div>
-   ${minikart(i,k)}
    ${k.pilot?`<div class="stempel">${esc(k.pilot)}</div>`:''}
    ${k.apen?`<div class="stempel apen">Åpent for deg som ikke er medlem</div>`:''}
    ${!k.bekreftet?`<div class="stempel vent">Ikke bekreftet av klubben</div>`:''}
+   ${fd}
+   <button type="button" class="vismer" aria-expanded="false" aria-controls="mer-${i}">Pris, kontakt og påmelding</button>
+   <div class="mer" id="mer-${i}">
+   ${minikart(i,k)}
    ${f}
    ${status==='ikke_avklart'
      ? `<div class="skolestatus">Ingen Snookerskole er satt opp her ennå. Klubben har ikke tatt stilling.</div>`
@@ -1403,7 +1421,15 @@ function tegnKlubber(){
    <div class="kvittering" data-kvit="${i}"></div>
    <div class="nbf">Medlemsklubb i
      <a href="https://www.biljardforbundet.no" target="_blank" rel="noopener">Norges Biljardforbund</a></div>
+   </div>
   </div>`;}).join('');
+
+ /* Mobil (15.11.2026): kortet viser navn, sted og drop-in. Resten bak én knapp,
+    så seksjonen ikke er 8 000 px. På bredere skjerm er knappen skjult og alt synlig. */
+ boks.querySelectorAll('.vismer').forEach(b=>b.onclick=()=>{
+  const kort=b.closest('.klubb'), apen=kort.classList.toggle('vis-mer');
+  b.setAttribute('aria-expanded',apen?'true':'false');
+ });
 
  boks.querySelectorAll('[data-meld]').forEach(b=>b.onclick=e=>{
   e.preventDefault();

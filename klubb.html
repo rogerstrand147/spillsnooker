@@ -26,8 +26,8 @@
 :root{
  --svart:#0C0E0D; --flate:#161B18; --hevet:#1D2320; --kant:#2A322D;
  --filt:#157F4C; --filt-lys:#2FA86D; --filt-mork:#0E5533;
- --lampe:#E07A4D; --lampe-lys:#F0A181;
- --elfenben:#F4F1EA; --dempet:#9AA39C; --svak:#6B746E;
+ --kritt:#7FB2E5; --kritt-lys:#A9CCEE;
+ --elfenben:#EDEFEA; --dempet:#9AA39C; --svak:#858E88;
  --gul:#E8C33D; --rosa:#E58BA6;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -36,7 +36,7 @@ body{background:var(--svart);color:var(--elfenben);
  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
 .wrap{max-width:960px;margin:0 auto;padding:0 24px}
 a{color:var(--filt-lys)}
-#forhand{background:var(--lampe);color:#0C0E0D;text-align:center;padding:9px 16px;
+#forhand{background:#E8C33D;color:#0C0E0D;text-align:center;padding:9px 16px;
  font-size:.82rem;font-weight:650;letter-spacing:.02em}
 header{padding:28px 0 8px;
  background:radial-gradient(ellipse 950px 420px at 50% -10%,rgba(21,127,76,.22),transparent 66%)}
@@ -55,7 +55,7 @@ html{scroll-padding-top:64px}
 .toppmeny nav a.hoved{color:var(--elfenben);border:1px solid var(--kant)}
 @media(max-width:480px){.toppmeny nav a.valgfri{display:none}}
 .bunnlenker{display:flex;gap:16px;flex-wrap:wrap}
-.merk{font-size:.74rem;text-transform:uppercase;letter-spacing:.16em;color:var(--lampe);font-weight:650;margin-top:26px}
+.merk{font-size:.74rem;text-transform:uppercase;letter-spacing:.16em;color:var(--filt-lys);font-weight:650;margin-top:26px}
 h1{font-size:clamp(1.7rem,4.4vw,2.7rem);line-height:1.1;letter-spacing:-.03em;font-weight:700;max-width:22ch;margin-top:8px}
 h1 em{font-style:normal;color:var(--filt-lys)}
 .led{color:var(--dempet);font-size:1.04rem;margin-top:14px;max-width:60ch}
@@ -74,9 +74,9 @@ h2{font-size:1.35rem;letter-spacing:-.02em;margin-bottom:6px}
  padding:10px 12px;color:var(--elfenben);font:inherit;font-size:1.05rem;width:100%;text-align:right;min-height:46px}
 .felt select{text-align:left;font-size:.95rem;text-overflow:ellipsis;margin-top:6px}
 .felt input:focus,.felt select:focus{outline:none;border-color:var(--filt-lys)}
-.felt input.anslag{border-color:rgba(224,122,77,.45)}
+.felt input.anslag{border-color:rgba(232,195,61,.45)}
 .tag{display:inline-block;font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;padding:2px 7px;border-radius:5px;
- background:rgba(224,122,77,.16);color:var(--lampe-lys);vertical-align:middle;margin-left:6px}
+ background:rgba(232,195,61,.16);color:var(--gul);vertical-align:middle;margin-left:6px}
 .tag.fakta{background:rgba(21,127,76,.18);color:var(--filt-lys)}
 .res h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.12em;color:var(--dempet);font-weight:650}
 .na{margin-top:8px;padding:16px;border-radius:11px;
@@ -90,14 +90,14 @@ h2{font-size:1.35rem;letter-spacing:-.02em;margin-bottom:6px}
 .stolpe{position:relative;height:22px;border-radius:6px;background:var(--hevet);border:1px solid var(--kant);overflow:hidden}
 .stolpe i{position:absolute;left:0;top:0;bottom:0;background:var(--filt);border-radius:5px 0 0 5px;
  transition:width .45s cubic-bezier(.2,.7,.2,1)}
-.stolpe i.over{background:var(--lampe)}
-.stolpe s{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(135deg,rgba(244,241,234,.10) 0 4px,transparent 4px 8px);
+.stolpe i.over{background:var(--gul)}
+.stolpe s{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(135deg,rgba(237,239,234,.10) 0 4px,transparent 4px 8px);
  border-left:1px dashed var(--dempet);border-right:1px dashed var(--dempet)}
 .forkl{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:.76rem;color:var(--svak)}
 .forkl i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:5px}
 .setning{margin-top:18px;font-size:1rem;line-height:1.55}
 .setning b{color:var(--filt-lys)}
-.setning.varsel b{color:var(--lampe-lys)}
+.setning.varsel b{color:var(--gul)}
 .forut{margin-top:22px;padding:16px 18px;border-radius:11px;background:var(--flate);border:1px solid var(--kant);
  font-size:.84rem;color:var(--dempet);line-height:1.6}
 .forut b{color:var(--elfenben)}
@@ -116,8 +116,8 @@ section+section{border-top:1px solid var(--kant)}
 .sum .r.tot b{color:var(--filt-lys);font-size:1.5rem}
 .dom{margin-top:14px;padding:14px 16px;border-radius:11px;font-size:.92rem;line-height:1.5}
 .dom.ok{background:rgba(21,127,76,.14);border:1px solid rgba(47,168,109,.34)}
-.dom.nei{background:rgba(224,122,77,.12);border:1px solid rgba(224,122,77,.4)}
-.dom.nei b{color:var(--lampe-lys)}
+.dom.nei{background:rgba(232,195,61,.12);border:1px solid rgba(232,195,61,.4)}
+.dom.nei b{color:var(--gul)}
 .dom.ok b{color:var(--filt-lys)}
 .spenn{display:grid;grid-template-columns:1fr auto;gap:8px 14px;align-items:center;margin-top:8px}
 .spenn .n{font-size:.9rem}
@@ -189,8 +189,8 @@ footer p{margin-top:8px;max-width:70ch}
    <div class="aar" id="aar"></div>
    <div class="forkl">
     <span><i style="background:var(--filt)"></i>Aktive</span>
-    <span><i style="background:repeating-linear-gradient(135deg,rgba(244,241,234,.35) 0 3px,transparent 3px 6px);border:1px dashed var(--dempet)"></i>Det bordene tåler (15–25 per bord)</span>
-    <span><i style="background:var(--lampe)"></i>Over det bordene tåler</span>
+    <span><i style="background:repeating-linear-gradient(135deg,rgba(237,239,234,.35) 0 3px,transparent 3px 6px);border:1px dashed var(--dempet)"></i>Det bordene tåler (15–25 per bord)</span>
+    <span><i style="background:var(--gul)"></i>Over det bordene tåler</span>
    </div>
    <p class="setning" id="setning"></p>
   </div>

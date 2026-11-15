@@ -27,8 +27,8 @@
 :root{
  --svart:#0C0E0D; --flate:#161B18; --hevet:#1D2320; --kant:#2A322D;
  --filt:#157F4C; --filt-lys:#2FA86D; --filt-mork:#0E5533;
- --lampe:#E07A4D; --lampe-lys:#F0A181;
- --elfenben:#F4F1EA; --dempet:#9AA39C; --svak:#6B746E;
+ --kritt:#7FB2E5; --kritt-lys:#A9CCEE;
+ --elfenben:#EDEFEA; --dempet:#9AA39C; --svak:#858E88;
  --gul:#E8C33D; --rosa:#E58BA6;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -40,7 +40,7 @@ body{background:var(--svart);color:var(--elfenben);
 a{color:var(--filt-lys)}
 
 /* Forhåndsvisningsbanner */
-#forhand{background:var(--lampe);color:#0C0E0D;text-align:center;padding:9px 16px;
+#forhand{background:#E8C33D;color:#0C0E0D;text-align:center;padding:9px 16px;
  font-size:.82rem;font-weight:650;letter-spacing:.02em}
 
 /* Topp */
@@ -74,15 +74,15 @@ svg#svg.drag{cursor:grabbing}
 .dot:hover .kule{stroke:var(--elfenben);stroke-width:1.4}
 .dot .stilk{stroke-linecap:round}
 .dot.skjult{display:none}
-.dot .kule{stroke:rgba(244,241,234,.34);stroke-width:.7}
-.dot.klubb .kule{stroke:rgba(244,241,234,.55);stroke-width:.9}
-.dot.koa .kule{stroke:rgba(244,241,234,.9);stroke-width:1.3}
+.dot .kule{stroke:rgba(237,239,234,.34);stroke-width:.7}
+.dot.klubb .kule{stroke:rgba(237,239,234,.55);stroke-width:.9}
+.dot.koa .kule{stroke:rgba(237,239,234,.9);stroke-width:1.3}
 .dot.privat{opacity:.5}
 .dot.dempet{opacity:.18}
-.dot.uthevet .kule{stroke:var(--lampe);stroke-width:1.8}
+.dot.uthevet .kule{stroke:var(--elfenben);stroke-width:1.8}
 /* Ønskeliste: stiplet ring = «her vil folk spille, men det finnes ikke noe sted». Antall, aldri navn. */
 .onske{cursor:default}
-.onske .ring{fill:rgba(224,122,77,.10);stroke:var(--lampe);stroke-width:1.2;stroke-dasharray:3 2.4}
+.onske .ring{fill:rgba(237,239,234,.08);stroke:var(--elfenben);stroke-width:1.2;stroke-dasharray:3 2.4}
 .onske text{fill:var(--elfenben);font-size:8.5px;font-weight:700;text-anchor:middle;dominant-baseline:central;pointer-events:none}
 .onske.dempet{opacity:.25}
 #onske .onskeboks{background:var(--flate);border:1px solid var(--kant);border-radius:14px;padding:22px;max-width:620px}
@@ -93,14 +93,14 @@ svg#svg.drag{cursor:grabbing}
 @media (max-width:520px){#onske .rad{grid-template-columns:1fr}}
 #onske .skjult-felt{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 #onske .onsketall{font-size:.86rem;color:var(--dempet);margin-top:14px}
-#q-svar a{color:var(--lampe)}
-.klubb .hull{color:var(--lampe);font-size:.93em}
-.klubb .stempel.vent{border-color:var(--svak);color:var(--dempet)}
+#q-svar a{color:var(--filt-lys)}
+.klubb .hull{color:var(--gul);font-size:.93em}
+.klubb .stempel.vent{border-color:rgba(232,195,61,.55);color:var(--gul)}
 .klubb .teller.tom span{color:var(--dempet)}
 .klubb .teller.tom b{display:inline;font-size:1em;color:var(--elfenben)}
-.kvittering.advarsel{border-color:var(--lampe);color:var(--dempet)}
-.kvittering.advarsel b{color:var(--lampe)}
-.klubb.peket{outline:2px solid var(--lampe);outline-offset:3px}
+.kvittering.advarsel{border-color:var(--gul);color:var(--dempet)}
+.kvittering.advarsel b{color:var(--gul)}
+.klubb.peket{outline:2px solid var(--kritt);outline-offset:3px}
 /* Klubbkort på mobil (15.11.2026): kort som standard, mer bak knappen.
    Kort uten bilde viser ikke plassholderflaten på mobil. */
 .klubb .vismer{display:none}
@@ -117,9 +117,9 @@ svg#svg.drag{cursor:grabbing}
 .minikart{display:flex;align-items:center;gap:14px;margin:14px 0 4px;
  padding:12px 14px;background:var(--svart);border:1px solid var(--kant);border-radius:10px}
 .minikart svg{width:54px;height:63px;flex:none;display:block}
-.minikart .veien{text-decoration:none;color:var(--lampe);font-size:.92rem;font-weight:500;line-height:1.35}
+.minikart .veien{text-decoration:none;color:var(--filt-lys);font-size:.92rem;font-weight:500;line-height:1.35}
 .minikart .veien span{display:block;color:var(--svak);font-size:.79rem;font-weight:400;margin-top:3px}
-.minikart .veien:hover{color:var(--lampe-lys)}
+.minikart .veien:hover{color:var(--elfenben)}
 .heroflate{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.85fr);
  gap:44px;align-items:center}
 .rekrutt{background:var(--flate);border:1px solid var(--kant);border-radius:16px;
@@ -130,7 +130,7 @@ svg#svg.drag{cursor:grabbing}
 .rekrutt .rtall{margin-top:14px;padding-top:14px;border-top:1px solid var(--kant);
  font-size:.82rem;color:var(--svak);font-family:ui-monospace,Menlo,monospace;line-height:1.7}
 .led.liten{font-size:.88rem;color:var(--svak);margin-top:10px;max-width:74ch}
-.led.liten b.hull{color:var(--lampe);font-weight:500}
+.led.liten b.hull{color:var(--gul);font-weight:500}
 @media(max-width:900px){.heroflate{grid-template-columns:1fr;gap:28px}}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .sok{display:flex;align-items:center;gap:12px;margin:0 0 16px}
@@ -138,17 +138,17 @@ svg#svg.drag{cursor:grabbing}
  color:var(--elfenben);border-radius:10px;padding:12px 15px;font-family:inherit;font-size:1rem}
 .sok input:focus{outline:none;border-color:var(--filt-lys)}
 .sok input::placeholder{color:var(--svak)}
-.sok #q-svar{font-size:.85rem;color:var(--lampe);font-family:ui-monospace,Menlo,monospace}
+.sok #q-svar{font-size:.85rem;color:var(--elfenben);font-family:ui-monospace,Menlo,monospace}
 .rettmeg{font-size:.86rem;color:var(--dempet);margin-top:10px;max-width:70ch;line-height:1.6}
-.rettmeg a{color:var(--lampe);text-decoration:none;border-bottom:1px solid rgba(224,122,77,.4)}
-.rettmeg a:hover{border-bottom-color:var(--lampe)}
+.rettmeg a{color:var(--filt-lys);text-decoration:none;border-bottom:1px solid rgba(47,168,109,.4)}
+.rettmeg a:hover{border-bottom-color:var(--filt-lys)}
 .fylke{display:flex;justify-content:space-between;align-items:center;gap:10px;
  padding:9px 14px;background:var(--hevet);border-top:1px solid var(--kant);
  font-size:.82rem;letter-spacing:.03em;color:var(--dempet);cursor:pointer;
  position:sticky;top:0;z-index:1}
 .fylke:hover,.fylke.on{color:var(--elfenben);background:#243029}
 .fylke .fbord{font-family:ui-monospace,Menlo,monospace;color:var(--elfenben)}
-.fylke.on .fbord{color:var(--lampe)}
+.fylke.on .fbord{color:var(--kritt)}
 .regler{margin-top:34px;padding:26px 28px;background:var(--flate);
  border:1px solid var(--kant);border-radius:14px}
 .regler h3{font-size:1.06rem;font-weight:500;color:var(--elfenben);margin-bottom:10px}
@@ -162,7 +162,7 @@ svg#svg.drag{cursor:grabbing}
  background:var(--hevet);border:1px solid var(--kant);border-radius:99px;font-size:.85rem}
 .ballrad b{width:15px;height:15px;border-radius:50%;display:block}
 .ballrad em{font-style:normal;font-family:ui-monospace,Menlo,monospace;
- color:var(--lampe);font-size:.9rem}
+ color:var(--dempet);font-size:.9rem}
 ol.punkt.tall{margin:14px 0 0 20px;padding:0;list-style:decimal;color:var(--dempet)}
 ol.punkt.tall li{margin:9px 0;line-height:1.65;max-width:70ch}
 ol.punkt.tall li b{color:var(--elfenben);font-weight:500}
@@ -195,10 +195,10 @@ ol.punkt.tall li b{color:var(--elfenben);font-weight:500}
 .item h3{font-size:.88rem;font-weight:600}
 .item p{font-size:.75rem;color:var(--svak)}
 .item .cnt{font-family:ui-monospace,Menlo,monospace;font-size:.9rem;color:var(--dempet)}
-.klubb .hull{color:var(--lampe);font-size:.93em}
+.klubb .hull{color:var(--gul);font-size:.93em}
 .klubb .stempel{display:inline-block;margin:10px 8px 0 0;padding:4px 11px;border-radius:99px;
   border:1px solid var(--filt);color:var(--filt-lys);font-size:.78rem;letter-spacing:.01em}
-.klubb .stempel.apen{border-color:var(--lampe);color:var(--lampe-lys)}
+.klubb .stempel.apen{border-color:var(--filt-lys);color:var(--filt-lys);background:rgba(47,168,109,.10)}
 /* Sier hva klubben faktisk har bestemt om Snookerskolen. Dempet med vilje —
    dette er en opplysning, ikke et salgsargument. */
 .skolestatus{margin-top:10px;font-size:.82rem;line-height:1.5;color:var(--svak)}
@@ -206,7 +206,7 @@ ol.punkt.tall li b{color:var(--elfenben);font-weight:500}
 
 /* Seksjoner */
 section{padding:64px 0}
-.merk{font-size:.74rem;text-transform:uppercase;letter-spacing:.16em;color:var(--lampe);font-weight:650}
+.merk{font-size:.74rem;text-transform:uppercase;letter-spacing:.16em;color:var(--filt-lys);font-weight:650}
 h2{font-size:clamp(1.6rem,3.4vw,2.2rem);letter-spacing:-.025em;font-weight:700;margin:8px 0 14px}
 .led{color:var(--dempet);max-width:64ch;margin-bottom:26px}
 
@@ -226,12 +226,15 @@ h2{font-size:clamp(1.6rem,3.4vw,2.2rem);letter-spacing:-.025em;font-weight:700;m
  border:1px solid rgba(47,168,109,.30)}
 .teller b{font-size:1.8rem;color:var(--filt-lys);font-weight:700;letter-spacing:-.02em;line-height:1}
 .teller span{color:var(--dempet);font-size:.83rem;display:block;margin-top:4px}
-.knapp{display:block;width:100%;text-align:center;background:var(--lampe);color:#0C0E0D;
+.knapp{display:block;width:100%;text-align:center;background:var(--kritt);color:#0C0E0D;
  font-weight:650;padding:13px 20px;border-radius:10px;text-decoration:none;font-size:.94rem;
  margin-top:16px;border:none;cursor:pointer;font-family:inherit}
-.knapp:hover{background:var(--lampe-lys)}
+.knapp:hover{background:var(--kritt-lys)}
 .knapp.sek{background:transparent;color:var(--filt-lys);border:1.5px solid var(--filt)}
 .knapp.sek:hover{background:rgba(21,127,76,.14)}
+/* 15.11: kortknappen er sekundær. Oransje/blått er bare for hovedhandlingen. */
+.klubb button.knapp[data-meld]{background:transparent;color:var(--elfenben);border:1.5px solid #46524B}
+.klubb button.knapp[data-meld]:hover{background:transparent;border-color:var(--filt-lys)}
 
 /* Skjema */
 .skjema{margin-top:14px;display:none;gap:9px;flex-direction:column}
@@ -252,12 +255,12 @@ h2{font-size:clamp(1.6rem,3.4vw,2.2rem);letter-spacing:-.025em;font-weight:700;m
 .stor{font-size:2rem;font-weight:700;color:var(--filt-lys);letter-spacing:-.02em;display:block;margin-bottom:2px}
 
 /* Bordvarsling */
-.varsel{background:linear-gradient(145deg,rgba(224,122,77,.10),rgba(224,122,77,.02));
- border:1px solid rgba(224,122,77,.26);border-radius:16px;padding:34px}
+.varsel{background:linear-gradient(145deg,rgba(232,195,61,.08),rgba(232,195,61,.02));
+ border:1px solid rgba(232,195,61,.26);border-radius:16px;padding:34px}
 .varsel h2{margin-top:0}
 .epost{display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:1rem;
  background:var(--hevet);border:1px solid var(--kant);padding:11px 17px;border-radius:9px;
- margin:14px 0;color:var(--lampe);text-decoration:none}
+ margin:14px 0;color:var(--filt-lys);text-decoration:none}
 ul.punkt{margin:14px 0 0 19px;color:var(--dempet);font-size:.92rem}
 ul.punkt li{margin-bottom:5px}
 
@@ -284,10 +287,10 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
    MERK: logoen hører hjemme HER, på vår egen forside — aldri oppå et
    klubbkort. Kortene er klubbenes, og vårt merke på deres lokale ville
    lest som om vi eide rommet. */
-.hero .merke{display:inline-flex;align-items:center;gap:9px;min-height:44px;padding:0 16px;border-radius:99px;background:rgba(12,14,13,.72);border:1px solid var(--lampe);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:var(--elfenben);font-weight:700;font-size:clamp(.95rem,2.2vw,1.15rem);letter-spacing:-.01em;white-space:nowrap}
+.hero .merke{display:inline-flex;align-items:center;gap:9px;min-height:44px;padding:0 16px;border-radius:99px;background:rgba(12,14,13,.72);border:1px solid rgba(237,239,234,.22);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:var(--elfenben);font-weight:700;font-size:clamp(.95rem,2.2vw,1.15rem);letter-spacing:-.01em;white-space:nowrap}
 .hero .merke i{width:22px;height:22px;background:url(favicon.svg) center/contain no-repeat;display:inline-block;flex:none;filter:drop-shadow(0 1px 6px rgba(12,14,13,.6))}
 .hero .merke .g{color:var(--filt-lys)}
-.hero .merke .d{color:var(--lampe)}
+.hero .merke .d{color:var(--dempet)}
 @media(max-width:420px){.hero .merke span{display:none}}
 .hero .topp a{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:99px;
  background:rgba(12,14,13,.55);border:1px solid var(--kant);color:var(--elfenben);text-decoration:none;
@@ -329,6 +332,24 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
  font-family:ui-monospace,Menlo,monospace;font-size:.72rem;padding:3px 8px;border-radius:6px}
 .klubb .bilde span{color:var(--filt-lys);font-weight:650;letter-spacing:-.01em;font-size:1.05rem;text-align:center;padding:12px}
 
+
+/* ═══ 15.11: topplinje på klubbkortet (desktop uten plassholderflate) ═══ */
+.klubb .topp{display:flex;align-items:center;gap:14px}
+.klubb .topp .navn{flex:1;min-width:0}
+.klubb .topp .tn{display:none;width:72px;height:54px;border-radius:9px;overflow:hidden;border:1px solid var(--filt);flex:none}
+.klubb .topp .tn img{width:100%;height:100%;object-fit:cover;display:block}
+.klubb .bordtall{flex:none;text-align:right;line-height:1}
+.klubb .bordtall b{display:block;font-size:1.6rem;font-weight:700;letter-spacing:-.02em;color:var(--elfenben)}
+.klubb .bordtall.ubekreftet b{color:var(--gul)}
+.klubb .bordtall small{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--dempet)}
+.klubb .kuler{display:none;gap:4px;margin:10px 0 4px}
+.klubb .kuler i{width:9px;height:9px;border-radius:50%;background:#C8322B;display:block}
+@media(min-width:701px){
+ .klubb .bilde{display:none}
+ .klubb .topp .tn{display:block}
+ .klubb .kuler{display:flex}
+}
+
 /* ═══ v2: telleren ═══ */
 .teller .setning{color:var(--elfenben);font-size:1.02rem;display:block;margin-bottom:4px}
 .teller .setning b{font-size:1.35em;color:var(--filt-lys);font-weight:700;letter-spacing:-.02em;
@@ -345,7 +366,7 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
 .teller.eksempel:not(.tom)::before{content:"EKSEMPELTALL";position:absolute;z-index:-1;
  top:50%;left:50%;transform:translate(-50%,-50%) rotate(-11deg);
  font-size:clamp(1.15rem,4.6vw,1.9rem);font-weight:800;letter-spacing:.16em;
- color:var(--lampe);opacity:.16;white-space:nowrap;pointer-events:none;
+ color:var(--kritt);opacity:.16;white-space:nowrap;pointer-events:none;
  text-transform:uppercase}
 @media (prefers-contrast:more){.teller.eksempel:not(.tom)::before{opacity:.3}}
 .klubb [data-meld][hidden]{display:none}
@@ -358,7 +379,7 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
 .portrett{aspect-ratio:4/5;border-radius:12px;border:1px solid var(--filt);display:grid;place-items:center;overflow:hidden;
  text-align:center;padding:16px;color:var(--dempet);font-family:ui-monospace,Menlo,monospace;font-size:.78rem;line-height:1.6;
  background:radial-gradient(ellipse 70% 60% at 50% 40%,#0F3D27 0%,#0A1C13 70%,#07110C 100%)}
-.sitat{font-size:clamp(1.3rem,2.6vw,1.8rem);font-weight:500;letter-spacing:-.02em;line-height:1.3;color:var(--lampe);margin:10px 0 14px}
+.sitat{font-size:clamp(1.3rem,2.6vw,1.8rem);font-weight:500;letter-spacing:-.02em;line-height:1.3;color:var(--elfenben);margin:10px 0 14px}
 .sitatkilde{color:var(--dempet);font-size:.9rem;max-width:52ch}
 
 /* ═══ v2: spillelista ═══ */
@@ -496,7 +517,7 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
     <span><b style="background:#E58BA6"></b>6+</span>
     <span style="color:#6B746E">bord, som verdien på ballen</span>
     <span style="color:#6B746E">Nedtonet = privat bord</span>
-    <span id="onske-forkl" hidden><b style="background:transparent;border:1.5px dashed #E07A4D"></b>ønsker seg et sted å spille</span>
+    <span id="onske-forkl" hidden><b style="background:transparent;border:1.5px dashed #EDEFEA"></b>ønsker seg et sted å spille</span>
    </div>
   </div>
   <div class="liste" id="list"></div>
@@ -545,7 +566,7 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
  <p class="led">Noen av klubbene har drop-in-kvelder der hvem som helst kan komme
  uten medlemskap og uten påmelding. Utstyr låner du på stedet, og kommer du alene er
  det som regel noen å spille med.</p>
- <p class="led liten"><b class="hull">Oransje tekst</b> betyr at opplysningen ikke er
+ <p class="led liten"><b class="hull">Gul tekst</b> betyr at opplysningen ikke er
  bekreftet av klubben selv. Noe av det er hentet fra klubbens egen nettside eller fra
  offentlige registre og stemmer sannsynligvis, men vi har ikke fått det bekreftet,
  og da sier vi det. Ring gjerne før du drar.</p>
@@ -1307,9 +1328,9 @@ function minikart(i,k){
  const sok=encodeURIComponent((k.bekreftet&&rein)?rein:(k.navn+', '+k.sted));
  const url='https://www.google.com/maps/search/?api=1&query='+sok;
  const nal=pos?(()=>{const q=P(pos[0],pos[1]);
-  return `<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="26" fill="#E07A4D" opacity=".16"/>
-          <circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="11" fill="#E07A4D"
-                  stroke="#F4F1EA" stroke-width="3"/>`;})():'';
+  return `<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="26" fill="#7FB2E5" opacity=".16"/>
+          <circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="11" fill="#7FB2E5"
+                  stroke="#EDEFEA" stroke-width="3"/>`;})():'';
  return `<div class="minikart">
    <svg viewBox="0 0 600 700" aria-label="Omtrentlig posisjon i Norge" role="img">
     <path d="${SILHUETT}" fill="#0C4A2E" stroke="#2FA86D" stroke-opacity=".3" stroke-width="2"/>
@@ -1390,7 +1411,8 @@ function tegnKlubber(){
   return `
   <div class="klubb${k.bilde?'':' utenbilde'}" id="klubb-${i}" data-by="${esc(by)}">
    <div class="bilde">${k.bilde?`<img src="${esc(k.bilde)}" alt="Lokalet hos ${esc(k.navn)}" loading="lazy">${k.bildenote?`<small class="bildenote">${esc(k.bildenote)}</small>`:''}`:`<span>${esc(k.navn)}</span>`}</div>
-   <h3>${esc(k.navn)}</h3>
+   <div class="topp">${k.bilde?`<span class="tn"><img src="${esc(k.bilde)}" alt="" loading="lazy"></span>`:''}<div class="navn"><h3>${esc(k.navn)}</h3></div>${k.bord?`<div class="bordtall${k.bekreftet?'':' ubekreftet'}"><b>${k.bord}</b><small>bord</small></div>`:''}</div>
+   ${k.bord?`<div class="kuler" aria-hidden="true">${'<i></i>'.repeat(Math.min(k.bord,15))}</div>`:''}
    <div class="sted">${esc(k.adresse||k.sted)}</div>
    ${k.pilot?`<div class="stempel">${esc(k.pilot)}</div>`:''}
    ${k.apen?`<div class="stempel apen">Åpent for deg som ikke er medlem</div>`:''}

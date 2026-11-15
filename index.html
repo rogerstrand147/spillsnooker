@@ -282,7 +282,8 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
 .hero .topp a:hover{border-color:var(--filt-lys);color:var(--filt-lys)}
 .hero h1{max-width:18ch}
 /* Toppfelt-video (02.10.2026): spilles én gang og blir stående på nærbildet.
-   Overskrift og knapp toner inn først når videoen er ferdig. Klassen «venter»
+   Overskrift og knapp toner inn etter 2,5 s (endret 15.11.2026: før ventet de
+   til videoen var ferdig, 13 s uten tekst på mobil). Klassen «venter»
    settes bare av skriptet, så uten skript står teksten fra start. */
 .hero .ord .knapp{display:inline-block;width:auto;margin-top:18px;padding-left:22px;padding-right:22px;text-decoration:none}
 .hero::after,.hero .ord{transition:opacity .9s ease,transform .9s ease}
@@ -364,15 +365,12 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
 </head>
 <body>
 
-<div id="forhand">Forhåndsvisning: klubbtallene er ekte, ventelistetallene er eksempler, og fire av sju klubber mangler åpningstider. Påmeldingen virker: adressen din lagres, og klubben får beskjed.</div>
+
 
 <header>
  <div class="wrap">
   <div class="hero" id="hero">
-   <div class="plassholder" id="plassholder"><div>
-    <b>Lyset tennes over ett bord i en mørk hall</b>
-    <span>13 sekunder, uten lyd, spilles én gang. 16:9 på skjerm, 4:5 på mobil. Stillbilde ved datasparing.</span>
-   </div></div>
+   <div class="plassholder" id="plassholder"></div>
    <div class="topp">
     <span class="merke"><i aria-hidden="true"></i><span>spill<span class="g">snooker</span><span class="d">.no</span></span></span>
     <nav aria-label="For klubber"><a href="#klubbdrift">For klubber</a></nav>
@@ -570,7 +568,7 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
    <p>Kø, kuler og kritt finnes på stedet. Kom i det du har på deg.</p></div>
   <div class="info"><span class="stor">250 kr</span>
    <p>Per time for bordet i Oslo, delt på dem som spiller. Hver klubb setter sin egen
-   pris. Vi henter inn resten nå.</p></div>
+   pris. Se klubbkortene.</p></div>
   <div class="info"><span class="stor">12 fot</span>
    <p>Et snookerbord er nesten dobbelt så stort som et poolbord. Det er en annen sport.</p></div>
   <div class="info"><h3>Det tar tid. Det er poenget</h3>
@@ -1213,13 +1211,13 @@ q.addEventListener('keydown',e=>{if(e.key!=='Enter')return;
   for(const [fil,type] of [[VIDEO_URL.replace(/\.mp4$/,'.webm'),'video/webm'],[VIDEO_URL,'video/mp4']]){
    const k=document.createElement('source'); k.src=fil; k.type=type; el.appendChild(k);
   }
-  /* Teksten venter til videoen er ferdig. Starter den ikke (blokkert autoplay, feil), kommer teksten likevel. */
+  /* Teksten kommer etter 2,5 s, mens videoen spiller videre (15.11.2026). Feiler videoen, kommer den med en gang. */
   hero.classList.add('venter');
   const vis=()=>hero.classList.remove('venter');
   el.addEventListener('ended',vis);
   el.addEventListener('error',vis);
   setTimeout(()=>{ if(el.paused&&el.currentTime===0) vis(); },2500);
-  setTimeout(vis,20000);
+  setTimeout(vis,2500);
   /* Stoppknapp: sluttbildet erstatter videoen, og teksten kommer med en gang. */
   const stopp=document.createElement('button');
   stopp.type='button'; stopp.className='stopp';
@@ -1313,8 +1311,8 @@ function tellerHTML(k){
  const by=esc(k.sted), t=k.venteliste||0;
  const eks=EKSEMPELTALL?' <em class="eks">eksempeltall</em>':'';
  const vm=EKSEMPELTALL?' eksempel':'';
- if(t===0) return `<div class="teller tom${vm}"><span><b>Bli den første i ${by}.</b> Klubben får beskjed om hver påmelding.${eks}</span></div>`;
- return `<div class="teller${vm}"><span class="setning">Det står <b data-mal="${t}">${REDUSERT?t:0}</b> ${t===1?'person':'personer'} i ${by} og venter.</span><span>Klubben får beskjed om hver påmelding.${eks}</span></div>`;
+ if(t===0) return `<div class="teller tom${vm}"><span><b>Bli den første i ${by}.</b> Vi gir klubben beskjed om hver påmelding.${eks}</span></div>`;
+ return `<div class="teller${vm}"><span class="setning">Det står <b data-mal="${t}">${REDUSERT?t:0}</b> ${t===1?'person':'personer'} i ${by} og venter.</span><span>Vi gir klubben beskjed om hver påmelding.${eks}</span></div>`;
 }
 
 /* Alle sju klubber får kort. «bekreftet» styrer om vi viser fakta eller åpne
@@ -1346,14 +1344,14 @@ function tegnKlubber(){
   const hull=t=>`<span class="hull">${t}</span>`;
   let f='';
   if(k.bekreftet){
-   f+=`<div class="rad"><span>Drop-in</span>${k.dropin?`<span>${esc(k.dropin)}</span>`:hull(esc(k.dropinhint||'Vi henter inn åpningstidene nå'))}</div>`;
-   f+=`<div class="rad"><span>Pris</span>${k.pris?`<span>${esc(k.pris)}</span>`:hull('Vi henter inn prisen nå')}</div>`;
+   f+=`<div class="rad"><span>Drop-in</span>${k.dropin?`<span>${esc(k.dropin)}</span>`:hull(esc(k.dropinhint||'Klubben har ikke oppgitt åpningstider'))}</div>`;
+   f+=`<div class="rad"><span>Pris</span>${k.pris?`<span>${esc(k.pris)}</span>`:hull('Klubben har ikke oppgitt pris')}</div>`;
    f+=k.bord
      ? `<div class="rad"><span>Bord</span><span>${k.bord} i fullstørrelse${k.bordnote?` <em style="color:var(--svak);font-style:normal">— ${esc(k.bordnote)}</em>`:''}</span></div>`
-     : `<div class="rad"><span>Bord</span>${hull('Vi bekrefter tallet med klubben nå')}</div>`;
-   f+=`<div class="rad"><span>Kontakt</span>${k.kontakt?`<span>${kontaktlenker(k.kontakt)}</span>`:hull('Vi henter inn kontaktadressen nå')}</div>`;
+     : `<div class="rad"><span>Bord</span>${hull('Ikke bekreftet av klubben')}</div>`;
+   f+=`<div class="rad"><span>Kontakt</span>${k.kontakt?`<span>${kontaktlenker(k.kontakt)}</span>`:hull('Klubben har ikke oppgitt kontaktadresse')}</div>`;
   }else{
-   f+=`<div class="rad"><span>Drop-in</span>${hull('Vi har spurt klubben')}</div>`;
+   f+=`<div class="rad"><span>Drop-in</span>${hull('Ikke bekreftet av klubben')}</div>`;
    f+=`<div class="rad"><span>Pris</span>${hull('Ikke bekreftet')}</div>`;
    f+=`<div class="rad"><span>Bord</span>${k.bord?`<span>${k.bord} <em style="color:var(--svak);font-style:normal">— fra registeret, ikke bekreftet</em></span>`:hull('Ikke bekreftet')}</div>`;
   }
@@ -1381,7 +1379,7 @@ function tegnKlubber(){
    ${minikart(i,k)}
    ${k.pilot?`<div class="stempel">${esc(k.pilot)}</div>`:''}
    ${k.apen?`<div class="stempel apen">Åpent for deg som ikke er medlem</div>`:''}
-   ${!k.bekreftet?`<div class="stempel vent">Vi snakker med klubben nå</div>`:''}
+   ${!k.bekreftet?`<div class="stempel vent">Ikke bekreftet av klubben</div>`:''}
    ${f}
    ${status==='ikke_avklart'
      ? `<div class="skolestatus">Ingen Snookerskole er satt opp her ennå. Klubben har ikke tatt stilling.</div>`
@@ -1527,7 +1525,7 @@ tegnKlubber();
  }
 })();
 
-if(!FORHANDSVIS) document.getElementById('forhand').style.display='none';
+
 </script>
 
 

@@ -27,7 +27,7 @@
 :root{
  --svart:#0C0E0D; --flate:#161B18; --hevet:#1D2320; --kant:#2A322D;
  --filt:#157F4C; --filt-lys:#2FA86D; --filt-mork:#0E5533;
- --kritt:#7FB2E5; --kritt-lys:#A9CCEE;
+ --lampe:#E07A4D; --lampe-lys:#F0A181;
  --elfenben:#EDEFEA; --dempet:#9AA39C; --svak:#858E88;
  --gul:#E8C33D; --rosa:#E58BA6;
 }
@@ -100,7 +100,7 @@ svg#svg.drag{cursor:grabbing}
 .klubb .teller.tom b{display:inline;font-size:1em;color:var(--elfenben)}
 .kvittering.advarsel{border-color:var(--gul);color:var(--dempet)}
 .kvittering.advarsel b{color:var(--gul)}
-.klubb.peket{outline:2px solid var(--kritt);outline-offset:3px}
+.klubb.peket{outline:2px solid var(--lampe);outline-offset:3px}
 /* Klubbkort på mobil (15.11.2026): kort som standard, mer bak knappen.
    Kort uten bilde viser ikke plassholderflaten på mobil. */
 .klubb .vismer{display:none}
@@ -148,7 +148,7 @@ svg#svg.drag{cursor:grabbing}
  position:sticky;top:0;z-index:1}
 .fylke:hover,.fylke.on{color:var(--elfenben);background:#243029}
 .fylke .fbord{font-family:ui-monospace,Menlo,monospace;color:var(--elfenben)}
-.fylke.on .fbord{color:var(--kritt)}
+.fylke.on .fbord{color:var(--lampe)}
 .regler{margin-top:34px;padding:26px 28px;background:var(--flate);
  border:1px solid var(--kant);border-radius:14px}
 .regler h3{font-size:1.06rem;font-weight:500;color:var(--elfenben);margin-bottom:10px}
@@ -226,10 +226,10 @@ h2{font-size:clamp(1.6rem,3.4vw,2.2rem);letter-spacing:-.025em;font-weight:700;m
  border:1px solid rgba(47,168,109,.30)}
 .teller b{font-size:1.8rem;color:var(--filt-lys);font-weight:700;letter-spacing:-.02em;line-height:1}
 .teller span{color:var(--dempet);font-size:.83rem;display:block;margin-top:4px}
-.knapp{display:block;width:100%;text-align:center;background:var(--kritt);color:#0C0E0D;
+.knapp{display:block;width:100%;text-align:center;background:var(--lampe);color:#0C0E0D;
  font-weight:650;padding:13px 20px;border-radius:10px;text-decoration:none;font-size:.94rem;
  margin-top:16px;border:none;cursor:pointer;font-family:inherit}
-.knapp:hover{background:var(--kritt-lys)}
+.knapp:hover{background:var(--lampe-lys)}
 .knapp.sek{background:transparent;color:var(--filt-lys);border:1.5px solid var(--filt)}
 .knapp.sek:hover{background:rgba(21,127,76,.14)}
 /* 15.11: kortknappen er sekundær. Oransje/blått er bare for hovedhandlingen. */
@@ -336,7 +336,7 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
 /* ═══ 15.11: topplinje på klubbkortet (desktop uten plassholderflate) ═══ */
 .klubb .topp{display:flex;align-items:center;gap:14px}
 .klubb .topp .navn{flex:1;min-width:0}
-.klubb .topp .tn{display:none;width:72px;height:54px;border-radius:9px;overflow:hidden;border:1px solid var(--filt);flex:none}
+.klubb .topp .tn{display:none;width:112px;height:84px;border-radius:9px;overflow:hidden;border:1px solid var(--filt);flex:none}
 .klubb .topp .tn img{width:100%;height:100%;object-fit:cover;display:block}
 .klubb .bordtall{flex:none;text-align:right;line-height:1}
 .klubb .bordtall b{display:block;font-size:1.6rem;font-weight:700;letter-spacing:-.02em;color:var(--elfenben)}
@@ -366,7 +366,7 @@ footer .disclaimer{margin-top:14px;max-width:64ch;line-height:1.6}
 .teller.eksempel:not(.tom)::before{content:"EKSEMPELTALL";position:absolute;z-index:-1;
  top:50%;left:50%;transform:translate(-50%,-50%) rotate(-11deg);
  font-size:clamp(1.15rem,4.6vw,1.9rem);font-weight:800;letter-spacing:.16em;
- color:var(--kritt);opacity:.16;white-space:nowrap;pointer-events:none;
+ color:var(--lampe);opacity:.16;white-space:nowrap;pointer-events:none;
  text-transform:uppercase}
 @media (prefers-contrast:more){.teller.eksempel:not(.tom)::before{opacity:.3}}
 .klubb [data-meld][hidden]{display:none}
@@ -1328,8 +1328,8 @@ function minikart(i,k){
  const sok=encodeURIComponent((k.bekreftet&&rein)?rein:(k.navn+', '+k.sted));
  const url='https://www.google.com/maps/search/?api=1&query='+sok;
  const nal=pos?(()=>{const q=P(pos[0],pos[1]);
-  return `<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="26" fill="#7FB2E5" opacity=".16"/>
-          <circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="11" fill="#7FB2E5"
+  return `<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="26" fill="#E07A4D" opacity=".16"/>
+          <circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="11" fill="#E07A4D"
                   stroke="#EDEFEA" stroke-width="3"/>`;})():'';
  return `<div class="minikart">
    <svg viewBox="0 0 600 700" aria-label="Omtrentlig posisjon i Norge" role="img">
